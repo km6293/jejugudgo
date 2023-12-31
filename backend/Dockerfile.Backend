@@ -1,0 +1,65 @@
+FROM ubuntu:22.04
+
+# default user
+ENV USER serve
+
+# packages install
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y sudo vim net-tools ssh openssh-server openjdk-17-jdk-headless python3 gradle lsof locales
+
+# 로케일 설정 및 ko_KR.UTF-8
+RUN locale-gen ko_KR.UTF-8 && \
+    update-locale LANG=ko_KR.UTF-8
+
+# Set default locale for the environment
+ENV LANG ko_KR.utf8
+ENV LC_ALL ko_KR.utf8
+
+# Access Option
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/UsePAM yes/#UserPAM yes/g' /etc/ssh/sshd_config
+
+#user add & set
+RUN groupadd -g 999 $USER
+RUN useradd -m -r -u 999 -g $USER $USER
+
+RUN sed -ri '20a'$USER'    ALL=(ALL) NOPASSWD:ALL' /etc/sudoers
+
+#set root & user passwd
+RUN echo 'root:root' | chpasswd
+RUN echo $USER':serve123' | chpasswd
+
+# java 환경변수
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+# Set the current working directory inside the image.
+WORKDIR /app
+
+# Switch to root to change ownership
+USER root
+
+# Copy the pre-built JAR file to the image
+COPY . .
+COPY ./build/libs/backend-0.0.1-SNAPSHOT.jar /app/build/libs/
+
+# Make Dir
+RUN mkdir -p /srv/result/ /srv/report/tmp/
+
+# Set Permissions and Ownership for everything under /srv
+RUN chown -R $USER:$USER /srv/
+RUN chmod -R 755 /srv/
+
+# Change ownership of the working directory to $USER
+RUN chown -R $USER:$USER /app
+
+# Switch back to $USER for running Gradle build
+USER $USER
+
+# Make port 9002 available to the world outside this container
+EXPOSE 9002
+
+# Set environment variable for Spring profile
+ENV SPRING_PROFILES_ACTIVE=prod
+
+# Run the jar file 
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","-Dspring.profiles.active=prod","build/libs/backend-0.0.1-SNAPSHOT.jar"]

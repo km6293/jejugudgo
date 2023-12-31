@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=zien
+      - POSTGRES_USER=zien
+      - POSTGRES_PASSWORD=zien2023!
+    ports:
+      - "5430:5432"
+    restart: always

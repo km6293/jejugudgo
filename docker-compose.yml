@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile.Frontend
+    restart: always
+    ports:
+      - "9003:9003"
+      - "9023:22"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.Backend
+    restart: always
+    ports:
+      - "9002:9002"
+      - "9022:22"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    volumes:
+      - backend-data:/srv
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=cloud
+      - POSTGRES_USER=cloud
+      - POSTGRES_PASSWORD=zien2023!
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  db-data:
+  backend-data:
