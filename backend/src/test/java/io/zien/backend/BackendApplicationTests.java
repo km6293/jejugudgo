@@ -2,7 +2,7 @@ package io.zien.backend;
 
 import static org.junit.Assert.assertEquals;
 
-import io.zien.backend.kalcBase.service.CloudRegisterService;
+import io.zien.backend.kalc.service.CloudRegisterService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

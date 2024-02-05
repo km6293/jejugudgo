@@ -9,7 +9,42 @@
       <li class="nav-item">
         <sidenav-collapse url="#" :aria-controls="''" v-bind:collapse="false" collapseRef="/base" navText="진법 계산기">
           <template v-slot:icon>
-            <i class="fa-regular fa-house"></i>
+            <i class="fa-regular fa-calculator"></i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse url="#" :aria-controls="''" v-bind:collapse="false" collapseRef="/complement" navText="보수 계산기">
+          <template v-slot:icon>
+            <i class="fa-regular fa-calculator"></i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse url="#" :aria-controls="''" v-bind:collapse="false" collapseRef="/DigitalData" navText="디지털데이터 표현">
+          <template v-slot:icon>
+            <i class="fa-regular fa-calculator"></i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse url="#" :aria-controls="''" v-bind:collapse="false" collapseRef="/Encrytion" navText="암호화">
+          <template v-slot:icon>
+            <i class="fa-regular fa-calculator"></i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse url="#" :aria-controls="''" v-bind:collapse="false" collapseRef="/Bit" navText="비트 연산">
+          <template v-slot:icon>
+            <i class="fa-regular fa-calculator"></i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse url="#" :aria-controls="''" v-bind:collapse="false" collapseRef="/Subnet" navText="서브넷마스크 계산">
+          <template v-slot:icon>
+            <i class="fa-regular fa-calculator"></i>
           </template>
         </sidenav-collapse>
       </li>

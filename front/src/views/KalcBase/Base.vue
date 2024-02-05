@@ -12,6 +12,8 @@
                       </small>
                   </h5>
                   <br>
+                  <el-input v-model="input" placeholder="변경할 정수를 입력해주세요." :style="{ width: '650px', height: '50px' }" />
+                  <br>
                   <el-checkbox v-model="checked1" label="2진법" size="large" @change="toggleOption(1)" />
                   <el-checkbox v-model="checked2" label="4진법" size="large" @change="toggleOption(2)" />
                   <el-checkbox v-model="checked3" label="8진법" size="large" @change="toggleOption(3)" />
@@ -21,20 +23,11 @@
                   <el-checkbox v-model="checked7" label="N 진법" size="large" @change="toggleOption(7)" /> &nbsp;
                   <el-input v-if="checked7" v-model="frombase" placeholder="현재 적용되어있는 진법" />
                   <br>
-                  <el-input v-model="input" placeholder="변경할 숫자를 입력해주세요." :style="{ width: '650px', height: '50px' }" />
+                  <br>
+                  <el-button type="primary" @click="getBaseNumber()">변환</el-button>
                   <br>
                   <br>
-                  <br>
-                  <el-checkbox v-model="checked8" label="2진법" size="large" @change="toggleOption2(8)" />
-                  <el-checkbox v-model="checked9" label="4진법" size="large" @change="toggleOption2(9)" />
-                  <el-checkbox v-model="checked10" label="8진법" size="large" @change="toggleOption2(10)" />
-                  <el-checkbox v-model="checked11" label="10진법" size="large" @change="toggleOption2(11)" />
-                  <el-checkbox v-model="checked12" label="16진법" size="large" @change="toggleOption2(12)" />
-                  <el-checkbox v-model="checked13" label="32진법" size="large" @change="toggleOption2(13)" />
-                  <el-checkbox v-model="checked14" label="N 진법" size="large" @change="toggleOption2(14)" /> &nbsp;
-                  <el-input v-if="checked14" v-model="tobase" placeholder="현재 적용되어있는 진법" />
-                  <br>
-                  <el-input v-model="input" disabled :style="{ width: '650px', height: '50px' }" />
+                  <el-input v-model="result" disabled :style="{ width: '650px', height: '50px' }" />
               </div>
           </div>
       </div>
@@ -43,6 +36,7 @@
 
 <script setup>
 import { ref } from "vue";
+import * as API from "@/api/api";
 
 const checked1 = ref(true);
 const checked2 = ref(false);
@@ -51,16 +45,9 @@ const checked4 = ref(false);
 const checked5 = ref(false);
 const checked6 = ref(false);
 const checked7 = ref(false);
-const checked8 = ref(true);
-const checked9 = ref(false);
-const checked10 = ref(false);
-const checked11 = ref(false);
-const checked12 = ref(false);
-const checked13 = ref(false);
-const checked14 = ref(false);
 const frombase = ref('');
-const tobase = ref('');
 const input = ref('');
+const result = ref('');
 
 const toggleOption = (option) => {
   checked1.value = false;
@@ -97,41 +84,22 @@ const toggleOption = (option) => {
       break;
   }
 }
-const toggleOption2 = (option) => {
-  checked8.value = false;
-  checked9.value = false;
-  checked10.value = false;
-  checked11.value = false;
-  checked12.value = false;
-  checked13.value = false;
-  checked14.value = false;
 
-  switch (option) {
-    case 8:
-      checked8.value = true;
-      break;
-    case 9:
-      checked9.value = true;
-      break;
-    case 10:
-      checked10.value = true;
-      break;
-    case 11:
-      checked11.value = true;
-      break;
-    case 12:
-      checked12.value = true;
-      break;
-    case 13:
-      checked13.value = true;
-      break;
-    case 14:
-      checked14.value = true;
-      break;
-    default:
-      break;
-  }
-};
+const getBaseNumber = () => {
+    let selectedBase;
+    if (checked1.value) selectedBase = 2;
+    else if (checked2.value) selectedBase = 4;
+    else if (checked3.value) selectedBase = 8;
+    else if (checked4.value) selectedBase = 10;
+    else if (checked5.value) selectedBase = 16;
+    else if (checked6.value) selectedBase = 32;
+    else if (checked7.value) selectedBase = parseInt(frombase.value); // Parse the base from string to integer
+
+    API.getBaseNumber(input.value, selectedBase)
+        .then((res) => {
+          result.value = res.data;
+        })
+}
 </script>
 
 <style scoped>

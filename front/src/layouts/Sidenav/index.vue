@@ -25,7 +25,7 @@
 </template>
 <script>
 import SidenavList from "./SidenavList.vue";
-import logo from "@/assets/img/favicon.png";
+import logo from "@/assets/img/favicon.jpg";
 import { mapState } from "vuex";
 
 export default {

@@ -5,19 +5,50 @@ const instance = axios.create({
 });
 axios.defaults.withCredentials = true; // 추후 쿠키 사용시 true로 변경 (자격 증명 허용 설정)
 
-// 로그인 구현 이후 사용
-// instance.interceptors.response.use(
-//     (response) => {
-//         return response;
-//     },
-//     function (error) {
-//         if (error.response.status == 401) {
-//             swal.fire("세션이 만료되었습니다.");
-//             router.push({ name: "board" });
-//         } else if (error.response.status == 403) {
-//             swal.fire("허용되지 않은 접근입니다.");
-//             router.push({ name: "board" });
-//         }
-//         return Promise.reject(error);
-//     }
-// );
+export function getBaseNumber(number: number, base: number) {
+    return instance.post("/api/kalc/base", { number, base });
+}
+
+export function getGrayCode(number: number) {
+    return instance.post("/api/kalc/grayCode", { "number": number });
+}
+
+export function getBCDCode(number: number) {
+    return instance.post("/api/kalc/bcdCode", { "number": number });
+}
+
+export function getBinary(number: number) {
+    return instance.post("/api/kalc/binary", { "number": number });
+}
+
+export function getParityBit(number: number) {
+    return instance.post("/api/kalc/parityBit", { "number": number });
+}
+
+export function getHammingCode(number: number) {
+    return instance.post("/api/kalc/hammingCode", { "number": number });
+}
+
+export function getOneComplement(number: number) {
+    return instance.post("/api/kalc/oneComplement", { "number": number });
+}
+
+export function getTwoComplement(number: number) {
+    return instance.post("/api/kalc/twoComplement", { "number": number });
+}
+
+export function getEncryption(string: String) {
+    return instance.post("/api/kalc/encryption", { "string": string });
+}
+
+export function getDecryption(string: String) {
+    return instance.post("/api/kalc/decryption", { "string": string });
+}
+
+export function getBit(bit1: String, bit2: String, type: String) {
+    return instance.post("/api/kalc/bit", { bit1, bit2, type });
+}
+
+export function getSubnet(ip: String, subnet: String) {
+    return instance.post("/api/kalc/subnet", { ip, subnet });
+}
