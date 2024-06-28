@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 const instance = axios.create({
-    baseURL: process.env.VUE_APP_BACKEND_BASE_URL,
-    withCredentials: true // 추후 쿠키 사용시 true로 변경 (자격 증명 허용 설정)
+  baseURL: process.env.VUE_APP_BACKEND_BASE_URL,
+  withCredentials: true, // 추후 쿠키 사용시 true로 변경 (자격 증명 허용 설정)
 });
 axios.defaults.withCredentials = true; // 추후 쿠키 사용시 true로 변경 (자격 증명 허용 설정)
 
@@ -23,5 +23,5 @@ axios.defaults.withCredentials = true; // 추후 쿠키 사용시 true로 변경
 // );
 
 export function requestRegister(obj: any) {
-    return instance.post("/api/register/request", obj);
+  return instance.post('/api/register/request', obj);
 }

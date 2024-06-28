@@ -23,6 +23,6 @@ module.exports = {
     workboxPluginMode: 'GenerateSW',
     workboxOptions: {
       // workbox options
-    }
-  }
-}
+    },
+  },
+};
