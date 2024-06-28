@@ -1,19 +1,27 @@
 <template>
   <div class="not-found">
     <div class="not-found-content">
-      <img src="../assets/404.png" alt="404 Error" class="not-found-image" />
+      <img
+        src="../assets/404.png"
+        alt="404 Error"
+        class="not-found-image"
+      />
       <h1>404 - Page Not Found</h1>
       <p>비정상적인 경로로 진입하였습니다.</p>
-      <router-link to="/" class="home-link">홈으로 돌아가기</router-link>
+      <router-link
+        to="/"
+        class="home-link"
+        >홈으로 돌아가기</router-link
+      >
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "NotFound",
+  name: 'NotFound',
 });
 </script>
 
