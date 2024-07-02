@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import LoginView from '@/views/Login/LoginView.vue';
 import NotFound from '@/views/NotFound.vue';
+import { getCookie } from '@/utils/cookies';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,5 +35,25 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isLoggedIn()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+function isLoggedIn() {
+  const user = getCookie('user');
+  return !!user;
+}
 
 export default router;
