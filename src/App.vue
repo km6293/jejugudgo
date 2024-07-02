@@ -1,11 +1,19 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/login">Login</router-link>
-  </nav>
-  <router-view />
+  <div id="app">
+    <router-view />
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/login">Login</router-link>
+    </nav>
+  </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -14,14 +22,29 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
 }
 
 nav {
-  padding: 30px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  padding: 15px;
+  text-align: center;
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+
+    &:hover {
+      color: #42b983;
+    }
 
     &.router-link-exact-active {
       color: #42b983;
