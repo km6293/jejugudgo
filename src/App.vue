@@ -1,54 +1,26 @@
 <template>
   <div id="app">
     <router-view />
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link>
-    </nav>
+    <NavBar />
   </div>
 </template>
 
 <script>
+import NavBar from '@/components/NavBar.vue';
+
 export default {
   name: 'App',
+  components: {
+    NavBar,
+  },
 };
 </script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   position: relative;
-}
-
-nav {
-  position: fixed;
-  bottom: 0;
+  max-width: 360px;
+  margin: 0 auto;
   width: 100%;
-  background-color: #333;
-  padding: 15px;
-  text-align: center;
-
-  a {
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-
-    &:hover {
-      color: #42b983;
-    }
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
