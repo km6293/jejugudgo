@@ -1,0 +1,48 @@
+<template>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M7 15L5.5 18.5H18.5L17 15H7Z"
+      fill="white"
+    />
+    <path
+      d="M16.5 10C16.5 13 12 16.5 12 16.5C12 16.5 7.5 13 7.5 10C7.5 7.549 9.549 5.5 12 5.5C14.451 5.5 16.5 7.549 16.5 10Z"
+      fill="#C0FFC5"
+    />
+    <path
+      d="M12 11.5C12.8284 11.5 13.5 10.8284 13.5 10C13.5 9.17157 12.8284 8.5 12 8.5C11.1716 8.5 10.5 9.17157 10.5 10C10.5 10.8284 11.1716 11.5 12 11.5Z"
+      fill="white"
+    />
+    <path
+      d="M16.5 10C16.5 13 12 16.5 12 16.5C12 16.5 7.5 13 7.5 10C7.5 7.549 9.549 5.5 12 5.5C14.451 5.5 16.5 7.549 16.5 10Z"
+      stroke="#09DF7A"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M12 11.5C12.8284 11.5 13.5 10.8284 13.5 10C13.5 9.17157 12.8284 8.5 12 8.5C11.1716 8.5 10.5 9.17157 10.5 10C10.5 10.8284 11.1716 11.5 12 11.5Z"
+      stroke="#09DF7A"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M16.0773 15H17L18.5 18.5H5.5L7 15H7.9227"
+      stroke="#09DF7A"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</template>
+
+<script>
+export default {
+  name: 'Location1Icon',
+};
+</script>
+
+<style scoped></style>

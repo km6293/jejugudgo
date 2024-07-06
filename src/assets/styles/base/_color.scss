@@ -1,32 +1,66 @@
-// Primary color palette
-$color-primary-50:  #EDFFEE;
-$color-primary-100: #C0FFC5;
-$color-primary-200: #95FEA0;
-$color-primary-300: #6EFD85;
-$color-primary-400: #35FA75;
-$color-primary-500: #22F779;
-$color-primary-600: #13F07D;
-$color-primary-700: #09DF7A;
-$color-primary-800: #03C66F;
-$color-primary-900: #00B064;
+// Primitive
 
-// Secondary color palette
-$color-secondary-50:  #F9F9F9;
-$color-secondary-100: #F2F2F2;
-$color-secondary-200: #E9E9E9;
-$color-secondary-300: #D9D9D9;
-$color-secondary-400: #B5B5B5;
-$color-secondary-500: #959595;
-$color-secondary-600: #6D6D6D;
-$color-secondary-700: #5A5A5A;
-$color-secondary-800: #3B3B3B;
-$color-secondary-900: #1B1B1B;
+// greyscale color palette
+$color-greyscale-white:  #FFFFFF;
+$color-greyscale-50: #F9F9F9;
+$color-greyscale-100: #F2F2F2;
+$color-greyscale-200: #E9E9E9;
+$color-greyscale-300: #D9D9D9;
+$color-greyscale-400: #B5B5B5;
+$color-greyscale-500: #959595;
+$color-greyscale-600: #6D6D6D;
+$color-greyscale-700: #5A5A5A;
+$color-greyscale-800: #3B3B3B;
+$color-greyscale-900: #1B1B1B;
+$color-greyscale-black: #000000;
+
+// green color palette
+$color-green-50:  #EDFFEE;
+$color-green-100: #C0FFC5;
+$color-green-200: #95FEA0;
+$color-green-300: #6EFD85;
+$color-green-400: #35FA75;
+$color-green-500: #22F779;
+$color-green-600: #13F07D;
+$color-green-700: #09DF7A;
+$color-green-800: #03C66F;
+$color-green-900: #00B064;
 
 // Error color palette
-$color-error-50: #FF2500;
+$color-error-100: #FF2500;
 
-// Main primary color
-$color-primary: $color-primary-400;
+// Semantic
+
+// primary color palette
+$color-primary-50: $color-green-50;
+$color-primary-100: $color-green-100;
+$color-primary-300: $color-green-300;
+$color-primary-500: $color-green-500;
+$color-primary-700: $color-green-700;
+
+// Neutral color palette
+$color-neutral-white: $color-greyscale-white;
+$color-neutral-100: $color-greyscale-100;
+$color-neutral-300: $color-greyscale-300;
+$color-neutral-500: $color-greyscale-500;
+$color-neutral-600: $color-greyscale-600;
+$color-neutral-700: $color-greyscale-700;
+$color-neutral-900: $color-greyscale-900;
+
+// Components
+$color-component-background: $color-greyscale-800;
+$color-component-texticon-primary: $color-green-500;
+$color-component-texticon-on-primary: $color-greyscale-white;
+$color-component-secondary: $color-neutral-900;
+$color-component-on-secondary: $color-neutral-100;
+$color-component-on-surface: $color-neutral-100;
+$color-component-surface: $color-greyscale-700;
+$color-component-texticon-neutral-high-emphasis: $color-greyscale-100;
+$color-component-texticon-neutral-low-emphasis: $color-greyscale-500;
 
 // Error color
-$color-error: $color-error-50;
+$color-error: $color-error-100;
+
+// text muted color
+$color-text-muted: #959595;
+$color-text-disabled: #D9D9D9;

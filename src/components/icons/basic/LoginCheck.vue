@@ -1,0 +1,22 @@
+<template>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 4C7.584 4 4 7.584 4 12C4 16.416 7.584 20 12 20C16.416 20 20 16.416 20 12C20 7.584 16.416 4 12 4ZM12 18.4C8.472 18.4 5.6 15.528 5.6 12C5.6 8.472 8.472 5.6 12 5.6C15.528 5.6 18.4 8.472 18.4 12C18.4 15.528 15.528 18.4 12 18.4ZM15.672 8.464L10.4 13.736L8.328 11.672L7.2 12.8L10.4 16L16.8 9.6L15.672 8.464Z"
+      fill="#09DF7A"
+    />
+  </svg>
+</template>
+
+<script>
+export default {
+  name: 'LoginCheckIcon',
+};
+</script>
+
+<style scoped></style>
