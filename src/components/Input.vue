@@ -13,6 +13,7 @@
         :value="modelValue"
         :placeholder="placeholder"
         :readonly="readonly"
+        :style="inputStyle"
         @input="readonly ? null : onInput"
         @focus="isFocused = true"
         @blur="isFocused = false"
@@ -57,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from 'vue';
+import { defineComponent, PropType, ref, computed, CSSProperties } from 'vue';
 import LoginCheckIcon from '@/components/icons/basic/LoginCheck.vue';
 import EyeOffIcon from '@/components/icons/basic/EyeOff.vue';
 import EyeOnIcon from '@/components/icons/basic/EyeOn.vue';
@@ -65,7 +66,7 @@ import ErrorIcon from '@/components/icons/basic/Error.vue';
 import DeleteIcon from '@/components/icons/basic/Delete.vue';
 
 export default defineComponent({
-  name: 'InputText',
+  name: 'Input',
   components: {
     LoginCheckIcon,
     EyeOffIcon,
@@ -80,11 +81,9 @@ export default defineComponent({
     },
     id: {
       type: String,
-      required: false,
     },
     label: {
       type: String,
-      required: false,
       default: '',
     },
     type: {
@@ -97,7 +96,6 @@ export default defineComponent({
     },
     helpMessage: {
       type: String,
-      required: false,
       default: '',
     },
     state: {
@@ -106,10 +104,21 @@ export default defineComponent({
       >,
       default: 'default',
     },
-
     readonly: {
       type: Boolean,
       default: false,
+    },
+    width: {
+      type: String,
+      default: '',
+    },
+    height: {
+      type: String,
+      default: '',
+    },
+    fontSize: {
+      type: String,
+      default: '1.6rem',
     },
   },
   setup(props, { emit }) {
@@ -141,6 +150,14 @@ export default defineComponent({
       );
     });
 
+    const inputStyle = computed((): CSSProperties => {
+      return {
+        width: props.width,
+        height: props.height,
+        fontSize: props.fontSize,
+      };
+    });
+
     return {
       inputType,
       togglePasswordVisibility,
@@ -150,6 +167,7 @@ export default defineComponent({
       stateClass: `state-${props.state}`,
       hasIcon,
       isFocused,
+      inputStyle,
     };
   },
 });
