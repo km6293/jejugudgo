@@ -8,7 +8,9 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "axios": "^1.7.2",
@@ -20,6 +22,15 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.6.1",
+    "@storybook/addon-essentials": "^8.1.11",
+    "@storybook/addon-interactions": "^8.1.11",
+    "@storybook/addon-links": "^8.1.11",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.4",
+    "@storybook/blocks": "^8.1.11",
+    "@storybook/test": "^8.1.11",
+    "@storybook/vue3": "^8.1.11",
+    "@storybook/vue3-webpack5": "^8.1.11",
     "@types/jest": "^27.5.2",
     "@types/webpack-env": "^1.18.5",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -33,6 +44,7 @@
     "@vue/cli-plugin-unit-jest": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.4.31",
     "@vue/eslint-config-typescript": "^9.1.0",
     "@vue/test-utils": "^2.0.0-0",
     "@vue/vue3-jest": "^27.0.0-alpha.1",
@@ -41,13 +53,16 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-vue": "^8.0.3",
     "gh-pages": "^6.1.1",
     "jest": "^27.0.5",
     "prettier": "^2.4.1",
     "sass": "^1.77.6",
     "sass-loader": "^12.6.0",
+    "storybook": "^8.1.11",
     "ts-jest": "^27.0.4",
-    "typescript": "~4.5.5"
+    "typescript": "~4.5.5",
+    "vue-loader": "^17.4.2"
   }
 }
