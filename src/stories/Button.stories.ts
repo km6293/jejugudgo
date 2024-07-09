@@ -1,60 +1,51 @@
-import Button from '@/components/Button.vue';
+import Button from '../components/Button.vue';
+import { Meta, StoryFn } from '@storybook/vue3';
+import { IButtonType } from '../components/Button.vue';
 import Add from '@/components/icons/basic/Add.vue';
 
+// 예시
+// <Button
+//   text="Click Me"
+//   :icon="Add"
+//   :style="{ width: '200px' }"
+//   @click="handleSecondButtonClick"
+// />
+
 export default {
-  title: 'Components/Button',
+  title: 'Example/Button',
   component: Button,
   argTypes: {
+    type: { control: 'select', options: ['submit', 'reset'] },
     disabled: { control: 'boolean' },
-    width: { control: 'text' },
-    height: { control: 'text' },
-    padding: { control: 'text' },
-    fontSize: { control: 'text' },
+    text: { control: 'text' },
+    icon: { control: 'select', options: [''] },
+    style: { control: 'object' },
   },
-};
+} as Meta<typeof Button>;
 
-const Template = (args: any) => ({
+const Template: StoryFn<IButtonType> = (args) => ({
   components: { Button },
   setup() {
     return { args };
   },
-  template: '<Button v-bind="args">test</Button>',
+  template: '<Button v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {
-  disabled: false,
-  width: '',
-  height: '50px',
-  padding: '16px',
-  fontSize: '1.6rem',
+export const Primary = Template.bind({});
+Primary.args = {
+  text: 'Primary Button',
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
+  type: 'submit',
   disabled: true,
-  width: '200px',
-  height: '50px',
-  padding: '16px',
-  fontSize: '1.6rem',
+  text: 'Disabled Button',
 };
 
 export const WithIcon = Template.bind({});
 WithIcon.args = {
-  disabled: false,
-  width: '200px',
-  height: '50px',
-  padding: '16px',
-  fontSize: '1.6rem',
+  type: 'reset',
+  text: 'Button with Icon',
+  icon: Add,
 };
-
-WithIcon.decorators = [
-  () => ({
-    template: `
-        <template #icon>
-          <Add />
-        </template>
-        test
-    `,
-  }),
-];
