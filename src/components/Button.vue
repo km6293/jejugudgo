@@ -1,111 +1,73 @@
 <template>
   <button
-    :class="['form-button', buttonState]"
-    :disabled="disabled"
-    :style="buttonStyle"
-    @mousedown="isPressed = true"
-    @mouseup="isPressed = false"
-    @mouseleave="isPressed = false"
+    :type="props.type || 'button'"
+    :disabled="props.disabled"
+    :class="'form-button'"
+    @click="handleClick"
+    :style="props.style"
   >
     <span
+      v-if="props.icon"
       class="icon"
-      v-if="$slots.icon"
     >
-      <slot name="icon" />
+      <component :is="props.icon" />
     </span>
-    <span class="button-text">
-      <slot />
+    <span>
+      {{ props.text }}
     </span>
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed, CSSProperties } from 'vue';
+<script lang="ts" setup>
+import { CSSProperties, defineEmits, defineProps } from 'vue';
+import type { Component } from 'vue';
 
-export default defineComponent({
-  name: 'Button',
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    width: {
-      type: String,
-      default: '',
-    },
-    height: {
-      type: String,
-      default: '',
-    },
-    padding: {
-      type: String,
-      default: '16px',
-    },
-    fontSize: {
-      type: String,
-      default: '1.6rem',
-    },
-  },
-  setup(props) {
-    const isPressed = ref(false);
+export interface IButtonType {
+  type?: 'submit' | 'reset';
+  disabled?: boolean;
+  text?: string;
+  icon?: Component;
+  style?: CSSProperties;
+}
 
-    const buttonState = computed(() => {
-      if (props.disabled) {
-        return 'disabled';
-      }
-      return isPressed.value ? 'pressed' : 'active';
-    });
+const props = defineProps<IButtonType>();
+const emit = defineEmits(['click']);
 
-    const buttonStyle = computed((): CSSProperties => {
-      return {
-        width: props.width,
-        height: props.height,
-        padding: props.padding,
-        fontSize: props.fontSize,
-      };
-    });
-
-    return {
-      isPressed,
-      buttonState,
-      buttonStyle,
-    };
-  },
-});
+const handleClick = () => {
+  if (!props.disabled) {
+    emit('click');
+  }
+};
 </script>
 
 <style scoped lang="scss">
-.form-button {
+button {
   border: none;
   border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.form-button .icon {
-  display: flex;
-  align-items: center;
-  margin-right: 4px;
-}
-
-.form-button .button-text {
-  display: flex;
-  align-items: center;
-}
-
-.form-button.active {
+  width: 100%;
+  height: 56px;
+  padding: 16px;
+  font-size: 1.6rem;
   background-color: $color-button-primary;
-}
 
-.form-button.disabled {
-  background-color: $color-neutral-500;
-  color: $color-neutral-700;
-  cursor: default;
-}
+  &:active {
+    background-color: $color-button-surface-pressed;
+  }
 
-.form-button.pressed {
-  background-color: $color-button-surface-pressed;
+  &:disabled {
+    background-color: $color-neutral-500;
+    color: $color-neutral-700;
+    cursor: default;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+  }
 }
 </style>
