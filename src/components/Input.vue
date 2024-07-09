@@ -248,7 +248,7 @@ input {
 }
 
 .state-error input {
-  border-color: $color-error;
+  border-color: $color-text-error;
 }
 
 .state-disabled input {
