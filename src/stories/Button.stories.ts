@@ -1,14 +1,14 @@
-import Button from '../components/Button.vue';
 import { Meta, StoryFn } from '@storybook/vue3';
-import { IButtonType } from '../components/Button.vue';
+import Button from '@/components/button/Button.vue';
+import { IButtonType } from '@/components/button/ButtonTypes';
 import Add from '@/components/icons/basic/Add.vue';
 
 // 예시
 // <Button
-//   text="Click Me"
-//   :icon="Add"
+//   disabled
+//   text="test"
 //   :style="{ width: '200px' }"
-//   @click="handleSecondButtonClick"
+//   :icon="Add"
 // />
 
 export default {

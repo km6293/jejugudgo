@@ -19,16 +19,8 @@
 </template>
 
 <script lang="ts" setup>
-import { CSSProperties, defineEmits, defineProps } from 'vue';
-import type { Component } from 'vue';
-
-export interface IButtonType {
-  type?: 'submit' | 'reset';
-  disabled?: boolean;
-  text?: string;
-  icon?: Component;
-  style?: CSSProperties;
-}
+import { defineEmits, defineProps } from 'vue';
+import type { IButtonType } from './ButtonTypes';
 
 const props = defineProps<IButtonType>();
 const emit = defineEmits(['click']);
