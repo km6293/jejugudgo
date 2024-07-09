@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/vue3';
 import Button from '@/components/button/Button.vue';
 import { IButtonType } from '@/components/button/ButtonTypes';
-import Add from '@/components/icons/basic/Add.vue';
+import { AddIcon } from '@/components/icons/basic';
 
 // 예시
 // <Button
@@ -47,5 +47,5 @@ export const WithIcon = Template.bind({});
 WithIcon.args = {
   type: 'reset',
   text: 'Button with Icon',
-  icon: Add,
+  icon: AddIcon,
 };
