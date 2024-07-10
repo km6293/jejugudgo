@@ -44,15 +44,16 @@ button {
   height: 56px;
   padding: 16px;
   font-size: 1.6rem;
-  background-color: $color-button-primary;
+  background-color: var(--color-button-primary);
+  font-family: 'Pretendard-bold', sans-serif;
 
   &:active {
-    background-color: $color-button-surface-pressed;
+    background-color: var(--color-button-surface-pressed);
   }
 
   &:disabled {
-    background-color: $color-neutral-500;
-    color: $color-neutral-700;
+    background-color: var(--color-neutral-500);
+    color: var(--color-neutral-700);
     cursor: default;
   }
 

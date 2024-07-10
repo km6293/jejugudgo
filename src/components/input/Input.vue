@@ -128,6 +128,7 @@ const showClearIcon = computed(
 
 <style lang="scss" scoped>
 .form-input {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -135,7 +136,7 @@ const showClearIcon = computed(
 label {
   font-size: 1.4rem;
   margin-bottom: 4px;
-  color: $color-text-body;
+  color: var(--color-text-body);
 }
 
 .input-wrapper {
@@ -147,16 +148,16 @@ label {
     width: 100%;
     font-size: 1.4rem;
     padding: 1.2rem 1.6rem;
-    border: 1px solid $color-neutral-300;
+    border: 1px solid var(--color-neutral-300);
     border-radius: 12px;
     background-color: transparent;
-    color: $color-text-active;
+    color: var(--color-text-active);
     font-family: 'Pretendard-Regular', sans-serif;
     line-height: 20px;
 
     &:focus {
       outline: none;
-      border-color: $color-neutral-white;
+      border-color: var(--color-neutral-white);
     }
   }
 
@@ -171,18 +172,18 @@ label {
 
   .icon {
     margin-left: 0.5rem;
-    color: $color-text-muted;
+    color: var(--color-text-muted);
   }
 }
 
 .message {
   font-size: 1.2rem;
-  color: $color-text-muted;
+  color: var(--color-text-muted);
   margin-top: 8px;
 }
 
 .state-default input {
-  border-color: $color-neutral-300;
+  border-color: var(--color-neutral-300);
 }
 
 .state-success input,
@@ -195,23 +196,23 @@ label {
 }
 
 .state-success input {
-  border-color: $color-primary-700;
+  border-color: var(--color-primary-700);
 }
 
 .state-filled input {
-  border-color: $color-neutral-500;
+  border-color: var(--color-neutral-500);
 }
 
 .state-error input {
-  border-color: $color-text-error;
+  border-color: var(--color-text-error);
 }
 
 .state-disabled input {
-  border-color: $color-neutral-600;
-  color: $color-text-disabled;
+  border-color: var(--color-neutral-600);
+  color: var(--color-text-disabled);
 
   &::placeholder {
-    color: $color-text-disabled;
+    color: var(--color-text-disabled);
   }
 }
 </style>

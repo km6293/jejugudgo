@@ -23,7 +23,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .progress-bar {
   height: 4px;
-  background-color: $color-green-300;
+  background-color: var(--color-green-300);
   transition: width 0.3s;
 }
 </style>

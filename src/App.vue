@@ -24,7 +24,7 @@ export default {
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  background-color: $color-background;
+  background-color: var(--color-background);
   display: flex;
   flex-direction: column;
 }

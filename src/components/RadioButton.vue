@@ -76,7 +76,7 @@ export default defineComponent({
 }
 
 .radio-option input[type='radio']:checked {
-  accent-color: $color-primary-300;
+  accent-color: var(--color-primary-300);
 }
 
 .radio-option label {
@@ -85,7 +85,7 @@ export default defineComponent({
 
 .radio-option .description {
   margin-left: 1.2rem;
-  color: $color-neutral-500;
+  color: var(--color-neutral-500);
   flex-shrink: 0;
 }
 </style>
