@@ -131,6 +131,7 @@ const showClearIcon = computed(
   width: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 43.2rem;
 }
 
 label {
@@ -146,6 +147,7 @@ label {
 
   input {
     width: 100%;
+
     font-size: 1.4rem;
     padding: 1.2rem 1.6rem;
     border: 1px solid var(--color-neutral-300);

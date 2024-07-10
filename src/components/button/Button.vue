@@ -34,6 +34,7 @@ const handleClick = () => {
 
 <style scoped lang="scss">
 button {
+  max-width: 43.2rem;
   border: none;
   border-radius: 12px;
   cursor: pointer;

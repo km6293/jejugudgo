@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
-import LoginView from '@/views/Login/LoginView.vue';
+import Login from '@/views/Auth/Login.vue';
 import NotFound from '@/views/NotFound.vue';
 import { getCookie } from '@/utils/cookies';
 
@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: Login,
     meta: { hideNavBar: true },
   },
   {
