@@ -14,6 +14,7 @@ export default {
 
 <style scoped>
 nav {
+  z-index: 1000;
   position: fixed;
   bottom: 0;
   width: 100%;
