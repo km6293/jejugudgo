@@ -23,6 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'login',
     component: LoginView,
+    meta: { hideNavBar: true },
   },
   {
     path: '/:catchAll(.*)',
