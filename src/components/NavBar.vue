@@ -14,13 +14,15 @@ export default {
 
 <style scoped>
 nav {
+  z-index: 1000;
   position: fixed;
   bottom: 0;
   width: 100%;
   background-color: #333;
   padding: 15px 0 15px 0;
   text-align: center;
-  max-width: 360px;
+  min-width: 280px;
+  max-width: 768px;
 
   a {
     font-weight: bold;

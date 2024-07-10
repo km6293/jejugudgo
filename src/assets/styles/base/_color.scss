@@ -1,5 +1,6 @@
 // Primitive
 
+
 // greyscale color palette
 $color-greyscale-white:  #FFFFFF;
 $color-greyscale-50: #F9F9F9;
@@ -11,6 +12,7 @@ $color-greyscale-500: #959595;
 $color-greyscale-600: #6D6D6D;
 $color-greyscale-700: #5A5A5A;
 $color-greyscale-800: #3B3B3B;
+$color-greyscale-850: #242424;
 $color-greyscale-900: #1B1B1B;
 $color-greyscale-black: #000000;
 
@@ -29,7 +31,9 @@ $color-green-900: #00B064;
 // Error color palette
 $color-error-100: #FF2500;
 
+
 // Semantic
+
 
 // primary color palette
 $color-primary-50: $color-green-50;
@@ -47,24 +51,42 @@ $color-neutral-600: $color-greyscale-600;
 $color-neutral-700: $color-greyscale-700;
 $color-neutral-900: $color-greyscale-900;
 
+
 // Components
-$color-component-background: $color-greyscale-800;
-$color-component-texticon-primary: $color-green-500;
-$color-component-texticon-on-primary: $color-greyscale-white;
-$color-component-secondary: $color-neutral-900;
-$color-component-on-secondary: $color-neutral-100;
-$color-component-on-surface: $color-neutral-100;
-$color-component-surface: $color-greyscale-700;
-$color-component-texticon-neutral-high-emphasis: $color-greyscale-100;
-$color-component-texticon-neutral-low-emphasis: $color-greyscale-500;
 
-// Error color
-$color-error: $color-error-100;
 
-// text muted color
-$color-text-muted: #959595;
-$color-text-disabled: #D9D9D9;
+$color-background: $color-greyscale-850;
 
-// button primary color
-$color-button-primary: #22F779;
-$color-button-surface-pressed: #09DF7A;
+// Button
+$color-button-primary: $color-green-500;
+$color-button-on-primary: $color-neutral-900;
+$color-button-secondary: $color-neutral-900;
+$color-button-on-secondary: $color-neutral-100;
+$color-button-surface-pressed: $color-primary-700;
+
+// Card
+$color-card-on-surface: $color-neutral-100;
+$color-card-surface: $color-greyscale-700;
+
+// _validation_text
+$color-validation-text-default: $color-neutral-100;
+$color-validation-text-error: $color-error-100;
+$color-validation-text-disabled: $color-neutral-500;
+
+// Chips
+$color-chips-stroke-default: $color-neutral-100;
+$color-chips-stroke-disabled: $color-neutral-500;
+$color-chips-surface-pressed: $color-neutral-700;
+
+// Text
+$color-text-error: $color-error-100;
+$color-text-body: $color-neutral-300;
+$color-text-muted: $color-neutral-500;
+$color-text-white: #FFFFFF;
+$color-text-white-50: #FFFFFF80;
+$color-text-black: #000000;
+$color-text-black-50: #00000080;
+$color-text-primary: $color-primary-500;
+$color-text-secondary: $color-neutral-100;
+$color-text-active: $color-greyscale-50;
+$color-text-disabled: $color-neutral-300;

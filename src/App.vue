@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <router-view />
-    <NavBar />
+    <NavBar v-if="!$route.meta.hideNavBar" />
+    <div id="container">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -19,8 +21,23 @@ export default {
 <style lang="scss">
 #app {
   position: relative;
-  max-width: 360px;
   margin: 0 auto;
   width: 100%;
+  height: 100%;
+  background-color: $color-background;
+  display: flex;
+  flex-direction: column;
+}
+
+#container {
+  flex: 1;
+  padding: 20px 20px 60px 20px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#container::-webkit-scrollbar {
+  display: none;
 }
 </style>
