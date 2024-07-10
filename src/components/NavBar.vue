@@ -20,7 +20,8 @@ nav {
   background-color: #333;
   padding: 15px 0 15px 0;
   text-align: center;
-  max-width: 360px;
+  min-width: 280px;
+  max-width: 768px;
 
   a {
     font-weight: bold;
