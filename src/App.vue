@@ -21,7 +21,6 @@ export default {
 <style lang="scss">
 #app {
   position: relative;
-  margin: 0 auto;
   width: 100%;
   height: 100%;
   background-color: var(--color-background);
@@ -31,7 +30,6 @@ export default {
 
 #container {
   flex: 1;
-  padding: 20px 20px 60px 20px;
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
