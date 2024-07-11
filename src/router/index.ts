@@ -1,8 +1,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
-import LoginView from '@/views/Login/LoginView.vue';
+import Login from '@/views/Auth/Login.vue';
 import NotFound from '@/views/NotFound.vue';
 import { getCookie } from '@/utils/cookies';
+
+const SignUpTerms = () => import('@/views/Auth/SignUpTerms.vue');
+const SignUpContent = () => import('@/views/Auth/SignUpContent.vue');
+const SignUpID = () => import('@/views/Auth/SignUpID.vue');
+const SignUpPassword = () => import('@/views/Auth/SignUpPassword.vue');
+const SignUpVerification = () => import('@/views/Auth/SignUpVerification.vue');
+const SignUpComplete = () => import('@/views/Auth/SignUpComplete.vue');
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,17 +20,51 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LoginView,
+    path: '/Login',
+    name: 'Login',
+    component: Login,
     meta: { hideNavBar: true },
+  },
+  {
+    path: '/SignUp',
+    component: SignUpContent,
+    meta: { hideNavBar: true },
+    children: [
+      {
+        path: '',
+        name: 'SignUp',
+        component: SignUpTerms,
+        meta: { progress: 20 },
+      },
+      {
+        path: '',
+        name: 'SignUpID',
+        component: SignUpID,
+        meta: { progress: 40 },
+      },
+      {
+        path: '',
+        name: 'SignUpPassword',
+        component: SignUpPassword,
+        meta: { progress: 60 },
+      },
+      {
+        path: '',
+        name: 'SignUpVerification',
+        component: SignUpVerification,
+        meta: { progress: 80 },
+      },
+      {
+        path: '',
+        name: 'SignUpComplete',
+        component: SignUpComplete,
+        meta: { progress: 100 },
+      },
+    ],
   },
   {
     path: '/:catchAll(.*)',

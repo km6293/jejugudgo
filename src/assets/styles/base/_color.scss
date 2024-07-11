@@ -1,92 +1,94 @@
-// Primitive
+:root {
+  // Primitive
 
 
-// greyscale color palette
-$color-greyscale-white:  #FFFFFF;
-$color-greyscale-50: #F9F9F9;
-$color-greyscale-100: #F2F2F2;
-$color-greyscale-200: #E9E9E9;
-$color-greyscale-300: #D9D9D9;
-$color-greyscale-400: #B5B5B5;
-$color-greyscale-500: #959595;
-$color-greyscale-600: #6D6D6D;
-$color-greyscale-700: #5A5A5A;
-$color-greyscale-800: #3B3B3B;
-$color-greyscale-850: #242424;
-$color-greyscale-900: #1B1B1B;
-$color-greyscale-black: #000000;
+  // greyscale color palette
+  --color-greyscale-white:  #FFFFFF;
+  --color-greyscale-50: #F9F9F9;
+  --color-greyscale-100: #F2F2F2;
+  --color-greyscale-200: #E9E9E9;
+  --color-greyscale-300: #D9D9D9;
+  --color-greyscale-400: #B5B5B5;
+  --color-greyscale-500: #959595;
+  --color-greyscale-600: #6D6D6D;
+  --color-greyscale-700: #5A5A5A;
+  --color-greyscale-800: #3B3B3B;
+  --color-greyscale-850: #242424;
+  --color-greyscale-900: #1B1B1B;
+  --color-greyscale-black: #000000;
 
-// green color palette
-$color-green-50:  #EDFFEE;
-$color-green-100: #C0FFC5;
-$color-green-200: #95FEA0;
-$color-green-300: #6EFD85;
-$color-green-400: #35FA75;
-$color-green-500: #22F779;
-$color-green-600: #13F07D;
-$color-green-700: #09DF7A;
-$color-green-800: #03C66F;
-$color-green-900: #00B064;
+  // green color palette
+  --color-green-50:  #EDFFEE;
+  --color-green-100: #C0FFC5;
+  --color-green-200: #95FEA0;
+  --color-green-300: #6EFD85;
+  --color-green-400: #35FA75;
+  --color-green-500: #22F779;
+  --color-green-600: #13F07D;
+  --color-green-700: #09DF7A;
+  --color-green-800: #03C66F;
+  --color-green-900: #00B064;
 
-// Error color palette
-$color-error-100: #FF2500;
-
-
-// Semantic
+  // Error color palette
+  --color-error-100: #FF2500;
 
 
-// primary color palette
-$color-primary-50: $color-green-50;
-$color-primary-100: $color-green-100;
-$color-primary-300: $color-green-300;
-$color-primary-500: $color-green-500;
-$color-primary-700: $color-green-700;
-
-// Neutral color palette
-$color-neutral-white: $color-greyscale-white;
-$color-neutral-100: $color-greyscale-100;
-$color-neutral-300: $color-greyscale-300;
-$color-neutral-500: $color-greyscale-500;
-$color-neutral-600: $color-greyscale-600;
-$color-neutral-700: $color-greyscale-700;
-$color-neutral-900: $color-greyscale-900;
+  // Semantic
 
 
-// Components
+  // primary color palette
+  --color-primary-50: var(--color-green-50);
+  --color-primary-100: var(--color-green-100);
+  --color-primary-300: var(--color-green-300);
+  --color-primary-500: var(--color-green-500);
+  --color-primary-700: var(--color-green-700);
+
+  // Neutral color palette
+  --color-neutral-white: var(--color-greyscale-white);
+  --color-neutral-100: var(--color-greyscale-100);
+  --color-neutral-300: var(--color-greyscale-300);
+  --color-neutral-500: var(--color-greyscale-500);
+  --color-neutral-600: var(--color-greyscale-600);
+  --color-neutral-700: var(--color-greyscale-700);
+  --color-neutral-900: var(--color-greyscale-900);
 
 
-$color-background: $color-greyscale-850;
+  // Components
 
-// Button
-$color-button-primary: $color-green-500;
-$color-button-on-primary: $color-neutral-900;
-$color-button-secondary: $color-neutral-900;
-$color-button-on-secondary: $color-neutral-100;
-$color-button-surface-pressed: $color-primary-700;
 
-// Card
-$color-card-on-surface: $color-neutral-100;
-$color-card-surface: $color-greyscale-700;
+  --color-background: var(--color-greyscale-850);
 
-// _validation_text
-$color-validation-text-default: $color-neutral-100;
-$color-validation-text-error: $color-error-100;
-$color-validation-text-disabled: $color-neutral-500;
+  // Button
+  --color-button-primary: var(--color-green-500);
+  --color-button-on-primary: var(--color-neutral-900);
+  --color-button-secondary: var(--color-neutral-900);
+  --color-button-on-secondary: var(--color-neutral-100);
+  --color-button-surface-pressed: var(--color-primary-700);
 
-// Chips
-$color-chips-stroke-default: $color-neutral-100;
-$color-chips-stroke-disabled: $color-neutral-500;
-$color-chips-surface-pressed: $color-neutral-700;
+  // Card
+  --color-card-on-surface: var(--color-neutral-100);
+  --color-card-surface: var(--color-greyscale-700);
 
-// Text
-$color-text-error: $color-error-100;
-$color-text-body: $color-neutral-300;
-$color-text-muted: $color-neutral-500;
-$color-text-white: #FFFFFF;
-$color-text-white-50: #FFFFFF80;
-$color-text-black: #000000;
-$color-text-black-50: #00000080;
-$color-text-primary: $color-primary-500;
-$color-text-secondary: $color-neutral-100;
-$color-text-active: $color-greyscale-50;
-$color-text-disabled: $color-neutral-300;
+  // _validation_text
+  --color-validation-text-default: var(--color-neutral-100);
+  --color-validation-text-error: var(--color-error-100);
+  --color-validation-text-disabled: var(--color-neutral-500);
+
+  // Chips
+  --color-chips-stroke-default: var(--color-neutral-100);
+  --color-chips-stroke-disabled: var(--color-neutral-500);
+  --color-chips-surface-pressed: var(--color-neutral-700);
+
+  // Text
+  --color-text-error: var(--color-error-100);
+  --color-text-body: var(--color-neutral-300);
+  --color-text-muted: var(--color-neutral-500);
+  --color-text-white: #FFFFFF;
+  --color-text-white-50: #FFFFFF80;
+  --color-text-black: #000000;
+  --color-text-black-50: #00000080;
+  --color-text-primary: var(--color-primary-500);
+  --color-text-secondary: var(--color-neutral-100);
+  --color-text-active: var(--color-greyscale-50);
+  --color-text-disabled: var(--color-neutral-300);
+}

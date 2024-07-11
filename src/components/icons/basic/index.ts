@@ -1,4 +1,5 @@
 import Add from './Add.vue';
+import Google from './Google.vue';
 import Bell from './Bell.vue';
 import Bookmark from './Bookmark.vue';
 import Bookmark1 from './Bookmark1.vue';
@@ -31,6 +32,7 @@ import Time from './Time.vue';
 
 export {
   Add as AddIcon,
+  Google as GoogleIcon,
   Bell as BellIcon,
   Bookmark as BookmarkIcon,
   Bookmark1 as Bookmark1Icon,
