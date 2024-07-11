@@ -8,42 +8,42 @@
       @submit.prevent="handleLogin"
     >
       <Input
-        :modelValue="email"
+        v-model="email"
         placeholder="이메일"
       />
       <Input
-        :modelValue="password"
+        v-model="password"
         placeholder="비밀번호"
         type="password"
       />
       <Button
         type="submit"
         text="로그인"
-        @click="handleLogin"
       />
       <div class="links">
-        <a
-          href="/signup"
+        <router-link
+          to="/SignUp"
           class="link"
-          >회원가입</a
+          >회원가입</router-link
         >
         <span class="divider"></span>
-        <a
-          href="/find-id"
+        <router-link
+          to="/find-id"
           class="link"
-          >아이디 찾기</a
+          >아이디 찾기</router-link
         >
         <span class="divider"></span>
-        <a
-          href="/find-password"
+        <router-link
+          to="/find-password"
           class="link"
-          >비밀번호 찾기</a
+          >비밀번호 찾기</router-link
         >
       </div>
     </form>
     <div class="sns-login">
-      <p>SNS 계정으로 3초만에 시작하기</p>
+      <p class="sns-text">SNS 계정으로 3초만에 시작하기</p>
       <Button
+        @click="handleGoogleLogin"
         :icon="GoogleIcon"
         text="Google 계정으로 로그인"
         :style="{
@@ -64,17 +64,30 @@ const email = ref('');
 const password = ref('');
 
 const handleLogin = () => {
+  if (!email.value || !password.value) {
+    // errorMessage.value = '이메일과 비밀번호를 모두 입력해주세요.';
+    return;
+  }
+
+  // TODO: 로그인 실패시 문구 추가
   alert(`이메일: ${email.value}\n비밀번호: ${password.value}`);
+};
+
+const handleGoogleLogin = () => {
+  window.location.href = 'http://localhost:8080/api/v1/oauth/authorize/google';
 };
 </script>
 
 <style scoped>
 .login-container {
-  gap: 66px;
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .slogan {
@@ -101,9 +114,8 @@ const handleLogin = () => {
   align-items: center;
   justify-content: space-around;
   box-sizing: border-box;
-  padding: 17px 16px 17px 16px;
+  padding: 17px 16px;
   width: 100%;
-  gap: 3rem;
   color: #b0b0b0;
   gap: 1rem;
   max-width: 43.2rem;
@@ -129,5 +141,9 @@ const handleLogin = () => {
   flex-direction: column;
   align-items: center;
   color: var(--color-neutral-white);
+}
+
+.sns-text {
+  font-size: 1.4rem;
 }
 </style>
