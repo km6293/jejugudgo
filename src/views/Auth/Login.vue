@@ -28,7 +28,7 @@
         >
         <span class="divider"></span>
         <router-link
-          to="/find-id"
+          to="/FindID"
           class="link"
           >아이디 찾기</router-link
         >
