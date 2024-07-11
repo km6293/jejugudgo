@@ -11,6 +11,11 @@ const SignUpPassword = () => import('@/views/Auth/SignUpPassword.vue');
 const SignUpVerification = () => import('@/views/Auth/SignUpVerification.vue');
 const SignUpComplete = () => import('@/views/Auth/SignUpComplete.vue');
 
+// const FindIDByPhone = () => import('@/views/Auth/FindIDByPhone.vue');
+const FindIDContent = () => import('@/views/Auth/FindIDContent.vue');
+const FindIDByEmail = () => import('@/views/Auth/FindIDByEmail.vue');
+const FindIDResult = () => import('@/views/Auth/FindIDResult.vue');
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -66,6 +71,24 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: '/FindID',
+    component: FindIDContent,
+    meta: { hideNavBar: true },
+    children: [
+      {
+        path: '',
+        name: 'FindIDByEmail',
+        component: FindIDByEmail,
+      },
+      {
+        path: '',
+        name: 'FindIDResult',
+        component: FindIDResult,
+      },
+    ],
+  },
+
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',
