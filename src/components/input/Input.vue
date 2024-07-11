@@ -8,10 +8,9 @@
       <input
         :class="{ 'has-icon': hasIcon }"
         :type="inputType"
-        :value="modelValue"
+        v-model="internalValue"
         :placeholder="placeholder"
         :readonly="readonly"
-        @input="updateValue"
         :style="props.style"
       />
 
@@ -79,6 +78,7 @@ const props = withDefaults(defineProps<IInputType>(), {
 });
 
 const emit = defineEmits(['update:modelValue']);
+const internalValue = ref(props.modelValue);
 const inputType = ref(props.type);
 const inputState = ref(props.state);
 
@@ -86,19 +86,18 @@ const togglePasswordVisibility = () => {
   inputType.value = inputType.value === 'password' ? 'text' : 'password';
 };
 
-const updateValue = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.value);
-};
+watch(internalValue, (newValue) => {
+  emit('update:modelValue', newValue);
+});
 
 const clearInput = () => {
-  emit('update:modelValue', '');
+  internalValue.value = '';
 };
 
 onMounted(() => {
   if (props.success || props.error) {
     watch(
-      () => props.modelValue,
+      () => internalValue.value,
       (newValue) => {
         if (props.success && props.success(newValue)) {
           console.log('success: ', newValue);
@@ -122,7 +121,7 @@ const hasIcon = computed(
 );
 const showTogglePassword = computed(() => props.type === 'password');
 const showClearIcon = computed(
-  () => Boolean(props.modelValue) && !props.readonly
+  () => Boolean(internalValue.value) && !props.readonly
 );
 </script>
 
@@ -198,23 +197,23 @@ label {
 }
 
 .state-success input {
-  border-color: var(--color-primary-700);
+  border-color: var (--color-primary-700);
 }
 
 .state-filled input {
-  border-color: var(--color-neutral-500);
+  border-color: var (--color-neutral-500);
 }
 
 .state-error input {
-  border-color: var(--color-text-error);
+  border-color: var (--color-text-error);
 }
 
 .state-disabled input {
-  border-color: var(--color-neutral-600);
-  color: var(--color-text-disabled);
+  border-color: var (--color-neutral-600);
+  color: var (--color-text-disabled);
 
   &::placeholder {
-    color: var(--color-text-disabled);
+    color: var (--color-text-disabled);
   }
 }
 </style>
