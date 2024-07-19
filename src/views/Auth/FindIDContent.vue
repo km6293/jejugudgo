@@ -9,9 +9,10 @@
 <style scoped>
 .find-id-container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  max-width: 47.2rem;
+  margin: 0 auto;
 }
 </style>

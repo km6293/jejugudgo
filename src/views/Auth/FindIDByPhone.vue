@@ -1,6 +1,6 @@
 <template>
-  <div class="signup-password-container">
-    <span class="signup-input">
+  <div class="find-id-container">
+    <span class="find-input">
       <Input
         placeholder="이름을 입력해주세요"
         label="이름"
@@ -36,12 +36,12 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const nextPage = () => {
-  router.push({ name: 'FindIDResult' });
+  router.push({ name: 'find-id-result' });
 };
 </script>
 
 <style scoped>
-.signup-password-container {
+.find-id-container {
   width: 100%;
   flex: 1;
   display: flex;
@@ -50,18 +50,10 @@ const nextPage = () => {
   box-sizing: border-box;
 }
 
-.signup-input {
+.find-input {
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.password-text {
-  font-family: 'Pretendard-bold', sans-serif;
-  color: var(--color-neutral-white);
-  font-size: 2.1rem;
-  line-height: 3rem;
-  margin-bottom: 20px;
 }
 
 .next-button {
