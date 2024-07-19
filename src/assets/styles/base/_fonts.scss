@@ -9,3 +9,8 @@
   src: url('@/assets/fonts/Pretendard-Regular.woff') format('woff');
   font-weight: 400;
 }
+
+:root {
+  --font-regular: 'Pretendard-Regular', sans-serif;
+  --font-bold: 'Pretendard-bold', sans-serif;
+}

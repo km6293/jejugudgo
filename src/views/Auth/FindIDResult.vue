@@ -32,7 +32,7 @@ import { ref } from 'vue';
 const router = useRouter();
 
 const nextPage = () => {
-  router.push({ name: 'SignUpPassword' });
+  router.push({ path: '/findpassword/phone' });
 };
 
 const selectedOption = ref('');
@@ -46,17 +46,15 @@ const radioOptions = ref([
 <style scoped>
 .find-id-result-container {
   margin-top: 40px;
-  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  box-sizing: border-box;
   justify-content: space-between;
 }
 
 .find-id-result-text {
-  font-family: 'Pretendard-bold', sans-serif;
+  font-family: var(--font-bold);
   color: var(--color-neutral-white);
   font-size: 2.1rem;
   line-height: 3rem;
@@ -64,7 +62,7 @@ const radioOptions = ref([
 }
 
 .find-password {
-  font-family: 'Pretendard-regular', sans-serif;
+  font-family: var(--font-regular);
   font-size: 1.2rem;
   margin-bottom: 20px;
   margin-top: auto;

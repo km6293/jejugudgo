@@ -34,7 +34,6 @@ const handleClick = () => {
 
 <style scoped lang="scss">
 button {
-  max-width: 43.2rem;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -46,7 +45,7 @@ button {
   padding: 16px;
   font-size: 1.6rem;
   background-color: var(--color-button-primary);
-  font-family: 'Pretendard-bold', sans-serif;
+  font-family: var(--font-bold);
 
   &:active {
     background-color: var(--color-button-surface-pressed);

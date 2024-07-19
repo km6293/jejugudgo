@@ -32,7 +32,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const nextPage = () => {
-  router.push({ name: 'SignUpVerification' });
+  router.push({ name: 'signup-verification' });
 };
 </script>
 
@@ -53,7 +53,7 @@ const nextPage = () => {
 }
 
 .password-text {
-  font-family: 'Pretendard-bold', sans-serif;
+  font-family: var(--font-bold);
   color: var(--color-neutral-white);
   font-size: 2.1rem;
   line-height: 3rem;
