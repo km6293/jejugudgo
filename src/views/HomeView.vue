@@ -1,20 +1,27 @@
 <template>
   <div class="home">
     <h1>This is home page</h1>
+    <div class="map-wrapper">
+      <KakaoMap />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'HomeView',
-  components: {},
-  data() {
-    return {};
-  },
-  methods: {},
-});
+<script setup lang="ts">
+import KakaoMap from '@/components/KakaoMap.vue';
 </script>
 
-<style scoped></style>
+<style scoped>
+.map-wrapper {
+  height: 400px;
+  width: calc(100% - 50px);
+  border: 1px solid #ccc;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .map-wrapper {
+    width: calc(100% - 20px);
+  }
+}
+</style>
