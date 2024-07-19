@@ -5,7 +5,7 @@ module.exports = defineConfig({
   devServer: {
     historyApiFallback: true,
   },
-  publicPath: './',
+  publicPath: '/',
   pwa: {
     name: 'My App',
     themeColor: '#4DBA87',
