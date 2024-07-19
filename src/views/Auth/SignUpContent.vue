@@ -4,7 +4,7 @@
       :progress="progress"
       class="progress"
     />
-    <router-view />
+    <router-view class="router-container" />
   </div>
 </template>
 
@@ -26,13 +26,17 @@ watch(router.currentRoute, updateProgress, { immediate: true });
 <style scoped>
 .home-container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .progress {
   margin-bottom: 40px;
+}
+
+.router-container {
+  max-width: 47.2rem;
+  margin: 0 auto;
 }
 </style>
