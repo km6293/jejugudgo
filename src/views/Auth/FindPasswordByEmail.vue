@@ -1,6 +1,6 @@
 <template>
-  <div class="find-id-email-container">
-    <span class="find-id-email-input">
+  <div class="find-password-email-container">
+    <span class="find-password-email-input">
       <Input
         placeholder="이름을 입력해주세요"
         label="이름"
@@ -36,19 +36,19 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const nextPage = () => {
-  router.push({ name: 'find-id-result' });
+  router.push({ name: 'find-password-reset' });
 };
 </script>
 
 <style scoped>
-.find-id-email-container {
+.find-password-email-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
 }
 
-.find-id-email-input {
+.find-password-email-input {
   display: flex;
   flex-direction: column;
   gap: 16px;

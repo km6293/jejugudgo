@@ -1,14 +1,14 @@
 <template>
-  <div class="find-id-email-container">
-    <span class="find-id-email-input">
+  <div class="find-password-container">
+    <span class="find-input">
       <Input
         placeholder="이름을 입력해주세요"
         label="이름"
       />
       <Input
         placeholder="010-0000-0000"
-        label="이메일"
-        message="이메일 주소를 입력해주세요"
+        label="휴대폰 번호"
+        message="가입 시 등록한 휴대폰 번호를 입력해주세요"
       />
       <Button
         text="인증번호 받기"
@@ -36,22 +36,32 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const nextPage = () => {
-  router.push({ name: 'find-id-result' });
+  router.push({ name: 'find-password-reset' });
 };
 </script>
 
 <style scoped>
-.find-id-email-container {
+.find-password-container {
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  box-sizing: border-box;
 }
 
-.find-id-email-input {
+.find-input {
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.password-text {
+  font-family: var(--font-bold);
+  color: var(--color-neutral-white);
+  font-size: 2.1rem;
+  line-height: 3rem;
+  margin-bottom: 20px;
 }
 
 .next-button {

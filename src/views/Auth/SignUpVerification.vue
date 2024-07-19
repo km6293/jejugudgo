@@ -31,7 +31,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const nextPage = () => {
-  router.push({ name: 'SignUpComplete' });
+  router.push({ name: 'signup-complete' });
 };
 </script>
 
@@ -42,7 +42,6 @@ const nextPage = () => {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .signup-input {
@@ -55,11 +54,10 @@ const nextPage = () => {
   display: flex;
   gap: 8px;
   align-items: center;
-  max-width: 43.2rem;
 }
 
 .verification-text {
-  font-family: 'Pretendard-bold', sans-serif;
+  font-family: var(--font-bold);
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;

@@ -1,8 +1,8 @@
 <template>
-  <div class="signup-complete-container">
+  <div class="find-password-complete-container">
     <span class="complete-text">
-      <h1>OOO님, 회원가입이 완료되었어요!</h1>
-      <h1>이제 제주도를 걸어보러 가실까요?</h1>
+      <h1>비밀번호 재설정을 완료했어요</h1>
+      <h1>새로운 비밀번호로 로그인해주세요</h1>
     </span>
 
     <Button
@@ -25,7 +25,7 @@ const nextPage = () => {
 </script>
 
 <style scoped>
-.signup-complete-container {
+.find-password-complete-container {
   width: 100%;
   flex: 1;
   display: flex;

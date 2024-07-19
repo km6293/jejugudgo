@@ -54,6 +54,7 @@ import Button from '@/components/button/Button.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
 const allChecked = ref(false);
 const terms = ref({
   service: false,
@@ -86,7 +87,7 @@ const checkAllChecked = () => {
 
 const nextPage = () => {
   if (allRequiredChecked.value) {
-    router.push({ name: 'SignUpID' });
+    router.push({ name: 'signup-id' });
   }
 };
 </script>
@@ -98,11 +99,10 @@ const nextPage = () => {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .terms-text {
-  font-family: 'Pretendard-bold', sans-serif;
+  font-family: var(--font-bold);
   color: var(--color-neutral-white);
   font-size: 2.1rem;
   line-height: 3rem;
@@ -110,7 +110,6 @@ const nextPage = () => {
 
 .divider {
   border-top: 1px solid var(--color-neutral-500);
-  width: 100%;
   display: block;
   margin-bottom: 5px;
 }

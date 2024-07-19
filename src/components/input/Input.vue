@@ -130,7 +130,6 @@ const showClearIcon = computed(
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-width: 43.2rem;
 }
 
 label {
@@ -153,7 +152,7 @@ label {
     border-radius: 12px;
     background-color: transparent;
     color: var(--color-text-active);
-    font-family: 'Pretendard-Regular', sans-serif;
+    font-family: var(--font-regular);
     line-height: 20px;
 
     &:focus {

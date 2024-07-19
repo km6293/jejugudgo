@@ -22,19 +22,19 @@
       />
       <div class="links">
         <router-link
-          to="/SignUp"
+          to="/signup"
           class="link"
           >회원가입</router-link
         >
         <span class="divider"></span>
         <router-link
-          to="/FindID"
+          to="/findid/phone"
           class="link"
           >아이디 찾기</router-link
         >
         <span class="divider"></span>
         <router-link
-          to="/find-password"
+          to="/findpassword/phone"
           class="link"
           >비밀번호 찾기</router-link
         >
@@ -80,14 +80,14 @@ const handleGoogleLogin = () => {
 
 <style scoped>
 .login-container {
-  width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  max-width: 47.2rem;
   padding: 20px;
-  box-sizing: border-box;
+  justify-content: space-between;
+  margin: 0 auto;
 }
 
 .slogan {
@@ -105,7 +105,6 @@ const handleGoogleLogin = () => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
 }
 
@@ -113,12 +112,9 @@ const handleGoogleLogin = () => {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  box-sizing: border-box;
   padding: 17px 16px;
-  width: 100%;
   color: #b0b0b0;
   gap: 1rem;
-  max-width: 43.2rem;
 }
 
 .link {
