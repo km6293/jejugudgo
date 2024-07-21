@@ -4,10 +4,16 @@
       <h1>로그인에 사용할</h1>
       <h1>아이디를 입력해주세요</h1>
     </span>
-    <Input placeholder="이메일" />
+    <Input
+      placeholder="이메일"
+      v-model="email"
+      :state="inputState"
+      :message="inputMessage"
+    />
     <Button
       class="next-button"
       @click="nextPage"
+      :disabled="inputState !== 'success'"
       text="다음"
     />
   </div>
@@ -16,12 +22,32 @@
 <script setup lang="ts">
 import Button from '@/components/button/Button.vue';
 import Input from '@/components/input/Input.vue';
+import { validateEmail } from '@/utils/emailValidators';
+import { watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { useSignupState } from '@/composables/useSignupState';
+
+const { email, inputState, inputMessage } = useSignupState();
 
 const router = useRouter();
 
+watch(email, (newEmail) => {
+  if (newEmail === '') {
+    inputState.value = 'default';
+    inputMessage.value = '';
+  } else if (validateEmail(newEmail)) {
+    inputState.value = 'success';
+    inputMessage.value = '';
+  } else {
+    inputState.value = 'error';
+    inputMessage.value = '이메일 형식이 올바르지 않습니다.';
+  }
+});
+
 const nextPage = () => {
-  router.push({ name: 'signup-password' });
+  if (inputState.value === 'success') {
+    router.push({ name: 'signup-password' });
+  }
 };
 </script>
 

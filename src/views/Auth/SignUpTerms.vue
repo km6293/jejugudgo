@@ -4,39 +4,47 @@
       <h1>제주걷고 서비스 약관에</h1>
       <h1>동의해주세요</h1>
     </span>
-    <span class="terms-check">
+    <span class="terms-check-container">
       <label>
-        <input
-          type="checkbox"
-          v-model="allChecked"
-          @change="toggleAll"
-        />
-        <span>모두 동의</span>
+        <div
+          class="terms-check"
+          @click="toggleAll"
+        >
+          <CheckActive2Icon v-if="allChecked" />
+          <Check2Icon v-else />
+          <span>모두 동의</span>
+        </div>
       </label>
       <span class="divider"></span>
       <label>
-        <input
-          type="checkbox"
-          v-model="terms.service"
-          @change="checkAllChecked"
-        />
-        <span>[필수] 서비스 이용약관</span>
+        <div
+          class="terms-check"
+          @click="toggleService"
+        >
+          <CheckActive1Icon v-if="terms.service" />
+          <Check1Icon v-else />
+          <span>[필수] 서비스 이용약관</span>
+        </div>
       </label>
       <label>
-        <input
-          type="checkbox"
-          v-model="terms.location"
-          @change="checkAllChecked"
-        />
-        <span>[필수] 위치 기반 서비스 이용약관</span>
+        <div
+          class="terms-check"
+          @click="toggleLocation"
+        >
+          <CheckActive1Icon v-if="terms.location" />
+          <Check1Icon v-else />
+          <span>[필수] 위치 기반 서비스 이용약관</span>
+        </div>
       </label>
       <label>
-        <input
-          type="checkbox"
-          v-model="terms.marketing"
-          @change="checkAllChecked"
-        />
-        <span>[선택] 마케팅 수신 동의</span>
+        <div
+          class="terms-check"
+          @click="toggleMarketing"
+        >
+          <CheckActive1Icon v-if="terms.marketing" />
+          <Check1Icon v-else />
+          <span>[선택] 마케팅 수신 동의</span>
+        </div>
       </label>
     </span>
     <Button
@@ -52,6 +60,12 @@
 import { ref, watch } from 'vue';
 import Button from '@/components/button/Button.vue';
 import { useRouter } from 'vue-router';
+import {
+  Check1Icon,
+  Check2Icon,
+  CheckActive1Icon,
+  CheckActive2Icon,
+} from '@/components/icons/basic';
 
 const router = useRouter();
 
@@ -90,6 +104,21 @@ const nextPage = () => {
     router.push({ name: 'signup-id' });
   }
 };
+
+const toggleService = () => {
+  terms.value.service = !terms.value.service;
+  checkAllChecked();
+};
+
+const toggleLocation = () => {
+  terms.value.location = !terms.value.location;
+  checkAllChecked();
+};
+
+const toggleMarketing = () => {
+  terms.value.marketing = !terms.value.marketing;
+  checkAllChecked();
+};
 </script>
 
 <style scoped>
@@ -111,17 +140,24 @@ const nextPage = () => {
 .divider {
   border-top: 1px solid var(--color-neutral-500);
   display: block;
-  margin-bottom: 5px;
+}
+
+.terms-check-container {
+  margin-top: 20px;
 }
 
 .terms-check {
-  margin-top: 20px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 label {
   display: block;
-  margin-bottom: 10px;
   color: var(--color-neutral-500);
+  height: 40px;
+  align-content: center;
+  margin-bottom: 4px;
 }
 
 input[type='checkbox'] {
