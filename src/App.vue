@@ -8,7 +8,9 @@
         'with-navbar': !$route.meta.hideNavBar,
       }"
     >
-      <router-view />
+      <KeepAlive>
+        <router-view />
+      </KeepAlive>
     </div>
     <NavBar v-if="!$route.meta.hideNavBar" />
   </div>
