@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
     <div class="logo">
-      <div class="slogan">슬로건</div>
+      <img :src="logoImage" />
+      <div class="slogan">걸음으로 만들어나가는 당신만의 이야기</div>
     </div>
     <form
       class="login-form"
@@ -62,6 +63,7 @@ import { GoogleIcon } from '@/components/icons/basic';
 
 const email = ref('');
 const password = ref('');
+const logoImage = new URL('@/assets/logo.png', import.meta.url).href;
 
 const handleLogin = () => {
   if (!email.value || !password.value) {
@@ -86,19 +88,22 @@ const handleGoogleLogin = () => {
   align-items: center;
   max-width: 47.2rem;
   padding: 20px;
-  justify-content: space-between;
   margin: 0 auto;
 }
 
-.slogan {
-  width: 24rem;
-  height: 95px;
-  border: 1px solid white;
+.logo {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  color: white;
+  flex: 1;
+}
+
+.slogan {
+  color: var(--color-neutral-100);
+  font-size: 1.4rem;
+  font-family: var(--font-bold);
+  margin-top: 16px;
 }
 
 .login-form {
@@ -106,6 +111,7 @@ const handleGoogleLogin = () => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
 }
 
 .links {
@@ -137,6 +143,9 @@ const handleGoogleLogin = () => {
   flex-direction: column;
   align-items: center;
   color: var(--color-neutral-white);
+  margin-top: auto;
+  flex: 1;
+  justify-content: end;
 }
 
 .sns-text {
