@@ -9,4 +9,7 @@ export interface IInputType {
   state?: 'default' | 'success' | 'filled' | 'error' | 'disabled';
   readonly?: boolean;
   style?: CSSProperties | null;
+  maxlength?: string | number;
 }
+
+export type InputState = NonNullable<IInputType['state']>;

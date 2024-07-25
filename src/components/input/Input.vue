@@ -1,16 +1,22 @@
 <template>
   <div :class="['form-input', `state-${inputState}`]">
     <!-- label -->
-    <label v-if="label">{{ label }}</label>
+    <label
+      class="input-label body2-medium"
+      v-if="label"
+      >{{ label }}</label
+    >
 
     <!-- input, icon -->
     <div class="input-wrapper">
       <input
+        class="body2-medium"
         :class="{ 'has-icon': hasIcon }"
         :type="inputType"
         v-model="internalValue"
         :placeholder="placeholder"
         :style="props.style"
+        :maxlength="props.maxlength"
       />
 
       <div class="icons">
@@ -44,7 +50,7 @@
     <!-- message -->
     <div
       v-if="message"
-      class="message"
+      class="message caption-medium"
     >
       {{ message }}
     </div>
@@ -66,7 +72,7 @@ import {
   EyeOnIcon,
   ErrorIcon,
   DeleteIcon,
-} from '@/components/icons/basic';
+} from '@/components';
 import { IInputType } from './InputTypes';
 
 const props = withDefaults(defineProps<IInputType>(), {
@@ -115,8 +121,7 @@ const showClearIcon = computed(
   display: flex;
   flex-direction: column;
 
-  label {
-    font-size: 1.4rem;
+  .input-label {
     margin-bottom: 4px;
     color: var(--color-text-body);
   }
@@ -128,14 +133,11 @@ const showClearIcon = computed(
 
     input {
       width: 100%;
-      font-size: 1.4rem;
       padding: 1.2rem 1.6rem;
       border: 1px solid var(--color-neutral-300);
       border-radius: 12px;
       background-color: transparent;
       color: var(--color-text-active);
-      font-family: var(--font-regular);
-      line-height: 20px;
 
       &:focus {
         outline: none;
@@ -158,7 +160,6 @@ const showClearIcon = computed(
   }
 
   .message {
-    font-size: 1.2rem;
     margin-top: 8px;
   }
 
