@@ -1,28 +1,32 @@
 <template>
   <div class="app-bar">
-    <ArrowIcon @click="goBack" />
+    <div class="app-bar-icon">
+      <BigArrowIcon
+        v-if="appBarBackButton"
+        @click="goBack"
+      />
+    </div>
     <span class="app-bar-title">
       {{ title }}
     </span>
-    <DeleteIcon @click="goHome" />
+    <BigDeleteIcon @click="goHome" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { RouteRecordName, useRoute, useRouter } from 'vue-router';
-import { ArrowIcon, DeleteIcon } from '@/components/icons/big';
+import { BigArrowIcon, BigDeleteIcon } from '@/components';
 import { computed } from 'vue';
 
 const router = useRouter();
 const route = useRoute();
 
 const title = computed(() => route.meta.title);
+const appBarBackButton = computed(() => route.meta.appBarBackButton !== false);
 
 const goBack = () => {
   router.back();
 };
-
-// console.log(route.fullPath);
 
 const goHome = () => {
   const homeRoute = route.meta.homeRoute as RouteRecordName;
@@ -53,5 +57,10 @@ const goHome = () => {
   font-family: var(--font-bold);
   color: var(--color-neutral-white);
   font-size: 18px;
+}
+
+.app-bar-icon {
+  width: 48px;
+  height: 48px;
 }
 </style>

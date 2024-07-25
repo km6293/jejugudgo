@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
     <div class="logo">
-      <div class="slogan">슬로건</div>
+      <LogoIcon />
+      <div class="slogan body2-bold">걸음으로 만들어나가는 당신만의 이야기</div>
     </div>
     <form
       class="login-form"
@@ -41,7 +42,7 @@
       </div>
     </form>
     <div class="sns-login">
-      <p class="sns-text">SNS 계정으로 3초만에 시작하기</p>
+      <p class="sns-text body2-regular">SNS 계정으로 3초만에 시작하기</p>
       <Button
         @click="handleGoogleLogin"
         :icon="GoogleIcon"
@@ -55,10 +56,8 @@
 </template>
 
 <script setup lang="ts">
-import Input from '@/components/input/Input.vue';
-import Button from '@/components/button/Button.vue';
 import { ref } from 'vue';
-import { GoogleIcon } from '@/components/icons/basic';
+import { LogoIcon, GoogleIcon, Button, Input } from '@/components';
 
 const email = ref('');
 const password = ref('');
@@ -86,19 +85,20 @@ const handleGoogleLogin = () => {
   align-items: center;
   max-width: 47.2rem;
   padding: 20px;
-  justify-content: space-between;
   margin: 0 auto;
 }
 
-.slogan {
-  width: 24rem;
-  height: 95px;
-  border: 1px solid white;
+.logo {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  color: white;
+  flex: 1;
+}
+
+.slogan {
+  color: var(--color-neutral-100);
+  margin-top: 16px;
 }
 
 .login-form {
@@ -106,6 +106,7 @@ const handleGoogleLogin = () => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
 }
 
 .links {
@@ -120,7 +121,6 @@ const handleGoogleLogin = () => {
 .link {
   text-decoration: none;
   color: inherit;
-  font-size: 1.2rem;
 }
 
 .divider {
@@ -137,6 +137,9 @@ const handleGoogleLogin = () => {
   flex-direction: column;
   align-items: center;
   color: var(--color-neutral-white);
+  margin-top: auto;
+  flex: 1;
+  justify-content: end;
 }
 
 .sns-text {

@@ -2,7 +2,7 @@
   <button
     :type="props.type || 'button'"
     :disabled="props.disabled"
-    :class="'form-button'"
+    class="form-button body1-bold"
     @click="handleClick"
     :style="props.style"
   >
@@ -43,9 +43,7 @@ button {
   width: 100%;
   height: 56px;
   padding: 16px;
-  font-size: 1.6rem;
   background-color: var(--color-button-primary);
-  font-family: var(--font-bold);
 
   &:active {
     background-color: var(--color-button-surface-pressed);

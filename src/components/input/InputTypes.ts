@@ -6,9 +6,10 @@ export interface IInputType {
   type?: 'text' | 'password';
   placeholder?: string;
   message?: string;
-  state?: 'default' | 'focused' | 'success' | 'filled' | 'error';
+  state?: 'default' | 'success' | 'filled' | 'error' | 'disabled';
   readonly?: boolean;
   style?: CSSProperties | null;
-  success?: (value: string | number) => boolean;
-  error?: (value: string | number) => boolean;
+  maxlength?: string | number;
 }
+
+export type InputState = NonNullable<IInputType['state']>;

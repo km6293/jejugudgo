@@ -7,8 +7,6 @@ import Camera from './Camera.vue';
 import Camera1 from './Camera1.vue';
 import Check1 from './Check1.vue';
 import Check2 from './Check2.vue';
-import CheckActive1 from './CheckActive1.vue';
-import CheckActive2 from './CheckActive2.vue';
 import CheckList1 from './CheckList1.vue';
 import CheckList2 from './CheckList2.vue';
 import Delete from './Delete.vue';
@@ -40,8 +38,6 @@ export {
   Camera1 as Camera1Icon,
   Check1 as Check1Icon,
   Check2 as Check2Icon,
-  CheckActive1 as CheckActive1Icon,
-  CheckActive2 as CheckActive2Icon,
   CheckList1 as CheckList1Icon,
   CheckList2 as CheckList2Icon,
   Delete as DeleteIcon,

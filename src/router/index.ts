@@ -1,32 +1,17 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-import Login from '@/views/Auth/Login.vue';
+import {
+  createRouter,
+  createWebHistory,
+  RouteLocationNormalized,
+  RouteRecordRaw,
+} from 'vue-router';
+import HomeView from '@/views/home/HomeView.vue';
+import Login from '@/views/auth/Login.vue';
 import NotFound from '@/views/NotFound.vue';
 import { getCookie } from '@/utils/cookies';
+import { useSignUpTermsStore } from '@/stores/auth/signUpTerms';
 
-const TabContainer = () => import('@/components/tabBar/TabContainer.vue');
-
-const SignUpTerms = () => import('@/views/Auth/SignUpTerms.vue');
-const SignUpContent = () => import('@/views/Auth/SignUpContent.vue');
-const SignUpID = () => import('@/views/Auth/SignUpID.vue');
-const SignUpPassword = () => import('@/views/Auth/SignUpPassword.vue');
-const SignUpVerification = () => import('@/views/Auth/SignUpVerification.vue');
-const SignUpComplete = () => import('@/views/Auth/SignUpComplete.vue');
-
-const FindIDContent = () => import('@/views/Auth/FindIDContent.vue');
-const FindIDByPhone = () => import('@/views/Auth/FindIDByPhone.vue');
-const FindIDByEmail = () => import('@/views/Auth/FindIDByEmail.vue');
-const FindIDResult = () => import('@/views/Auth/FindIDResult.vue');
-
-const FindPasswordContent = () =>
-  import('@/views/Auth/FindPasswordContent.vue');
-const FindPasswordByPhone = () =>
-  import('@/views/Auth/FindPasswordByPhone.vue');
-const FindPasswordByEmail = () =>
-  import('@/views/Auth/FindPasswordByEmail.vue');
-const FindPasswordReset = () => import('@/views/Auth/FindPasswordReset.vue');
-const FindPasswordComplete = () =>
-  import('@/views/Auth/FindPasswordComplete.vue');
+const loadComponent = (componentPath: string) => () =>
+  import(`@/views/auth/${componentPath}.vue`);
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -50,126 +35,109 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/signup',
-    component: SignUpContent,
+    component: loadComponent('SignUpContent'),
     meta: { hideNavBar: true, homeRoute: 'login', title: '회원가입' },
     redirect: { name: 'signup-terms' },
     children: [
       {
-        path: '/terms',
+        path: 'terms',
         name: 'signup-terms',
-        component: SignUpTerms,
+        component: loadComponent('SignUpTerms'),
+        meta: { progress: 0 },
+      },
+      {
+        path: 'id',
+        name: 'signup-id',
+        component: loadComponent('SignUpID'),
         meta: { progress: 20 },
       },
       {
-        path: '/id',
-        name: 'signup-id',
-        component: SignUpID,
+        path: 'password',
+        name: 'signup-password',
+        component: loadComponent('SignUpPassword'),
         meta: { progress: 40 },
       },
       {
-        path: '/password',
-        name: 'signup-password',
-        component: SignUpPassword,
+        path: 'verification',
+        name: 'signup-verification',
+        component: loadComponent('SignUpVerification'),
         meta: { progress: 60 },
       },
       {
-        path: '/verification',
-        name: 'signup-verification',
-        component: SignUpVerification,
-        meta: { progress: 80 },
-      },
-      {
-        path: '/complete',
+        path: 'complete',
         name: 'signup-complete',
-        component: SignUpComplete,
-        meta: { progress: 100 },
+        component: loadComponent('SignUpComplete'),
+        meta: { progress: 100, appBarBackButton: false },
       },
     ],
   },
   {
     path: '/findid',
-    component: FindIDContent,
-    meta: {
-      hideNavBar: true,
-      homeRoute: 'login',
-      title: '아이디 찾기',
-    },
+    component: loadComponent('FindIDContent'),
+    meta: { hideNavBar: true, homeRoute: 'login', title: '아이디 찾기' },
     children: [
       {
         path: '',
         name: 'tab-id-container',
-        component: TabContainer,
+        component: () => import('@/components/tabBar/TabContainer.vue'),
         children: [
           {
             path: 'phone',
             name: 'find-id-by-phone',
-            component: FindIDByPhone,
-            meta: {
-              tabTitle: '휴대폰 인증',
-            },
+            component: loadComponent('FindIDByPhone'),
+            meta: { tabTitle: '휴대폰 인증' },
           },
           {
             path: 'email',
             name: 'find-id-by-email',
-            component: FindIDByEmail,
-            meta: {
-              tabTitle: '이메일 인증',
-            },
+            component: loadComponent('FindIDByEmail'),
+            meta: { tabTitle: '이메일 인증' },
           },
         ],
       },
       {
         path: 'result',
         name: 'find-id-result',
-        component: FindIDResult,
+        component: loadComponent('FindIDResult'),
       },
     ],
   },
   {
     path: '/findpassword',
-    component: FindPasswordContent,
-    meta: {
-      hideNavBar: true,
-      homeRoute: 'login',
-      title: '비밀번호 찾기',
-    },
+    component: loadComponent('FindPasswordContent'),
+    meta: { hideNavBar: true, homeRoute: 'login', title: '비밀번호 찾기' },
     children: [
       {
         path: '',
         name: 'tab-password-container',
-        component: TabContainer,
+        component: () => import('@/components/tabBar/TabContainer.vue'),
         children: [
           {
             path: 'phone',
             name: 'find-password-by-phone',
-            component: FindPasswordByPhone,
-            meta: {
-              tabTitle: '휴대폰 인증',
-            },
+            component: loadComponent('FindPasswordByPhone'),
+            meta: { tabTitle: '휴대폰 인증' },
           },
           {
             path: 'email',
             name: 'find-password-by-email',
-            component: FindPasswordByEmail,
-            meta: {
-              tabTitle: '이메일 인증',
-            },
+            component: loadComponent('FindPasswordByEmail'),
+            meta: { tabTitle: '이메일 인증' },
           },
         ],
       },
       {
         path: 'reset',
         name: 'find-password-reset',
-        component: FindPasswordReset,
+        component: loadComponent('FindPasswordReset'),
       },
       {
         path: 'complete',
         name: 'find-password-complete',
-        component: FindPasswordComplete,
+        component: loadComponent('FindPasswordComplete'),
       },
     ],
   },
-
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',
@@ -183,12 +151,24 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const termsStore = useSignUpTermsStore();
+
+  const isLeavingParentRoute = (
+    from: RouteLocationNormalized,
+    to: RouteLocationNormalized
+  ) => {
+    const fromParent = from.matched[0];
+    const toParent = to.matched[0];
+    return fromParent && toParent && fromParent.path !== toParent.path;
+  };
+
+  if (isLeavingParentRoute(from, to)) {
+    termsStore.resetTerms();
+  }
+
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isLoggedIn()) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath },
-      });
+      next({ path: '/login', query: { redirect: to.fullPath } });
     } else {
       next();
     }
@@ -198,8 +178,7 @@ router.beforeEach((to, from, next) => {
 });
 
 function isLoggedIn() {
-  const user = getCookie('user');
-  return !!user;
+  return !!getCookie('user');
 }
 
 export default router;

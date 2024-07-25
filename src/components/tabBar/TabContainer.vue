@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import TabBar from '@/components/tabBar/TabBar.vue';
+import { TabBar } from '@/components';
 import { ITabContainerType } from './TabContainerTypes';
 import { RouteRecordRaw, useRoute } from 'vue-router';
 

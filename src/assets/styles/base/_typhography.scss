@@ -1,57 +1,121 @@
-.font-bold-heading-1 {
-  font-size: 3.2rem;
-  line-height: 3.8rem;
-  letter-spacing: -4%;
-}
-.font-bold-heading-2 {
-  font-size: 2.4rem;
-  line-height: 3.4rem;
-  letter-spacing: -4%;
-}
-.font-bold-heading-3 {
-  font-size: 2.1rem;
-  line-height: 3.0rem;
-  letter-spacing: -4%;
+:root {
+  /* Font Families */
+  --font-regular: 'Pretendard-Regular', sans-serif;
+  --font-medium: 'Pretendard-Medium', sans-serif;
+  --font-bold: 'Pretendard-Bold', sans-serif;
+
+  /* Font Sizes */
+  --font-size-heading1: 3.2rem;
+  --font-size-heading2: 2.4rem;
+  --font-size-heading3: 2.1rem;
+  --font-size-subheading: 1.8rem;
+  --font-size-body1: 1.6rem;
+  --font-size-body2: 1.4rem;
+  --font-size-caption: 1.2rem;
+
+  /* Line Heights */
+  --line-height-heading1: 3.8rem;
+  --line-height-heading2: 3.4rem;
+  --line-height-heading3: 3.0rem;
+  --line-height-subheading: 2.7rem;
+  --line-height-body1: 2.4rem;
+  --line-height-body2: 2.0rem;
+  --line-height-caption: 1.8rem;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02rem;
+  --letter-spacing-normal: -0.01rem;
 }
 
-.font-bold-subheading-1 {
-  font-size: 1.8rem;
-  line-height: 2.7rem;
-  letter-spacing: -2%;
+/* Typography Styles */
+.heading1 {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-heading1);
+  line-height: var(--line-height-heading1);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
-.font-bold-body-1 {
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  letter-spacing: -2%;
+.heading2-bold {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-heading2);
+  line-height: var(--line-height-heading2);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
-.font-bold-body-2 {
-  font-size: 1.4rem;
-  line-height: 2.1rem;
-  letter-spacing: -2%;
+.heading3-bold {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-heading3);
+  line-height: var(--line-height-heading3);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
-.font-bold-caption-1 {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
-  letter-spacing: -2%;
+.subheading-bold {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-subheading);
+  line-height: var(--line-height-subheading);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
-.font-regular-body-1 {
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  letter-spacing: -2%;
-}
-.font-regular-body-2 {
-  font-size: 1.4rem;
-  line-height: 2.1rem;
-  letter-spacing: -2%;
+.body1-bold {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-body1);
+  line-height: var(--line-height-body1);
+  letter-spacing: var(--letter-spacing-normal);
 }
 
-.font-regular-caption-1 {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
-  letter-spacing: -2%;
+.body2-bold {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-body2);
+  line-height: var(--line-height-body2);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.caption-bold {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.body1-medium {
+  font-family: var(--font-medium);
+  font-size: var(--font-size-body1);
+  line-height: var(--line-height-body1);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.body2-medium {
+  font-family: var(--font-medium);
+  font-size: var(--font-size-body2);
+  line-height: var(--line-height-body2);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.caption-medium {
+  font-family: var(--font-medium);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.body1-regular {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-body1);
+  line-height: var(--line-height-body1);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.body2-regular {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-body2);
+  line-height: var(--line-height-body2);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.caption-regular {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-normal);
 }
 

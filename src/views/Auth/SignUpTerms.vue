@@ -1,44 +1,56 @@
 <template>
   <div class="terms-container">
-    <span class="terms-text">
+    <div class="terms-text heading3-bold">
       <h1>제주걷고 서비스 약관에</h1>
       <h1>동의해주세요</h1>
-    </span>
-    <span class="terms-check">
-      <label>
-        <input
-          type="checkbox"
-          v-model="allChecked"
-          @change="toggleAll"
-        />
-        <span>모두 동의</span>
+    </div>
+    <div class="terms-check-container">
+      <label
+        @click="() => toggleAllTerms(!allChecked.value)"
+        class="terms-check"
+      >
+        <Check2Icon :active="allChecked" />
+        <span
+          :class="['terms-check-text', { active: allChecked }]"
+          class="body2-medium"
+          >모두 동의</span
+        >
       </label>
-      <span class="divider"></span>
-      <label>
-        <input
-          type="checkbox"
-          v-model="terms.service"
-          @change="checkAllChecked"
-        />
-        <span>[필수] 서비스 이용약관</span>
+      <div class="divider"></div>
+      <label
+        @click="() => toggleTerm('service')"
+        class="terms-check"
+      >
+        <Check1Icon :active="service" />
+        <span
+          :class="['terms-check-text', { active: service }]"
+          class="body2-medium"
+          >[필수] 서비스 이용약관</span
+        >
       </label>
-      <label>
-        <input
-          type="checkbox"
-          v-model="terms.location"
-          @change="checkAllChecked"
-        />
-        <span>[필수] 위치 기반 서비스 이용약관</span>
+      <label
+        @click="() => toggleTerm('location')"
+        class="terms-check"
+      >
+        <Check1Icon :active="location" />
+        <span
+          :class="['terms-check-text', { active: location }]"
+          class="body2-medium"
+          >[필수] 위치 기반 서비스 이용약관</span
+        >
       </label>
-      <label>
-        <input
-          type="checkbox"
-          v-model="terms.marketing"
-          @change="checkAllChecked"
-        />
-        <span>[선택] 마케팅 수신 동의</span>
+      <label
+        @click="() => toggleTerm('marketing')"
+        class="terms-check"
+      >
+        <Check1Icon :active="marketing" />
+        <span
+          :class="['terms-check-text', { active: marketing }]"
+          class="body2-medium"
+          >[선택] 마케팅 수신 동의</span
+        >
       </label>
-    </span>
+    </div>
     <Button
       class="next-button"
       :disabled="!allRequiredChecked"
@@ -48,42 +60,17 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, watch } from 'vue';
-import Button from '@/components/button/Button.vue';
+<script setup>
 import { useRouter } from 'vue-router';
+import { useSignUpTermsStore } from '@/stores/auth/signUpTerms';
+import { Check1Icon, Check2Icon, Button } from '@/components';
+import { storeToRefs } from 'pinia';
 
 const router = useRouter();
-
-const allChecked = ref(false);
-const terms = ref({
-  service: false,
-  location: false,
-  marketing: false,
-});
-
-const allRequiredChecked = ref(false);
-
-watch(
-  () => [terms.value.service, terms.value.location],
-  () => {
-    allRequiredChecked.value = terms.value.service && terms.value.location;
-  },
-  { immediate: true }
-);
-
-const toggleAll = () => {
-  const newValue = !allChecked.value;
-  allChecked.value = newValue;
-  terms.value.service = newValue;
-  terms.value.location = newValue;
-  terms.value.marketing = newValue;
-};
-
-const checkAllChecked = () => {
-  allChecked.value =
-    terms.value.service && terms.value.location && terms.value.marketing;
-};
+const signUpTermsStore = useSignUpTermsStore();
+const { service, location, marketing, allChecked, allRequiredChecked } =
+  storeToRefs(signUpTermsStore);
+const { toggleTerm, toggleAllTerms } = signUpTermsStore;
 
 const nextPage = () => {
   if (allRequiredChecked.value) {
@@ -100,41 +87,31 @@ const nextPage = () => {
   flex-direction: column;
   padding: 20px;
 }
-
 .terms-text {
-  font-family: var(--font-bold);
   color: var(--color-neutral-white);
-  font-size: 2.1rem;
-  line-height: 3rem;
 }
-
 .divider {
   border-top: 1px solid var(--color-neutral-500);
-  display: block;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
-
-.terms-check {
+.terms-check-container {
   margin-top: 20px;
 }
-
-label {
-  display: block;
-  margin-bottom: 10px;
+.terms-check {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 4px;
+}
+.terms-check-text {
   color: var(--color-neutral-500);
 }
-
-input[type='checkbox'] {
-  margin-right: 10px;
-}
-
-input[type='checkbox']:checked + span {
+.terms-check-text.active {
   color: var(--color-neutral-100);
 }
-
 .next-button {
   margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
+  align-self: center;
 }
 </style>

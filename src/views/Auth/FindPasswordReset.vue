@@ -25,8 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/button/Button.vue';
-import Input from '@/components/input/Input.vue';
+import { Button, Input } from '@/components';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

@@ -14,17 +14,8 @@
   </div>
 </template>
 
-<script>
-import AppBar from '@/components/AppBar.vue';
-import NavBar from '@/components/NavBar.vue';
-
-export default {
-  name: 'App',
-  components: {
-    AppBar,
-    NavBar,
-  },
-};
+<script setup>
+import { NavBar, AppBar } from '@/components';
 </script>
 
 <style lang="scss">
@@ -33,7 +24,6 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: var(--color-background);
-  font-family: var(--font-regular);
 }
 
 .content {
