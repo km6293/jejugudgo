@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import KakaoMap from '@/components/KakaoMap.vue';
+import { KakaoMap } from '@/components';
 </script>
 
 <style scoped>
