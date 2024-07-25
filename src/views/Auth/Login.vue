@@ -1,8 +1,8 @@
 <template>
   <div class="login-container">
     <div class="logo">
-      <img :src="logoImage" />
-      <div class="slogan">걸음으로 만들어나가는 당신만의 이야기</div>
+      <LogoIcon />
+      <div class="slogan body2-bold">걸음으로 만들어나가는 당신만의 이야기</div>
     </div>
     <form
       class="login-form"
@@ -42,7 +42,7 @@
       </div>
     </form>
     <div class="sns-login">
-      <p class="sns-text">SNS 계정으로 3초만에 시작하기</p>
+      <p class="sns-text body2-regular">SNS 계정으로 3초만에 시작하기</p>
       <Button
         @click="handleGoogleLogin"
         :icon="GoogleIcon"
@@ -56,14 +56,11 @@
 </template>
 
 <script setup lang="ts">
-import Input from '@/components/input/Input.vue';
-import Button from '@/components/button/Button.vue';
 import { ref } from 'vue';
-import { GoogleIcon } from '@/components/icons/basic';
+import { LogoIcon, GoogleIcon, Button, Input } from '@/components';
 
 const email = ref('');
 const password = ref('');
-const logoImage = new URL('@/assets/logo.png', import.meta.url).href;
 
 const handleLogin = () => {
   if (!email.value || !password.value) {
@@ -101,8 +98,6 @@ const handleGoogleLogin = () => {
 
 .slogan {
   color: var(--color-neutral-100);
-  font-size: 1.4rem;
-  font-family: var(--font-bold);
   margin-top: 16px;
 }
 
@@ -126,7 +121,6 @@ const handleGoogleLogin = () => {
 .link {
   text-decoration: none;
   color: inherit;
-  font-size: 1.2rem;
 }
 
 .divider {

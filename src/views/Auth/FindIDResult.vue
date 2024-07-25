@@ -24,9 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/button/Button.vue';
+import { Button, RadioButton } from '@/components';
 import { useRouter } from 'vue-router';
-import RadioButton from '@/components/RadioButton.vue';
 import { ref } from 'vue';
 
 const router = useRouter();

@@ -29,8 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/button/Button.vue';
-import Input from '@/components/input/Input.vue';
+import { Button, Input } from '@/components';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -42,12 +41,10 @@ const nextPage = () => {
 
 <style scoped>
 .find-password-container {
-  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .find-input {
@@ -56,17 +53,8 @@ const nextPage = () => {
   gap: 16px;
 }
 
-.password-text {
-  font-family: var(--font-bold);
-  color: var(--color-neutral-white);
-  font-size: 2.1rem;
-  line-height: 3rem;
-  margin-bottom: 20px;
-}
-
 .next-button {
   margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
+  align-self: center;
 }
 </style>
