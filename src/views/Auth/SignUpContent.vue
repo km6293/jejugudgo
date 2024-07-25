@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <ProgressBar
-      :progress="progress"
+      :progress="state.progress"
       class="progress"
     />
     <router-view class="router-container" />
@@ -9,15 +9,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { reactive, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import ProgressBar from '@/components/ProgressBar.vue';
+import { ProgressBar } from '@/components';
 
 const router = useRouter();
-const progress = ref<number>(0);
+const state = reactive({
+  progress: 0,
+});
+
+const animateProgress = (start: number, end: number, duration: number) => {
+  const startTime = performance.now();
+
+  const animate = (currentTime: number) => {
+    const elapsedTime = currentTime - startTime;
+    const progress = Math.min(elapsedTime / duration, 1);
+    state.progress = start + (end - start) * progress;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  };
+
+  requestAnimationFrame(animate);
+};
 
 const updateProgress = () => {
-  progress.value = (router.currentRoute.value.meta.progress as number) || 0;
+  const targetProgress =
+    (router.currentRoute.value.meta.progress as number) || 0;
+  animateProgress(state.progress, targetProgress + 20, 100);
 };
 
 watch(router.currentRoute, updateProgress, { immediate: true });
@@ -25,7 +45,6 @@ watch(router.currentRoute, updateProgress, { immediate: true });
 
 <style scoped>
 .home-container {
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -37,6 +56,6 @@ watch(router.currentRoute, updateProgress, { immediate: true });
 
 .router-container {
   max-width: 47.2rem;
-  margin: 0 auto;
+  align-self: center;
 }
 </style>

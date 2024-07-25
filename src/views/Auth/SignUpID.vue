@@ -1,6 +1,6 @@
 <template>
   <div class="signup-id-container">
-    <span class="id-text">
+    <span class="id-text heading3-bold">
       <h1>로그인에 사용할</h1>
       <h1>아이디를 입력해주세요</h1>
     </span>
@@ -20,14 +20,15 @@
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/button/Button.vue';
-import Input from '@/components/input/Input.vue';
-import { validateEmail } from '@/utils/emailValidators';
+import { Button, Input } from '@/components';
+import { validateEmail } from '@/utils';
 import { watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { useSignupState } from '@/composables/useSignupState';
+import { useSignUpIDStore } from '@/stores/auth';
+import { storeToRefs } from 'pinia';
 
-const { email, inputState, inputMessage } = useSignupState();
+const signUpIDStore = useSignUpIDStore();
+const { email, inputState, inputMessage } = storeToRefs(signUpIDStore);
 
 const router = useRouter();
 
@@ -38,6 +39,7 @@ watch(email, (newEmail) => {
   } else if (validateEmail(newEmail)) {
     inputState.value = 'success';
     inputMessage.value = '';
+    email.value = newEmail;
   } else {
     inputState.value = 'error';
     inputMessage.value = '이메일 형식이 올바르지 않습니다.';
@@ -61,16 +63,12 @@ const nextPage = () => {
 }
 
 .id-text {
-  font-family: var(--font-bold);
   color: var(--color-neutral-white);
-  font-size: 2.1rem;
-  line-height: 3rem;
   margin-bottom: 20px;
 }
 
 .next-button {
   margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
+  align-self: center;
 }
 </style>

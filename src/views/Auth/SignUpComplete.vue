@@ -5,8 +5,11 @@
       <h1>이제 제주도를 걸어보러 가실까요?</h1>
     </span>
 
+    <div class="icon-wrapper">
+      <SignUpIcon class="signup-icon" />
+    </div>
+
     <Button
-      class="next-button"
       @click="nextPage"
       text="다음"
     />
@@ -14,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/button/Button.vue';
+import { Button, SignUpIcon } from '@/components';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -30,20 +33,21 @@ const nextPage = () => {
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
 }
 
 .complete-text {
+  text-align: left;
   font-family: var(--font-bold);
   color: var(--color-neutral-white);
   font-size: 2.1rem;
   line-height: 3rem;
-  margin-bottom: 20px;
 }
 
-.next-button {
-  margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 </style>
