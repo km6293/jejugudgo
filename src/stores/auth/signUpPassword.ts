@@ -1,9 +1,17 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { reactive, toRefs } from 'vue';
 
 export const useSignUpPasswordStore = defineStore('signUpPassword', () => {
-  const password = ref('');
-  const confirmPassword = ref('');
+  const initialState = {
+    password: '',
+    confirmPassword: '',
+  };
 
-  return { password, confirmPassword };
+  const state = reactive({ ...initialState });
+
+  const $reset = () => {
+    Object.assign(state, initialState);
+  };
+
+  return { ...toRefs(state), $reset };
 });

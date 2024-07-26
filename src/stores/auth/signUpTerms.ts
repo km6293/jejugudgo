@@ -1,46 +1,40 @@
-import { ref, computed } from 'vue';
+import { computed, reactive, toRefs } from 'vue';
 import { defineStore } from 'pinia';
 
 export const useSignUpTermsStore = defineStore('signUpTerms', () => {
-  const service = ref(false);
-  const location = ref(false);
-  const marketing = ref(false);
+  const initialState = {
+    service: false,
+    location: false,
+    marketing: false,
+  };
+
+  const state = reactive({ ...initialState });
 
   const allChecked = computed(
-    () => service.value && location.value && marketing.value
+    () => state.service && state.location && state.marketing
   );
-  const allRequiredChecked = computed(() => service.value && location.value);
+  const allRequiredChecked = computed(() => state.service && state.location);
 
   const toggleTerm = (term: 'service' | 'location' | 'marketing') => {
-    if (term === 'service') {
-      service.value = !service.value;
-    } else if (term === 'location') {
-      location.value = !location.value;
-    } else if (term === 'marketing') {
-      marketing.value = !marketing.value;
-    }
+    state[term] = !state[term];
   };
 
   const toggleAllTerms = (value: boolean) => {
-    service.value = value;
-    location.value = value;
-    marketing.value = value;
+    state.service = value;
+    state.location = value;
+    state.marketing = value;
   };
 
-  const resetTerms = () => {
-    service.value = false;
-    location.value = false;
-    marketing.value = false;
+  const $reset = () => {
+    Object.assign(state, initialState);
   };
 
   return {
-    service,
-    location,
-    marketing,
+    ...toRefs(state),
+    $reset,
     allChecked,
     allRequiredChecked,
     toggleTerm,
     toggleAllTerms,
-    resetTerms,
   };
 });

@@ -79,13 +79,14 @@ const {
   code,
   codeState,
   codeMessege,
+  cleanPhoneNumber,
 } = storeToRefs(signUpVerificationStore);
 
 const signUpIDStore = useSignUpIDStore();
-const { email } = signUpIDStore;
+const { email } = storeToRefs(signUpIDStore);
 
 const signUpPasswordStore = useSignUpPasswordStore();
-const { password } = signUpPasswordStore;
+const { password } = storeToRefs(signUpPasswordStore);
 
 const state = reactive({
   verificationStart: false,
@@ -97,14 +98,14 @@ const sendCode = async () => {
     return;
   }
   nameState.value = 'default';
-  if (!validatePhoneNumber(signUpVerificationStore.cleanPhoneNumber)) {
+  if (!validatePhoneNumber(cleanPhoneNumber.value)) {
     phoneNumberState.value = 'error';
     return;
   }
   phoneNumberState.value = 'default';
 
   state.verificationStart = true;
-  await sendSms(name.value, signUpVerificationStore.cleanPhoneNumber);
+  await sendSms(name.value, cleanPhoneNumber.value);
 };
 
 const handleTimeout = () => {
@@ -113,32 +114,16 @@ const handleTimeout = () => {
 
 const nextPage = async () => {
   try {
-    const smsCheckResponse = await checkSms(
+    await checkSms(name.value, cleanPhoneNumber.value, code.value);
+    await signUp(
+      email.value,
+      password.value,
       name.value,
-      signUpVerificationStore.cleanPhoneNumber,
-      code.value
+      cleanPhoneNumber.value
     );
-    console.log('SMS verification successful:', smsCheckResponse);
-
-    try {
-      const signUpResponse = await signUp(
-        email,
-        password,
-        name.value,
-        signUpVerificationStore.cleanPhoneNumber
-      );
-      console.log('Sign-up successful:', signUpResponse);
-
-      router.push({ name: 'signup-complete' });
-    } catch (error) {
-      console.error('Sign-up failed:', error);
-    }
-  } catch (error: unknown) {
-    console.log(error);
-    const smsError = error as {
-      originalError: unknown;
-      errorCode: string | null;
-    };
+    router.push({ name: 'signup-complete' });
+  } catch (error) {
+    const smsError = error as { errorCode: string | null };
     if (smsError.errorCode === 'AUTH_03') {
       codeState.value = 'error';
       codeMessege.value = '인증번호가 틀렸습니다.';

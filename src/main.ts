@@ -9,4 +9,5 @@ if (process.env.NODE_ENV === 'development') {
   require('@/mocks/_mockSetup');
 }
 
-createApp(App).use(createPinia()).use(router).mount('#app');
+const pinia = createPinia();
+createApp(App).use(pinia).use(router).mount('#app');
