@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="to"
-    class="nav-item"
+    class="nav-item caption-regular"
     :class="{ active: isActive }"
   >
     <div class="nav-icon">
