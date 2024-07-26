@@ -27,6 +27,8 @@ import Return from './Return.vue';
 import Setting from './Setting.vue';
 import Temperature from './Temperature.vue';
 import Time from './Time.vue';
+import RadioChecked from './RadioChecked.vue';
+import RadioNotChecked from './RadioNotChecked.vue';
 
 export {
   Add as AddIcon,
@@ -58,4 +60,6 @@ export {
   Setting as SettingIcon,
   Temperature as TemperatureIcon,
   Time as TimeIcon,
+  RadioChecked as RadioCheckedIcon,
+  RadioNotChecked as RadioNotCheckedIcon,
 };

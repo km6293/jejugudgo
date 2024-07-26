@@ -9,49 +9,58 @@
       <input
         type="radio"
         :id="option.value"
-        :name="name"
         :value="option.value"
         :checked="modelValue === option.value"
         @change="updateValue(option.value)"
+        class="hidden-radio"
       />
-      <label :for="option.value">{{ option.label }}</label>
+      <label
+        class="body1-regular radio-label"
+        :for="option.value"
+      >
+        <span class="icon">
+          <component
+            :is="
+              modelValue === option.value
+                ? RadioCheckedIcon
+                : RadioNotCheckedIcon
+            "
+          />
+        </span>
+        {{ option.label }}
+      </label>
       <span
         v-if="option.description"
-        class="description"
-        >{{ option.description }}</span
+        class="description caption-regular"
       >
+        {{ option.description }}
+      </span>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script lang="ts" setup>
+import { PropType, defineEmits, defineProps } from 'vue';
+import { RadioCheckedIcon, RadioNotCheckedIcon } from '@/components';
 
-export default defineComponent({
-  name: 'RadioButton',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    options: {
-      type: Array as PropType<
-        Array<{ label: string; value: string; description?: string }>
-      >,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  methods: {
-    updateValue(value: string) {
-      this.$emit('update:modelValue', value);
-    },
+  options: {
+    type: Array as PropType<
+      Array<{ label: string; value: string; description?: string }>
+    >,
+    required: true,
   },
 });
+
+const emit = defineEmits(['update:modelValue']);
+
+const updateValue = (value: string) => {
+  emit('update:modelValue', value);
+};
 </script>
 
 <style scoped lang="scss">
@@ -64,23 +73,30 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 1.2rem;
 
   &.last-option {
     margin-bottom: 0;
   }
 }
 
-.radio-option input[type='radio'] {
-  margin-right: 1.2rem;
+.hidden-radio {
+  display: none;
 }
 
-.radio-option input[type='radio']:checked {
-  accent-color: var(--color-primary-300);
-}
-
-.radio-option label {
+.radio-label {
   flex-grow: 1;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--color-neutral-white);
+}
+
+.radio-label .icon {
+  height: 48px;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .radio-option .description {

@@ -8,7 +8,6 @@
       <RadioButton
         v-model="selectedOption"
         :options="radioOptions"
-        name="exampleRadioGroup"
       />
     </div>
     <div class="find-password">
