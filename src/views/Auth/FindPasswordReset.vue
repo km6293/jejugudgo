@@ -104,7 +104,7 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { Check1Icon, Input, Button } from '@/components';
-import { useFindPasswordStore } from '@/stores/auth/findPasswordReset';
+import { useFindPasswordStore } from '@/stores/auth';
 import {
   hasUppercase,
   hasNumber,

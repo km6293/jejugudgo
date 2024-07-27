@@ -16,29 +16,36 @@
         v-model="password"
         placeholder="비밀번호"
         type="password"
+        :message="message"
+        :state="loginState"
       />
       <Button
         type="submit"
         text="로그인"
+        :disabled="isLocked"
       />
+
       <div class="links">
         <router-link
           to="/signup"
           class="link"
-          >회원가입</router-link
         >
+          회원가입
+        </router-link>
         <span class="divider"></span>
         <router-link
           to="/findid/phone"
           class="link"
-          >아이디 찾기</router-link
         >
+          아이디 찾기
+        </router-link>
         <span class="divider"></span>
         <router-link
           to="/findpassword/phone"
           class="link"
-          >비밀번호 찾기</router-link
         >
+          비밀번호 찾기
+        </router-link>
       </div>
     </form>
     <div class="sns-login">
@@ -58,22 +65,34 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { LogoIcon, GoogleIcon, Button, Input } from '@/components';
+import { login } from '@/apis/userFeature';
+import { storeToRefs } from 'pinia';
+import { useLoginStore } from '@/stores/auth';
 
-const email = ref('');
-const password = ref('');
+const loginStore = useLoginStore();
+const { email, password, message, loginFailCount, loginState, isLocked } =
+  storeToRefs(loginStore);
 
-const handleLogin = () => {
+const handleLogin = async () => {
   if (!email.value || !password.value) {
-    // errorMessage.value = '이메일과 비밀번호를 모두 입력해주세요.';
+    message.value = '이메일과 비밀번호를 모두 입력해주세요.';
+    loginState.value = 'error';
     return;
   }
 
-  // TODO: 로그인 실패시 문구 추가
-  alert(`이메일: ${email.value}\n비밀번호: ${password.value}`);
+  await login(email.value, password.value)
+    .then(() => {
+      loginFailCount.value = 0;
+    })
+    .catch(() => {
+      loginFailCount.value += 1;
+      loginState.value = 'error';
+      message.value = `비밀번호 입력 5회 실패 시, 10분 간 입력이 제한됩니다. (${loginFailCount.value}/5)`;
+    });
 };
 
 const handleGoogleLogin = () => {
-  window.location.href = 'http://localhost:8080/api/v1/oauth/authorize/google';
+  window.location.href = `${process.env.VUE_APP_BASE_API}/api/v1/oauth/authorize/google`;
 };
 </script>
 
