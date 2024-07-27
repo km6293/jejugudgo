@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'CourseDisabled',
+  name: 'RecommendedCourseDisabled',
 };
 </script>
 
