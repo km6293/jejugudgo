@@ -1,15 +1,22 @@
 import { defineStore } from 'pinia';
 import { InputState } from '@/components/input/InputTypes';
-import { ref } from 'vue';
+import { reactive, toRefs } from 'vue';
 
 export const useSignUpIDStore = defineStore('signUpID', () => {
-  const email = ref('');
-  const inputState = ref<InputState>('default');
-  const inputMessage = ref('');
+  const initialState = {
+    email: '',
+    inputState: 'default' as InputState,
+    inputMessage: '',
+  };
+
+  const state = reactive({ ...initialState });
+
+  const $reset = () => {
+    Object.assign(state, initialState);
+  };
 
   return {
-    email,
-    inputState,
-    inputMessage,
+    ...toRefs(state),
+    $reset,
   };
 });

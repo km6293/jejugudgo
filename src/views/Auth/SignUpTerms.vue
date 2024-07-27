@@ -6,7 +6,7 @@
     </div>
     <div class="terms-check-container">
       <label
-        @click="() => toggleAllTerms(!allChecked.value)"
+        @click="() => toggleAllTerms(!allChecked)"
         class="terms-check"
       >
         <Check2Icon :active="allChecked" />
@@ -73,7 +73,7 @@ const { service, location, marketing, allChecked, allRequiredChecked } =
 const { toggleTerm, toggleAllTerms } = signUpTermsStore;
 
 const nextPage = () => {
-  if (allRequiredChecked.value) {
+  if (allRequiredChecked) {
     router.push({ name: 'signup-id' });
   }
 };

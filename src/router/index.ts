@@ -8,18 +8,18 @@ import HomeView from '@/views/home/HomeView.vue';
 import Login from '@/views/auth/Login.vue';
 import NotFound from '@/views/NotFound.vue';
 import { getCookie } from '@/utils/cookies';
-import { useSignUpTermsStore } from '@/stores/auth/signUpTerms';
+import {
+  useSignUpTermsStore,
+  useSignUpIDStore,
+  useSignUpPasswordStore,
+  useSignUpVerificationStore,
+} from '@/stores/auth';
 
 const loadComponent = (componentPath: string) => () =>
   import(`@/views/auth/${componentPath}.vue`);
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView,
-    meta: { hideAppBar: true },
-  },
+  { path: '/', name: 'home', component: HomeView, meta: { hideAppBar: true } },
   {
     path: '/about',
     name: 'about',
@@ -138,11 +138,7 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-  {
-    path: '/:catchAll(.*)',
-    name: 'NotFound',
-    component: NotFound,
-  },
+  { path: '/:catchAll(.*)', name: 'NotFound', component: NotFound },
 ];
 
 const router = createRouter({
@@ -150,20 +146,38 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+const isLeavingParentRoute = (
+  from: RouteLocationNormalized,
+  to: RouteLocationNormalized,
+  path: string
+) => {
+  const fromParent = from.matched[0];
+  const toParent = to.matched[0];
+  return (
+    fromParent &&
+    toParent &&
+    fromParent.path !== toParent.path &&
+    fromParent.path === path
+  );
+};
+
+router.beforeEach(async (to, from, next) => {
   const termsStore = useSignUpTermsStore();
+  const idStore = useSignUpIDStore();
+  const passwordStore = useSignUpPasswordStore();
+  const verificationStore = useSignUpVerificationStore();
 
-  const isLeavingParentRoute = (
-    from: RouteLocationNormalized,
-    to: RouteLocationNormalized
-  ) => {
-    const fromParent = from.matched[0];
-    const toParent = to.matched[0];
-    return fromParent && toParent && fromParent.path !== toParent.path;
-  };
-
-  if (isLeavingParentRoute(from, to)) {
-    termsStore.resetTerms();
+  if (isLeavingParentRoute(from, to, '/signup')) {
+    try {
+      await Promise.all([
+        termsStore.$reset(),
+        idStore.$reset(),
+        passwordStore.$reset(),
+        verificationStore.$reset(),
+      ]);
+    } catch (error) {
+      console.error('Error resetting stores:', error);
+    }
   }
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {

@@ -1,29 +1,33 @@
-import { computed, ref } from 'vue';
+import { computed, reactive, toRefs } from 'vue';
 import { defineStore } from 'pinia';
 import { InputState } from '@/components/input/InputTypes';
 
 export const useSignUpVerificationStore = defineStore(
   'signUpVerification',
   () => {
-    const name = ref('');
-    const nameState = ref<InputState>('default');
-    const phoneNumber = ref('');
-    const phoneNumberState = ref<InputState>('default');
-    const code = ref('');
-    const codeState = ref<InputState>('default');
-    const codeMessege = ref('');
+    const initialState = {
+      name: '',
+      nameState: 'default' as InputState,
+      phoneNumber: '',
+      phoneNumberState: 'default' as InputState,
+      code: '',
+      codeState: 'default' as InputState,
+      codeMessege: '',
+    };
+
+    const state = reactive({ ...initialState });
+
+    const $reset = () => {
+      Object.assign(state, initialState);
+    };
+
     const cleanPhoneNumber = computed(() =>
-      phoneNumber.value.replace(/-/g, '')
+      state.phoneNumber.replace(/-/g, '')
     );
 
     return {
-      name,
-      nameState,
-      phoneNumber,
-      phoneNumberState,
-      code,
-      codeState,
-      codeMessege,
+      ...toRefs(state),
+      $reset,
       cleanPhoneNumber,
     };
   }
