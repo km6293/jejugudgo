@@ -8,6 +8,11 @@ import {
   passwordsMatch,
 } from './passwordValidators';
 import { validatePhoneNumber } from './phoneValidators';
+import {
+  saveToLocalStorage,
+  getFromLocalStorage,
+  removeFromLocalStorage,
+} from './localStorageHelper';
 
 export {
   autoHyphen,
@@ -18,4 +23,7 @@ export {
   isValidLength,
   passwordsMatch,
   validatePhoneNumber,
+  saveToLocalStorage,
+  getFromLocalStorage,
+  removeFromLocalStorage,
 };

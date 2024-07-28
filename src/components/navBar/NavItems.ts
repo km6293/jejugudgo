@@ -7,8 +7,8 @@ import {
   MyWalkGoDisabledIcon,
   WalkTogetherActiveIcon,
   WalkTogetherDisabledIcon,
-  CourseActiveIcon,
-  CourseDisabledIcon,
+  RecommendedCourseActiveIcon,
+  RecommendedCourseDisabledIcon,
 } from '@/components';
 
 export interface NavItem {
@@ -26,10 +26,10 @@ export const navItems: NavItem[] = [
     iconInactive: HomeDisabledIcon,
   },
   {
-    to: '/course',
-    label: '코스',
-    iconActive: CourseActiveIcon,
-    iconInactive: CourseDisabledIcon,
+    to: '/recommended-course',
+    label: '추천코스',
+    iconActive: RecommendedCourseActiveIcon,
+    iconInactive: RecommendedCourseDisabledIcon,
   },
   {
     to: '/about',
