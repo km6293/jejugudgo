@@ -18,10 +18,13 @@ import { ITabContainerType } from './TabContainerTypes';
 import { RouteRecordRaw, useRoute } from 'vue-router';
 
 const route = useRoute();
-
 const tabs: ITabContainerType[] = [];
+
 const matchedRoute = route.matched.find(
-  (r) => r.name === 'tab-id-container' || r.name === 'tab-password-container'
+  (r) =>
+    r.name === 'tab-id-container' ||
+    r.name === 'tab-password-container' ||
+    r.name === 'tab-home-container'
 ) as RouteRecordRaw | undefined;
 
 if (matchedRoute && matchedRoute.children) {
