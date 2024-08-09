@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
-import { instance } from '@/apis';
+import axiosInstance from '@/apis';
 
-const mock = new MockAdapter(instance);
+const mock = new MockAdapter(axiosInstance);
 export default mock;
