@@ -13,6 +13,7 @@ import RadioButton from './RadioButton.vue';
 import ResentTimer from './ResentTimer.vue';
 import Timer from './Timer.vue';
 import Carousel from './Carousel.vue';
+import Notification from './Notification.vue';
 
 import Button from './button/Button.vue';
 import Input from './input/Input.vue';
@@ -25,6 +26,7 @@ export {
   ProgressBar,
   RadioButton,
   ResentTimer,
+  Notification,
   Timer,
   Carousel,
   Button,
