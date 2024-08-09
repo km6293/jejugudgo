@@ -4,7 +4,6 @@ import {
   RouteLocationNormalized,
   RouteRecordRaw,
 } from 'vue-router';
-import HomeView from '@/views/home/HomeView.vue';
 import Login from '@/views/auth/Login.vue';
 import NotFound from '@/views/NotFound.vue';
 import { getCookie } from '@/utils/cookies';
@@ -16,10 +15,42 @@ import {
 } from '@/stores/auth';
 
 const loadComponent = (componentPath: string) => () =>
-  import(`@/views/auth/${componentPath}.vue`);
+  import(`@/views/${componentPath}.vue`);
 
 const routes: Array<RouteRecordRaw> = [
-  { path: '/', name: 'home', component: HomeView, meta: { hideAppBar: true } },
+  {
+    path: '/home',
+    name: 'home',
+    component: loadComponent('home/HomeContent'),
+    meta: { hideAppBar: true },
+    children: [
+      {
+        path: '',
+        name: 'tab-home-container',
+        component: () => import('@/components/tabBar/TabContainer.vue'),
+        children: [
+          {
+            path: 'course',
+            name: 'home-course',
+            component: loadComponent('home/HomeCourse'),
+            meta: { tabTitle: '코스' },
+          },
+          {
+            path: 'trail',
+            name: 'home-trail',
+            component: loadComponent('home/HomeTrail'),
+            meta: { tabTitle: '산책로' },
+          },
+          {
+            path: 'jeju-tales',
+            name: 'home-jeju-tales',
+            component: loadComponent('home/HomeJejuTales'),
+            meta: { tabTitle: '제주 이야기' },
+          },
+        ],
+      },
+    ],
+  },
   {
     path: '/about',
     name: 'about',
@@ -35,45 +66,45 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/signup',
-    component: loadComponent('SignUpContent'),
+    component: loadComponent('auth/SignUpContent'),
     meta: { hideNavBar: true, homeRoute: 'login', title: '회원가입' },
     redirect: { name: 'signup-terms' },
     children: [
       {
         path: 'terms',
         name: 'signup-terms',
-        component: loadComponent('SignUpTerms'),
+        component: loadComponent('auth/SignUpTerms'),
         meta: { progress: 0 },
       },
       {
         path: 'id',
         name: 'signup-id',
-        component: loadComponent('SignUpID'),
+        component: loadComponent('auth/SignUpID'),
         meta: { progress: 20 },
       },
       {
         path: 'password',
         name: 'signup-password',
-        component: loadComponent('SignUpPassword'),
+        component: loadComponent('auth/SignUpPassword'),
         meta: { progress: 40 },
       },
       {
         path: 'verification',
         name: 'signup-verification',
-        component: loadComponent('SignUpVerification'),
+        component: loadComponent('auth/SignUpVerification'),
         meta: { progress: 60 },
       },
       {
         path: 'complete',
         name: 'signup-complete',
-        component: loadComponent('SignUpComplete'),
+        component: loadComponent('auth/SignUpComplete'),
         meta: { progress: 100, appBarBackButton: false },
       },
     ],
   },
   {
     path: '/findid',
-    component: loadComponent('FindIDContent'),
+    component: loadComponent('auth/FindIDContent'),
     meta: { hideNavBar: true, homeRoute: 'login', title: '아이디 찾기' },
     children: [
       {
@@ -84,13 +115,13 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: 'phone',
             name: 'find-id-by-phone',
-            component: loadComponent('FindIDByPhone'),
+            component: loadComponent('auth/FindIDByPhone'),
             meta: { tabTitle: '휴대폰 인증' },
           },
           {
             path: 'email',
             name: 'find-id-by-email',
-            component: loadComponent('FindIDByEmail'),
+            component: loadComponent('auth/FindIDByEmail'),
             meta: { tabTitle: '이메일 인증' },
           },
         ],
@@ -98,13 +129,13 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'result',
         name: 'find-id-result',
-        component: loadComponent('FindIDResult'),
+        component: loadComponent('auth/FindIDResult'),
       },
     ],
   },
   {
     path: '/findpassword',
-    component: loadComponent('FindPasswordContent'),
+    component: loadComponent('auth/FindPasswordContent'),
     meta: { hideNavBar: true, homeRoute: 'login', title: '비밀번호 찾기' },
     children: [
       {
@@ -115,13 +146,13 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: 'phone',
             name: 'find-password-by-phone',
-            component: loadComponent('FindPasswordByPhone'),
+            component: loadComponent('auth/FindPasswordByPhone'),
             meta: { tabTitle: '휴대폰 인증' },
           },
           {
             path: 'email',
             name: 'find-password-by-email',
-            component: loadComponent('FindPasswordByEmail'),
+            component: loadComponent('auth/FindPasswordByEmail'),
             meta: { tabTitle: '이메일 인증' },
           },
         ],
@@ -129,12 +160,12 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'reset',
         name: 'find-password-reset',
-        component: loadComponent('FindPasswordReset'),
+        component: loadComponent('auth/FindPasswordReset'),
       },
       {
         path: 'complete',
         name: 'find-password-complete',
-        component: loadComponent('FindPasswordComplete'),
+        component: loadComponent('auth/FindPasswordComplete'),
       },
     ],
   },

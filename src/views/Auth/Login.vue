@@ -55,7 +55,16 @@
         :icon="GoogleIcon"
         text="Google 계정으로 로그인"
         :style="{
-          background: 'var(--color-greyscale-600)',
+          background: 'var(--color-neutral-700)',
+          color: 'var(--color-neutral-100)',
+        }"
+      />
+      <Button
+        @click="handleGoogleLogin"
+        :icon="KakaoIcon"
+        text="카카오 로그인"
+        :style="{
+          background: '#FEE500',
         }"
       />
     </div>
@@ -64,31 +73,43 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LogoIcon, GoogleIcon, Button, Input } from '@/components';
+import { LogoIcon, GoogleIcon, Button, Input, KakaoIcon } from '@/components';
 import { login } from '@/apis/userFeature';
 import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/stores/auth';
+import router from '@/router';
+import { ILoginRequest } from '@/types/api';
 
 const loginStore = useLoginStore();
 const { email, password, message, loginFailCount, loginState, isLocked } =
   storeToRefs(loginStore);
 
 const handleLogin = async () => {
+  const data: ILoginRequest = {
+    email: email.value,
+    password: password.value,
+  };
+
   if (!email.value || !password.value) {
     message.value = '이메일과 비밀번호를 모두 입력해주세요.';
     loginState.value = 'error';
     return;
   }
 
-  await login(email.value, password.value)
-    .then(() => {
-      loginFailCount.value = 0;
-    })
-    .catch(() => {
-      loginFailCount.value += 1;
-      loginState.value = 'error';
-      message.value = `비밀번호 입력 5회 실패 시, 10분 간 입력이 제한됩니다. (${loginFailCount.value}/5)`;
-    });
+  const status = await login(data);
+
+  if (status === 'AUTH_01' || status === 'AUTH_02') {
+    loginFailCount.value += 1;
+    loginState.value = 'error';
+    message.value = `로그인 5회 실패 시, 10분 간 입력이 제한됩니다. (${loginFailCount.value}/5)`;
+  }
+
+  if (status === '200') {
+    loginFailCount.value = 0;
+    loginState.value = 'default';
+    message.value = '';
+    await router.push({ path: '/home' });
+  }
 };
 
 const handleGoogleLogin = () => {
