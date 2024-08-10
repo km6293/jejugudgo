@@ -17,7 +17,14 @@
 
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
-import { defineProps, ref, watch, nextTick } from 'vue';
+import {
+  defineProps,
+  ref,
+  watch,
+  nextTick,
+  onMounted,
+  onBeforeUnmount,
+} from 'vue';
 import { ITabBarType } from './TabBarTypes';
 
 const props = defineProps<ITabBarType>();
@@ -54,7 +61,14 @@ watch(
   { immediate: true }
 );
 
-updateUnderlineStyle();
+onMounted(() => {
+  window.addEventListener('resize', updateUnderlineStyle);
+  updateUnderlineStyle();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateUnderlineStyle);
+});
 </script>
 
 <style scoped>
@@ -66,7 +80,6 @@ updateUnderlineStyle();
 
 button {
   flex: 1;
-  padding: 10px 20px;
   cursor: pointer;
   border: none;
   background-color: var(--color-background);

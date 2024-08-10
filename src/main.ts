@@ -5,9 +5,11 @@ import '@/registerServiceWorker';
 import router from '@/router';
 import '@/assets/styles/style.scss';
 
-if (process.env.NODE_ENV === 'development') {
-  require('@/mocks/_mockSetup');
-}
+// if (process.env.NODE_ENV === 'development') {
+//   require('@/mocks/_mockSetup');
+// }
+
+const app = createApp(App);
 
 const pinia = createPinia();
-createApp(App).use(pinia).use(router).mount('#app');
+app.use(pinia).use(router).mount('#app');

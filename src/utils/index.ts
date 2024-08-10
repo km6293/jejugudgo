@@ -1,5 +1,13 @@
 import { autoHyphen } from './autoHyphen';
+import { getCookie, setCookie, deleteCookie } from './cookies';
 import { validateEmail } from './emailValidators';
+import { errorMessages } from './errorMessages';
+import { hasError } from './hasError';
+import {
+  saveToLocalStorage,
+  getFromLocalStorage,
+  removeFromLocalStorage,
+} from './localStorageHelper';
 import {
   hasUppercase,
   hasNumber,
@@ -8,11 +16,6 @@ import {
   passwordsMatch,
 } from './passwordValidators';
 import { validatePhoneNumber } from './phoneValidators';
-import {
-  saveToLocalStorage,
-  getFromLocalStorage,
-  removeFromLocalStorage,
-} from './localStorageHelper';
 
 export {
   autoHyphen,
@@ -26,4 +29,9 @@ export {
   saveToLocalStorage,
   getFromLocalStorage,
   removeFromLocalStorage,
+  getCookie,
+  setCookie,
+  deleteCookie,
+  errorMessages,
+  hasError,
 };

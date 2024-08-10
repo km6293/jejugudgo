@@ -1,7 +1,7 @@
 /**
  * 로그인
  */
-export interface IPostAuthLoginRequest {
+export interface ILoginRequest {
   email: string;
   password: string;
 }

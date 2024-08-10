@@ -43,6 +43,7 @@ button {
   width: 100%;
   height: 56px;
   padding: 16px;
+  position: relative;
   background-color: var(--color-button-primary);
 
   &:active {
@@ -58,7 +59,9 @@ button {
   .icon {
     display: flex;
     align-items: center;
-    margin-right: 4px;
+    position: absolute;
+    margin-left: 1.2rem;
+    left: 0;
   }
 }
 </style>

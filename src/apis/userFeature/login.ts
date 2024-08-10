@@ -1,27 +1,18 @@
-import axios from 'axios';
+import axiosInstance from '@/apis';
+import { setCookie, hasError } from '@/utils';
+import { ILoginRequest } from '@/types/api';
 
-const handleAxiosError = (error: unknown) => {
-  const errorCode =
-    axios.isAxiosError(error) && error.response
-      ? error.response.data.errorCode
-      : null;
-  throw { originalError: error, errorCode };
-};
-
-export const login = async (email: string, password: string) => {
+export const login = async (data: ILoginRequest) => {
   try {
-    const url = `${process.env.VUE_APP_BASE_API}/api/v1/auth/login`;
-    const data = { email, password };
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
+    const response = await axiosInstance.post(`/auth/login`, data);
+    const accessToken = response.headers['authorization'];
 
-    const response = await axios.post(url, data, {
-      headers,
-    });
+    if (accessToken) {
+      setCookie('Authorization', accessToken);
+    }
 
     return response.data;
   } catch (error) {
-    handleAxiosError(error);
+    return hasError(error);
   }
 };
