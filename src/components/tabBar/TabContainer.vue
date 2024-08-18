@@ -15,33 +15,25 @@
 <script setup lang="ts">
 import { TabBar } from '@/components';
 import { ITabContainerType } from './TabContainerTypes';
-import { RouteRecordRaw, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const tabs: ITabContainerType[] = [];
 
-const matchedRoute = route.matched.find(
-  (r) =>
-    r.name === 'tab-id-container' ||
-    r.name === 'tab-password-container' ||
-    r.name === 'tab-home-container'
-) as RouteRecordRaw | undefined;
+const matchedPath = route.matched.find((path) => {
+  return typeof path.name === 'string' && path.name.indexOf('-container') >= 0;
+});
 
-if (matchedRoute && matchedRoute.children) {
-  matchedRoute.children.forEach((child: RouteRecordRaw) => {
-    if (
-      child.name &&
-      typeof child.name === 'string' &&
-      child.meta &&
-      typeof child.meta.tabTitle === 'string'
-    ) {
-      tabs.push({
-        name: child.name,
-        label: child.meta.tabTitle,
-        path: matchedRoute.path + '/' + child.path,
-      });
-    }
+if (matchedPath) {
+  const childTabs = matchedPath.children.map((child) => {
+    return {
+      name: child.name as string,
+      label: (child.meta?.tabTitle as string) || '',
+      path: matchedPath.path + '/' + child.path,
+    };
   });
+
+  tabs.push(...childTabs);
 }
 </script>
 

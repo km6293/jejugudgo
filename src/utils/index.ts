@@ -7,7 +7,10 @@ import {
   saveToLocalStorage,
   getFromLocalStorage,
   removeFromLocalStorage,
-} from './localStorageHelper';
+  saveToSessionStorage,
+  getFromSessionStorage,
+  removeFromSessionStorage,
+} from './storageHelper';
 import {
   hasUppercase,
   hasNumber,
@@ -29,6 +32,9 @@ export {
   saveToLocalStorage,
   getFromLocalStorage,
   removeFromLocalStorage,
+  saveToSessionStorage,
+  getFromSessionStorage,
+  removeFromSessionStorage,
   getCookie,
   setCookie,
   deleteCookie,
