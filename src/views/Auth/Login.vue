@@ -154,7 +154,8 @@ const handleGoogleLogin = () => {
   align-items: center;
   justify-content: space-around;
   padding: 17px 16px;
-  color: #b0b0b0;
+  color: var(--color-neutral-100);
+  font-size: 1.2rem;
   gap: 1rem;
 }
 

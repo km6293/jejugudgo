@@ -9,38 +9,46 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, reactive } from 'vue';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { ProgressBar } from '@/components';
+import {
+  useSignUpTermsStore,
+  useSignUpIDStore,
+  useSignUpPasswordStore,
+  useSignUpVerificationStore,
+} from '@/stores/auth';
 
-const router = useRouter();
+const route = useRoute();
+const parentRoute =
+  route.matched.length > 1 ? route.matched[route.matched.length - 2] : null;
+const childPathList = parentRoute?.children.map((child) => child.path);
+
+onMounted(() => {
+  useSignUpTermsStore().$reset();
+  useSignUpIDStore().$reset();
+  useSignUpPasswordStore().$reset();
+  useSignUpVerificationStore().$reset();
+
+  setTimeout(() => {
+    pathIndex(route.fullPath);
+  }, 30);
+});
+
+onBeforeRouteUpdate((to, from, next) => {
+  pathIndex(to.fullPath);
+  next();
+});
+
+const pathIndex = (fullPath: string) => {
+  const pathList = fullPath.split('/');
+  const pathIndex = childPathList?.indexOf(pathList[2]) as number;
+  state.progress = (pathIndex + 1) * 20;
+};
+
 const state = reactive({
   progress: 0,
 });
-
-const animateProgress = (start: number, end: number, duration: number) => {
-  const startTime = performance.now();
-
-  const animate = (currentTime: number) => {
-    const elapsedTime = currentTime - startTime;
-    const progress = Math.min(elapsedTime / duration, 1);
-    state.progress = start + (end - start) * progress;
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    }
-  };
-
-  requestAnimationFrame(animate);
-};
-
-const updateProgress = () => {
-  const targetProgress =
-    (router.currentRoute.value.meta.progress as number) || 0;
-  animateProgress(state.progress, targetProgress + 20, 100);
-};
-
-watch(router.currentRoute, updateProgress, { immediate: true });
 </script>
 
 <style scoped>

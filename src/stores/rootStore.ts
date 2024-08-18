@@ -6,6 +6,8 @@ export const useRootStore = defineStore('root', () => {
   const initialState = {
     showSplash: true,
     showUserGuide: false,
+    tabHome: 'course',
+    tabWalkTogether: 'find-accompany',
   };
 
   const userGuideStatus = getFromLocalStorage('showUserGuide');

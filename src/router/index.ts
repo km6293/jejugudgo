@@ -1,18 +1,8 @@
-import {
-  createRouter,
-  createWebHistory,
-  RouteLocationNormalized,
-  RouteRecordRaw,
-} from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Login from '@/views/auth/Login.vue';
 import NotFound from '@/views/NotFound.vue';
 import { getCookie } from '@/utils/cookies';
-import {
-  useSignUpTermsStore,
-  useSignUpIDStore,
-  useSignUpPasswordStore,
-  useSignUpVerificationStore,
-} from '@/stores/auth';
+import { moveTabStore, saveTabStore } from '@/utils/enterCondition';
 
 const loadComponent = (componentPath: string) => () =>
   import(`@/views/${componentPath}.vue`);
@@ -21,31 +11,65 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     name: 'home',
-    component: loadComponent('home/HomeContent'),
+    component: loadComponent('home/Content'),
     meta: { hideAppBar: true },
     children: [
       {
         path: '',
         name: 'tab-home-container',
         component: () => import('@/components/tabBar/TabContainer.vue'),
+        beforeEnter: (to, from, next) => moveTabStore(to.path, next),
         children: [
           {
             path: 'course',
             name: 'home-course',
-            component: loadComponent('home/HomeCourse'),
+            component: loadComponent('home/Course'),
+            beforeEnter: (to, from, next) => saveTabStore(to.path, next),
             meta: { tabTitle: '코스' },
           },
           {
             path: 'trail',
             name: 'home-trail',
-            component: loadComponent('home/HomeTrail'),
+            component: loadComponent('home/Trail'),
+            beforeEnter: (to, from, next) => saveTabStore(to.path, next),
             meta: { tabTitle: '산책로' },
           },
           {
             path: 'jeju-tales',
             name: 'home-jeju-tales',
-            component: loadComponent('home/HomeJejuTales'),
+            component: loadComponent('home/JejuTales'),
+            beforeEnter: (to, from, next) => saveTabStore(to.path, next),
             meta: { tabTitle: '제주 이야기' },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: '/walk-together',
+    name: 'walk-together',
+    component: loadComponent('walkTogether/Content'),
+    meta: { hideAppBar: true },
+    children: [
+      {
+        path: '',
+        name: 'tab-walk-together-container',
+        component: () => import('@/components/tabBar/TabContainer.vue'),
+        beforeEnter: (to, from, next) => moveTabStore(to.path, next),
+        children: [
+          {
+            path: 'find-accompany',
+            name: 'walk-together-find-accompany',
+            component: loadComponent('walkTogether/FindAccompany'),
+            beforeEnter: (to, from, next) => saveTabStore(to.path, next),
+            meta: { tabTitle: '동행찾기' },
+          },
+          {
+            path: 'chatting',
+            name: 'walk-together-chatting',
+            component: loadComponent('walkTogether/Chatting'),
+            beforeEnter: (to, from, next) => saveTabStore(to.path, next),
+            meta: { tabTitle: '채팅' },
           },
         ],
       },
@@ -74,38 +98,38 @@ const routes: Array<RouteRecordRaw> = [
         path: 'terms',
         name: 'signup-terms',
         component: loadComponent('auth/SignUpTerms'),
-        meta: { progress: 0 },
       },
       {
         path: 'id',
         name: 'signup-id',
         component: loadComponent('auth/SignUpID'),
-        meta: { progress: 20 },
       },
       {
         path: 'password',
         name: 'signup-password',
         component: loadComponent('auth/SignUpPassword'),
-        meta: { progress: 40 },
       },
       {
         path: 'verification',
         name: 'signup-verification',
         component: loadComponent('auth/SignUpVerification'),
-        meta: { progress: 60 },
       },
       {
         path: 'complete',
         name: 'signup-complete',
         component: loadComponent('auth/SignUpComplete'),
-        meta: { progress: 100, appBarBackButton: false },
+        meta: { appBarBackButton: false },
       },
     ],
   },
   {
     path: '/findid',
     component: loadComponent('auth/FindIDContent'),
-    meta: { hideNavBar: true, homeRoute: 'login', title: '아이디 찾기' },
+    meta: {
+      hideNavBar: true,
+      homeRoute: 'login',
+      title: '아이디 찾기',
+    },
     children: [
       {
         path: '',
@@ -136,7 +160,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/findpassword',
     component: loadComponent('auth/FindPasswordContent'),
-    meta: { hideNavBar: true, homeRoute: 'login', title: '비밀번호 찾기' },
+    meta: {
+      hideNavBar: true,
+      homeRoute: 'login',
+      title: '비밀번호 찾기',
+    },
     children: [
       {
         path: '',
@@ -177,49 +205,14 @@ const router = createRouter({
   routes,
 });
 
-const isLeavingParentRoute = (
-  from: RouteLocationNormalized,
-  to: RouteLocationNormalized,
-  path: string
-) => {
-  const fromParent = from.matched[0];
-  const toParent = to.matched[0];
-  return (
-    fromParent &&
-    toParent &&
-    fromParent.path !== toParent.path &&
-    fromParent.path === path
-  );
-};
-
 router.beforeEach(async (to, from, next) => {
-  const termsStore = useSignUpTermsStore();
-  const idStore = useSignUpIDStore();
-  const passwordStore = useSignUpPasswordStore();
-  const verificationStore = useSignUpVerificationStore();
-
-  if (isLeavingParentRoute(from, to, '/signup')) {
-    try {
-      await Promise.all([
-        termsStore.$reset(),
-        idStore.$reset(),
-        passwordStore.$reset(),
-        verificationStore.$reset(),
-      ]);
-    } catch (error) {
-      console.error('Error resetting stores:', error);
-    }
-  }
-
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isLoggedIn()) {
-      next({ path: '/login', query: { redirect: to.fullPath } });
-    } else {
-      next();
+      return next({ path: '/login', query: { redirect: to.fullPath } });
     }
-  } else {
-    next();
   }
+
+  next();
 });
 
 function isLoggedIn() {
