@@ -1,7 +1,7 @@
 <template>
   <header class="header-content">
     <div class="header-text heading2-bold">
-      경한님, 혼자옵서예! <br />
+      제주객님, 혼자옵서예! <br />
       오늘은 어디를 걸을까요?
     </div>
     <div class="header-info">

@@ -20,7 +20,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   {
-    to: '/',
+    to: '/home',
     label: '홈',
     iconActive: HomeActiveIcon,
     iconInactive: HomeDisabledIcon,

@@ -30,11 +30,7 @@ const goBack = () => {
 
 const goHome = () => {
   const homeRoute = route.meta.homeRoute as RouteRecordName;
-  if (homeRoute) {
-    router.push({ name: homeRoute });
-  } else {
-    router.push({ name: '/' });
-  }
+  router.push({ name: homeRoute ? homeRoute : '/' });
 };
 </script>
 
