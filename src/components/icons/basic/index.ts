@@ -33,6 +33,13 @@ import RadioChecked from './RadioChecked.vue';
 import RadioNotChecked from './RadioNotChecked.vue';
 import Note from './Note.vue';
 import Weather from './Weather.vue';
+import Distance from './Distance.vue';
+import Review from './Review.vue';
+import Time1 from './Time1.vue';
+import Star from './Star.vue';
+import Position from './Position.vue';
+import Phone from './Phone.vue';
+import Heart from './Heart.vue';
 
 export {
   Add as AddIcon,
@@ -70,4 +77,11 @@ export {
   Time as TimeIcon,
   RadioChecked as RadioCheckedIcon,
   RadioNotChecked as RadioNotCheckedIcon,
+  Distance as DistanceIcon,
+  Review as ReviewIcon,
+  Time1 as Time1Icon,
+  Star as StarIcon,
+  Position as PositionIcon,
+  Phone as PhoneIcon,
+  Heart as HeartIcon,
 };
