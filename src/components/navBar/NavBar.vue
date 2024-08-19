@@ -19,8 +19,7 @@ import NavItem from './NavItem.vue';
 import { navItems } from './NavItems';
 
 const route = useRoute();
-
-const isActive = (path) => route.path === path;
+const isActive = (path) => route.path.indexOf(path) > -1;
 </script>
 
 <style scoped>
