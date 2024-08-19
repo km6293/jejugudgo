@@ -20,7 +20,7 @@
   --spacing-15: 60px;
   --spacing-100: 1000px;
 
-  // Spacing & Sizing/margin
+  // Spacing & Sizing/Margin
   --margin-xs: var(--spacing-1);
   --margin-s: var(--spacing-2);
   --margin-m: var(--spacing-4);
@@ -32,6 +32,13 @@
   --height-s: var(--spacing-6);
   --height-m: var(--spacing-9);
   --height-l: var(--spacing-12);
+
+  // Spacing & Sizing/Padding
+  --padding-xs: var(--spacing-2);
+  --padding-s: var(--spacing-3);
+  --padding-m: var(--spacing-4);
+  --padding-l: var(--spacing-6);
+  --padding-xl: var(--spacing-8);
 
   // Spacing & Sizing/Radius
   --radius-xs: var(--spacing-2);
