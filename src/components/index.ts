@@ -13,6 +13,8 @@ import RadioButton from './RadioButton.vue';
 import ResentTimer from './ResentTimer.vue';
 import Timer from './Timer.vue';
 import Carousel from './Carousel.vue';
+import CardContent from './CardContent.vue';
+import CardImage from './CardImage.vue';
 import Notification from './Notification.vue';
 
 import Button from './button/Button.vue';
@@ -33,4 +35,6 @@ export {
   Input,
   NavBar,
   TabBar,
+  CardContent,
+  CardImage,
 };
