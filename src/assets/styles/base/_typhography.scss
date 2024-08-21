@@ -119,3 +119,10 @@
   letter-spacing: var(--letter-spacing-normal);
 }
 
+.regular-12 {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-caption);
+  line-height: 1.68rem;
+  letter-spacing: var(--letter-spacing-tight);
+}
+

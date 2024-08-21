@@ -77,66 +77,80 @@
   --color-red-200: #FE5F3B;
   --color-red-100: #FF8563;
 
-  // Error color palette
-  --color-error-100: #FF2500;
-
-
   // Semantic
 
 
   // primary color palette
-  --color-primary-50: var(--color-green-50);
-  --color-primary-100: var(--color-green-100);
-  --color-primary-300: var(--color-green-300);
-  --color-primary-500: var(--color-green-500);
   --color-primary-700: var(--color-green-700);
+  --color-primary-500: var(--color-green-500);
+  --color-primary-300: var(--color-green-300);
+  --color-primary-100: var(--color-green-100);
+  --color-primary-50: var(--color-green-50);
 
   // Neutral color palette
-  --color-neutral-white: var(--color-white-100);
-  --color-neutral-100: var(--color-greyscale-100);
-  --color-neutral-300: var(--color-greyscale-300);
-  --color-neutral-500: var(--color-greyscale-500);
-  --color-neutral-600: var(--color-greyscale-600);
-  --color-neutral-700: var(--color-greyscale-700);
+  --color-neutral-black: var(--color-black-100);
   --color-neutral-900: var(--color-greyscale-900);
+  --color-neutral-700: var(--color-greyscale-700);
+  --color-neutral-600: var(--color-greyscale-600);
+  --color-neutral-500: var(--color-greyscale-500);
+  --color-neutral-300: var(--color-greyscale-300);
+  --color-neutral-100: var(--color-greyscale-100);
+  --color-neutral-50: var(--color-greyscale-50);
+  --color-neutral-white: var(--color-white-100);
+
+  // Error color palette
+  --color-error: var(--color-red-300);
+
+  // Opacity White palette
+  --color-opacity-white-90: var(--color-white-90);
+  --color-opacity-white-70: var(--color-white-70);
+  --color-opacity-white-50: var(--color-white-50);
+  --color-opacity-white-30: var(--color-white-30);
+  --color-opacity-white-15: var(--color-white-15);
+
+  // Opacity Black palette
+  --color-opacity-black-90: var(--color-black-90);
+  --color-opacity-black-70: var(--color-black-70);
+  --color-opacity-black-50: var(--color-black-50);
+  --color-opacity-black-30: var(--color-black-30);
+  --color-opacity-black-15: var(--color-black-15);
 
 
   // Components
 
-
   --color-background: var(--color-greyscale-850);
 
   // Button
-  --color-button-primary: var(--color-green-500);
+  --color-button-primary: var(--color-primary-500);
   --color-button-on-primary: var(--color-neutral-900);
   --color-button-secondary: var(--color-neutral-900);
   --color-button-on-secondary: var(--color-neutral-100);
   --color-button-surface-pressed: var(--color-primary-700);
 
   // Card
-  --color-card-on-surface: var(--color-neutral-100);
-  --color-card-surface: var(--color-greyscale-700);
+  --color-card-on-surface: var(--color-white-100);
+  --color-card-surface: var(--color-greyscale-800);
 
   // _validation_text
   --color-validation-text-default: var(--color-neutral-100);
-  --color-validation-text-error: var(--color-error-100);
+  --color-validation-text-error: var(--color-red-300);
   --color-validation-text-disabled: var(--color-neutral-500);
 
   // Chips
   --color-chips-stroke-default: var(--color-neutral-100);
   --color-chips-stroke-disabled: var(--color-neutral-500);
-  --color-chips-surface-pressed: var(--color-neutral-700);
+  --color-chips-surface-pressed: var(--color-primary-700);
 
   // Text
-  --color-text-error: var(--color-error-100);
+  --color-text-error: var(--color-red-300);
   --color-text-body: var(--color-neutral-300);
   --color-text-muted: var(--color-neutral-500);
-  --color-text-white: #FFFFFF;
-  --color-text-white-50: #FFFFFF80;
-  --color-text-black: #000000;
-  --color-text-black-50: #00000080;
+  --color-text-white: var(--color-white-100);
+  --color-text-white-50: var(--color-white-50);
+  --color-text-black: var(--color-black-100);
+  --color-text-black-50: var(--color-opacity-black-50);
   --color-text-primary: var(--color-primary-500);
   --color-text-secondary: var(--color-neutral-100);
-  --color-text-active: var(--color-greyscale-50);
+  --color-text-active: var(--color-neutral-50);
   --color-text-disabled: var(--color-neutral-300);
 }
