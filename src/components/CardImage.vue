@@ -1,39 +1,30 @@
 <template>
   <div class="image-wrapper">
     <img
-      src="https://via.placeholder.com/150"
+      :src="src"
       :alt="alt"
       :style="imageStyle"
+      class="image"
     />
-    <HeartIcon class="icon" />
+    <HeartIcon
+      class="icon"
+      :type="false"
+    />
   </div>
 </template>
 
-<script setup>
-import { defineProps } from 'vue';
+<script setup lang="ts">
+import { computed, defineProps, CSSProperties } from 'vue';
 import { HeartIcon } from '@/components';
 
-const props = defineProps({
-  src: {
-    type: String,
-    required: true,
-  },
-  alt: {
-    type: String,
-    default: 'Image',
-  },
-  imageClass: {
-    type: String,
-    default: '',
-  },
-  imageStyle: {
-    type: Object,
-    default: () => ({}),
-  },
-  iconStyle: {
-    type: Object,
-    default: () => ({}),
-  },
+const props = defineProps<{
+  test: string;
+  alt?: string;
+  imageStyle?: CSSProperties;
+}>();
+
+const src = computed(() => {
+  return `https://via.placeholder.com/${props.test}`;
 });
 </script>
 
@@ -47,5 +38,9 @@ const props = defineProps({
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.image {
+  border-radius: 12px;
 }
 </style>

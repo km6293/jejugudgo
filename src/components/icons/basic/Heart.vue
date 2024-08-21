@@ -21,8 +21,8 @@ const props = defineProps<{
   type: boolean;
 }>();
 
-const fillColor = computed(() => (props.type ? 'black' : 'white'));
-const fillOpacity = computed(() => (props.type ? '0.5' : '1'));
+const fillColor = computed(() => (props.type ? 'white' : 'black'));
+const fillOpacity = computed(() => (props.type ? '1' : '0.5'));
 </script>
 
 <style scoped></style>

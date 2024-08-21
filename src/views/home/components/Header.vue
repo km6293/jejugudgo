@@ -22,7 +22,10 @@
           </div>
           <WeatherIcon class="rows-item-icon" />
         </div>
-        <div class="rows-item">
+        <div
+          class="rows-item"
+          @click="goToCheckList"
+        >
           <div class="item-text">
             <div class="item-sub-text caption-medium">필요한 것들</div>
             <div class="item-main-text subheading-bold">체크하기</div>
@@ -36,6 +39,12 @@
 
 <script setup lang="ts">
 import { BigSearchIcon, WeatherIcon, NoteIcon } from '@/components';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const goToCheckList = () => {
+  router.push({ name: 'check-list' });
+};
 </script>
 
 <style scoped>

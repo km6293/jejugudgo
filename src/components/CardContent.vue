@@ -1,86 +1,85 @@
-<template class="card-content">
-  <div class="content-write">
-    <div class="content-title body1-medium">
-      강남 한복판에서 부산 광안대교까지
+<template>
+  <div class="card-content">
+    <div class="content-header">
+      <div class="content-title body1-medium">
+        강남 한복판에서 부산 광안대교까지
+      </div>
+      <p class="content-body body2-regular">시작점-도착점</p>
     </div>
-    <div class="contetn-body body2-regular">시작점-도착점</div>
-  </div>
-  <div class="content-info">
-    <div class="info-container">
-      <div class="info-icon"><DistanceIcon /></div>
-      <div class="info-content caption-medium">5.14km</div>
+    <div class="content-info">
+      <div
+        v-if="props.distance"
+        class="info-item"
+      >
+        <div class="info-icon"><DistanceIcon /></div>
+        <p class="info-text caption-medium">5.14km</p>
+      </div>
+      <div
+        v-if="props.time"
+        class="info-item"
+      >
+        <div class="info-icon"><Time1Icon /></div>
+        <p class="info-text caption-medium">3시간</p>
+      </div>
+      <div
+        v-if="props.star"
+        class="info-item"
+      >
+        <div class="info-icon"><StarIcon /></div>
+        <p class="info-text caption-medium">4.5(251)</p>
+      </div>
     </div>
-    <div class="info-container">
-      <div class="info-icon"><Time1Icon /></div>
-      <div class="info-content caption-medium">3시간 이상</div>
-    </div>
-    <div class="info-container">
-      <div class="info-icon"><StarIcon /></div>
-      <div class="info-content caption-medium">4.5(251)</div>
-    </div>
-  </div>
-  <div class="content-tag">
-    <div class="tag-radius">
-      <div class="tag-content caption-regular">바다</div>
-    </div>
-    <div class="tag-radius">
-      <div class="tag-content caption-regular">올레길</div>
-    </div>
+    <Tag :tags="['바다', '올레길']" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { StarIcon, DistanceIcon, Time1Icon } from '@/components';
+import { withDefaults, defineProps } from 'vue';
+import { StarIcon, DistanceIcon, Time1Icon, Tag } from '@/components';
+
+interface Props {
+  distance?: boolean;
+  time?: boolean;
+  star?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  distance: false,
+  time: false,
+  star: false,
+});
 </script>
 
 <style scoped>
 .card-content {
-  display: flex;
-  justify-content: center;
   gap: var(--margin-xs);
+  display: grid;
 }
 
-.content-write {
+.content-header {
+  display: grid;
   gap: var(--margin-xs);
 }
 
 .content-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--color-text-secondary);
 }
 
-.contetn-body {
+.content-body,
+.info-text {
   color: var(--color-text-body);
 }
 
 .content-info {
-  gap: 8px;
   display: flex;
+  gap: var(--margin-xs);
 }
 
-.info-content {
-  color: var(--color-text-body);
-}
-
-.info-container {
+.info-item {
+  display: flex;
   align-items: center;
-  display: flex;
-}
-
-.content-tag {
-  display: flex;
-  gap: 4px;
-}
-
-.tag-radius {
-  display: inline-flex;
-  border-radius: var(--radius-xs);
-  padding: var(--padding-xs);
-  gap: 1rem;
-  border: 1px solid var(--Neutral-700, #555555);
-}
-
-.tag-content {
-  flex-wrap: wrap;
-  color: var(--color-text-body);
 }
 </style>
