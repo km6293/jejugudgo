@@ -1,25 +1,75 @@
 <template>
   <div class="course-container">
     <div class="recommended-course">
-      <div class="heading3-bold course-text">오늘의 추천코스</div>
-      <CardImage />
-      <CardContent />
+      <Title :title="'오늘의 추천코스'" />
+      <div class="recommended-slider">
+        <div
+          v-for="item of 5"
+          :key="item"
+          class="recommended-item"
+        >
+          <CardImage :test="'225x148'" />
+          <CardContent
+            :star="true"
+            :time="true"
+            :distance="true"
+          />
+        </div>
+      </div>
     </div>
     <div class="walking-courses">
-      <div class="heading3-bold course-text">걷기 코스 TOP 10</div>
+      <Title :title="'걷기 코스 TOP 10'" />
+      <div class="walking-slider">
+        <div
+          v-for="item of 3"
+          :key="item"
+          class="walking-item"
+        >
+          <CardImage :test="'104x104'" />
+          <CardContent
+            :star="true"
+            :time="true"
+            :distance="true"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { CardContent, CardImage } from '@/components';
+import { Title } from './components';
 </script>
 
 <style scoped>
+.walking-item {
+  height: 104px;
+  gap: 12px;
+  display: flex;
+}
+
+.walking-slider {
+  gap: var(--margin-m);
+  display: grid;
+}
+
+.recommended-slider {
+  overflow-x: auto;
+  display: inline-flex;
+  gap: var(--margin-m);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.recommended-item {
+  width: 225px;
+}
+
 .course-container {
+  display: flex;
   margin-top: 40px;
   flex-direction: column;
-  display: flex;
   gap: 40px;
 }
 
@@ -33,9 +83,5 @@ import { CardContent, CardImage } from '@/components';
   gap: var(--margin-m2);
   padding: 0px 20px 0px 20px;
   display: grid;
-}
-
-.course-text {
-  color: var(--color-neutral-100);
 }
 </style>
