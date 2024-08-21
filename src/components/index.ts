@@ -16,6 +16,7 @@ import Carousel from './Carousel.vue';
 import CardContent from './CardContent.vue';
 import CardImage from './CardImage.vue';
 import Notification from './Notification.vue';
+import Tag from './Tag.vue';
 
 import Button from './button/Button.vue';
 import Input from './input/Input.vue';
@@ -37,4 +38,5 @@ export {
   TabBar,
   CardContent,
   CardImage,
+  Tag,
 };
