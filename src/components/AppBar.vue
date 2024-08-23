@@ -5,11 +5,22 @@
         v-if="appBarBackButton"
         @click="goBack"
       />
+      <div
+        v-else
+        class="placeholder"
+      ></div>
     </div>
     <span class="app-bar-title">
       {{ title }}
     </span>
-    <BigDeleteIcon @click="goHome" />
+    <BigDeleteIcon
+      v-if="appBarCloseButton"
+      @click="goHome"
+    />
+    <div
+      v-else
+      class="placeholder"
+    ></div>
   </div>
 </template>
 
@@ -23,14 +34,17 @@ const route = useRoute();
 
 const title = computed(() => route.meta.title);
 const appBarBackButton = computed(() => route.meta.appBarBackButton !== false);
+const appBarCloseButton = computed(
+  () => route.meta.appBarCloseButton !== false
+);
 
 const goBack = () => {
   router.back();
 };
 
 const goHome = () => {
-  const homeRoute = route.meta.homeRoute as RouteRecordName;
-  router.push({ name: homeRoute ? homeRoute : '/' });
+  const homeRoute = route.meta.homeRoute as RouteRecordName as string;
+  router.push({ path: homeRoute ? homeRoute : '/home' });
 };
 </script>
 
@@ -55,8 +69,12 @@ const goHome = () => {
   font-size: 18px;
 }
 
-.app-bar-icon {
+.app-bar-icon,
+.placeholder {
   width: 48px;
   height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -5,7 +5,7 @@
     :class="{ active: isActive }"
   >
     <div class="nav-icon">
-      <component :is="isActive ? iconActive : iconInactive" />
+      <component :is="props.isActive ? iconActive : iconInactive" />
       <slot></slot>
     </div>
   </router-link>

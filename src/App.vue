@@ -65,7 +65,7 @@ onMounted(() => {
 }
 
 .content.with-navbar {
-  padding-bottom: 56px;
+  padding-bottom: 112px;
 }
 
 .content::-webkit-scrollbar {

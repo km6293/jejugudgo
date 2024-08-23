@@ -14,7 +14,6 @@ import Header from './components/Header.vue';
 
 <style scoped>
 .home-container {
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 40px;
