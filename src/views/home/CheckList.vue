@@ -32,6 +32,7 @@ const active = true;
 <style scoped>
 .check-list-container {
   padding: 20px 20px 0px 20px;
+  position: relative;
 }
 
 .check-list {
@@ -71,9 +72,9 @@ const active = true;
   background-color: var(--color-button-primary);
   width: 11.2rem;
   height: 4rem;
-  right: 20px;
-  bottom: 110px;
-  position: absolute;
+  left: 100%;
+  bottom: 10px;
+  position: sticky;
   display: flex;
   align-items: center;
 }
