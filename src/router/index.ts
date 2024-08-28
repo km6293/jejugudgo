@@ -49,7 +49,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/check-list',
     name: 'check-list',
     component: loadComponent('home/CheckList'),
-    meta: { appBarCloseButton: false, title: '체크리스트' },
+  },
+  {
+    path: '/course-search',
+    name: 'course-search',
+    component: loadComponent('courseSearch/CourseSearch'),
+    meta: { hideAppBar: true },
   },
   {
     path: '/walk-together',
@@ -80,13 +85,6 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
     ],
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
-    meta: { hideAppBar: true },
   },
   {
     path: '/login',
