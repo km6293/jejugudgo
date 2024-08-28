@@ -40,6 +40,9 @@ import Star from './Star.vue';
 import Position from './Position.vue';
 import Phone from './Phone.vue';
 import Heart from './Heart.vue';
+import Search from './Search.vue';
+import Sparkle from './Sparkle.vue';
+import Target from './Target.vue';
 
 export {
   Add as AddIcon,
@@ -84,4 +87,7 @@ export {
   Position as PositionIcon,
   Phone as PhoneIcon,
   Heart as HeartIcon,
+  Sparkle as SparkleIcon,
+  Search as SearchIcon,
+  Target as TargetIcon,
 };
