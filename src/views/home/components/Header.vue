@@ -5,15 +5,7 @@
       오늘은 어디를 걸을까요?
     </div>
     <div class="header-info">
-      <div class="info-search">
-        <input
-          class="search-text body2-medium"
-          placeholder="내 주변 코스 찾기"
-        />
-        <div class="serach-icon">
-          <BigSearchIcon />
-        </div>
-      </div>
+      <Search />
       <div class="info-rows">
         <div class="rows-item">
           <div class="item-text">
@@ -38,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { BigSearchIcon, WeatherIcon, NoteIcon } from '@/components';
+import { Search, WeatherIcon, NoteIcon } from '@/components';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
