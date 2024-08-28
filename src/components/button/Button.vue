@@ -59,9 +59,6 @@ button {
   .icon {
     display: flex;
     align-items: center;
-    position: absolute;
-    margin-left: 1.2rem;
-    left: 0;
   }
 }
 </style>

@@ -52,8 +52,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 <style scoped>
 .card-content {
-  gap: var(--margin-xs);
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .content-header {

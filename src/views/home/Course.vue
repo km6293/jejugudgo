@@ -45,7 +45,7 @@ import { Title } from './components';
 <style scoped>
 .walking-item {
   height: 104px;
-  gap: 12px;
+  gap: 16px;
   display: flex;
 }
 
