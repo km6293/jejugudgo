@@ -7,42 +7,24 @@
       <Tags />
     </div>
     <div class="search-map">
-      <Tmap
-        :lat="37.566481622437934"
-        :lng="126.98502302169841"
-        icon="location"
-      />
+      <div id="map_div"></div>
       <div class="map-button">
         <Button
           :icon="TargetIcon"
-          :style="{
-            backgroundColor: 'var(--color-button-secondary)',
-            color: 'var(--color-button-on-secondary)',
-            width: '48px',
-            height: '48px',
-            fontSize: '1.4rem',
-          }"
+          :style="buttonStyle"
+          @click="() => moveNowLocation(map)"
         />
         <div class="course-button">
           <Button
             text="주변코스 검색"
             :icon="SearchIcon"
-            :style="{
-              backgroundColor: 'var(--color-button-secondary)',
-              color: 'var(--color-button-on-secondary)',
-              height: '48px',
-              width: '156px',
-              fontSize: '1.4rem',
-            }"
+            :style="searchButtonStyle"
+            @click="() => searchRoutes(map)"
           />
           <Button
             text="코스 검색하기"
             :icon="SparkleIcon"
-            :style="{
-              width: '158px',
-              height: '44px',
-              fontSize: '1.4rem',
-            }"
+            :style="smallButtonStyle"
           />
 
           <!-- <div class="search-course"></div>
@@ -57,12 +39,46 @@
 import {
   Tags,
   Search,
-  Tmap,
   Button,
   SearchIcon,
   TargetIcon,
   SparkleIcon,
 } from '@/components';
+import { ref, onMounted } from 'vue';
+import { useMap, useLocation } from '@/hooks';
+
+const map = ref<any>(null);
+
+const { initTmap, searchRoutes } = useMap(map);
+const { moveNowLocation } = useLocation(map);
+
+onMounted(async () => {
+  await initTmap(map);
+  await console.log(map);
+  await moveNowLocation(map);
+});
+
+const buttonStyle = {
+  backgroundColor: 'var(--color-button-secondary)',
+  color: 'var(--color-button-on-secondary)',
+  width: '48px',
+  height: '48px',
+  fontSize: '1.4rem',
+};
+
+const searchButtonStyle = {
+  backgroundColor: 'var(--color-button-secondary)',
+  color: 'var(--color-button-on-secondary)',
+  height: '48px',
+  width: '156px',
+  fontSize: '1.4rem',
+};
+
+const smallButtonStyle = {
+  width: '158px',
+  height: '44px',
+  fontSize: '1.4rem',
+};
 </script>
 
 <style scoped>

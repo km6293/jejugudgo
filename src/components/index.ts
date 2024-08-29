@@ -6,9 +6,6 @@ export * from './icons/navigation';
 // image
 export * from './images';
 
-// map
-export * from './map';
-
 import AppBar from './AppBar.vue';
 import KakaoMap from './KakaoMap.vue';
 import ProgressBar from './ProgressBar.vue';
