@@ -1,7 +1,7 @@
 <template>
   <div class="signup-complete-container">
     <span class="complete-text">
-      <h1>OOO님, 회원가입이 완료되었어요!</h1>
+      <h1>회원가입이 완료되었어요!</h1>
       <h1>이제 제주도를 걸어보러 가실까요?</h1>
     </span>
 
