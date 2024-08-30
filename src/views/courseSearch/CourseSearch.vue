@@ -12,14 +12,14 @@
         <Button
           :icon="TargetIcon"
           :style="buttonStyle"
-          @click="() => moveNowLocation(map)"
+          @click="handleMoveNowLocation"
         />
         <div class="course-button">
           <Button
             text="주변코스 검색"
             :icon="SearchIcon"
             :style="searchButtonStyle"
-            @click="() => searchRoutes(map)"
+            @click="handleSearchRoutes"
           />
           <Button
             text="코스 검색하기"
@@ -54,9 +54,16 @@ const { moveNowLocation } = useLocation(map);
 
 onMounted(async () => {
   await initTmap(map);
-  await console.log(map);
   await moveNowLocation(map);
 });
+
+const handleMoveNowLocation = () => {
+  moveNowLocation(map);
+};
+
+const handleSearchRoutes = () => {
+  searchRoutes(map);
+};
 
 const buttonStyle = {
   backgroundColor: 'var(--color-button-secondary)',
