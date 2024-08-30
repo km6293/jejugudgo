@@ -6,7 +6,7 @@
         label="이름"
       />
       <Input
-        placeholder="010-0000-0000"
+        placeholder="example@naver.com"
         label="이메일"
         message="이메일 주소를 입력해주세요"
       />

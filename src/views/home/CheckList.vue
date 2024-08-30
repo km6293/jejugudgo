@@ -1,23 +1,107 @@
 <template>
   <div class="check-list-container">
     <div class="check-list">
+      <!-- 기본 리스트 아이템 -->
       <div
-        v-for="item of 100"
-        :key="item"
+        v-for="(item, index) in items"
+        :key="index"
         class="list-content"
       >
-        <div :class="['list-check', { active }]">
+        <div
+          :class="['list-check', { active: item.checked }]"
+          @click="toggleCheck(index)"
+        >
           <Check1Icon
-            v-if="active"
+            v-if="item.checked"
             :active="true"
             width="18px"
             height="18px"
           />
         </div>
-        <div class="list-detail body1-regular">칫솔</div>
+
+        <!-- 항목 이름 또는 수정 중일 때 인풋 필드 -->
+        <div
+          v-if="item.editing"
+          class="list-detail body1-regular"
+        >
+          <input
+            v-model="item.editingName"
+            type="text"
+            :class="[
+              'edit-item-input',
+              'transparent-input',
+              `edit-item-input-${index}`,
+            ]"
+            @keyup.enter="saveItem(index)"
+            @blur="saveItem(index)"
+            autofocus
+          />
+        </div>
+        <div
+          v-else
+          class="list-detail body1-regular"
+        >
+          {{ item.name }}
+        </div>
+
+        <!-- 메뉴 버튼 -->
+        <div
+          class="menu-button"
+          v-if="!item.editing && !item.showActions"
+          @click="toggleActions(index)"
+        >
+          <i class="fa-solid fa-ellipsis fa-2xs"></i>
+        </div>
+
+        <!-- 액션 버튼들 -->
+        <div
+          v-if="item.showActions && !item.editing"
+          class="action-buttons"
+        >
+          <button
+            @click.stop="editItem(index)"
+            class="edit-button"
+          >
+            <i
+              class="fa-solid fa-gear"
+              style="color: green"
+            ></i>
+          </button>
+          <button
+            @click.stop="deleteItem(index)"
+            class="delete-button"
+          >
+            <i
+              class="fa-solid fa-trash"
+              style="color: green"
+            ></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 항목 추가 인풋 필드 -->
+      <div
+        v-if="showInputField"
+        class="list-content"
+      >
+        <div class="list-check"></div>
+        <input
+          v-model="newItem"
+          type="text"
+          placeholder="새 항목 입력"
+          @keyup.enter="addItem"
+          class="add-item-input transparent-input"
+          autofocus
+        />
       </div>
     </div>
-    <div class="add-list">
+
+    <!-- '항목 추가' 버튼 -->
+    <div
+      class="add-list"
+      v-if="!showInputField"
+      @click="showInputField = true"
+    >
       <AddIcon />
       <div class="add-title body2-bold">항목 추가</div>
     </div>
@@ -25,8 +109,170 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { Check1Icon, AddIcon } from '@/components';
-const active = true;
+import '@fortawesome/fontawesome-free/css/all.css';
+import axios from 'axios';
+
+// 기본 리스트 아이템
+const items = ref([
+  {
+    name: '등산화',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '모자',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '우비',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '배낭',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '생수',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '가벼운 구급약',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '랜턴',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '선글라스',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '간식',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+  {
+    name: '잠옷',
+    checked: false,
+    showActions: false,
+    editing: false,
+    editingName: '',
+  },
+]);
+
+const newItem = ref('');
+const showInputField = ref(false);
+
+// 체크 상태 토글 함수
+const toggleCheck = (index: number) => {
+  items.value[index].checked = !items.value[index].checked;
+};
+
+// 데이터 초기 로드 (API 개발)
+// onMounted(async () => {
+//   try {
+//     const response = await axios.get('http://localhost:8080/api/v1/checklist');
+//     items.value = response.data;
+//     console.log('Items loaded successfully:', items.value);
+//   } catch (error) {
+//     console.error('Failed to load items:', error);
+//   }
+// });
+
+// 항목 추가 함수
+const addItem = async () => {
+  if (newItem.value.trim() !== '') {
+    const newItemData = {
+      name: newItem.value,
+      checked: false,
+      showActions: false,
+      editing: false,
+      editingName: '',
+    };
+    items.value.push(newItemData);
+
+    try {
+      await axios.post('http://localhost:8080/api/v1/checklist', items.value);
+      console.log('Items sent successfully:', items.value);
+    } catch (error) {
+      console.error('Failed to send items:', error);
+    }
+
+    newItem.value = '';
+    showInputField.value = false;
+  }
+};
+
+// 액션 토글 함수
+const toggleActions = (index: number) => {
+  // 다른 아이템의 액션이 열려 있을 경우 닫기
+  items.value.forEach((item, i) => {
+    if (i !== index) item.showActions = false;
+  });
+
+  items.value[index].showActions = !items.value[index].showActions;
+};
+
+// 아이템 수정 함수
+const editItem = (index: number) => {
+  const item = items.value[index];
+  item.editingName = item.name; // 현재 이름을 수정할 이름으로 설정
+  item.editing = true;
+  item.showActions = false; // 액션 버튼 숨기기
+
+  // 인풋 필드가 포커스될 수 있도록 약간의 지연을 줌
+  setTimeout(() => {
+    const input = document.querySelector(
+      `.edit-item-input-${index}`
+    ) as HTMLInputElement;
+    if (input) {
+      input.focus();
+    }
+  }, 0);
+};
+
+// 아이템 저장 함수
+const saveItem = async (index: number) => {
+  const item = items.value[index];
+  if (item.editingName.trim() !== '') {
+    item.name = item.editingName;
+  }
+  item.editing = false;
+  item.showActions = false;
+};
+
+// 아이템 삭제 함수
+const deleteItem = async (index: number) => {
+  items.value.splice(index, 1);
+};
 </script>
 
 <style scoped>
@@ -45,6 +291,10 @@ const active = true;
   height: 20px;
   background-color: var(--color-neutral-700);
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .list-check.active {
@@ -59,10 +309,55 @@ const active = true;
   height: 52px;
   padding: var(--margin-s) var(--margin-m2);
   gap: 16px;
+  position: relative;
 }
 
 .list-detail {
   color: var(--color-text-active);
+  flex-grow: 1;
+}
+
+.transparent-input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-active);
+  font-size: 1.5rem;
+  width: 100%;
+}
+
+.edit-item-input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-active);
+  font-size: 1.5rem;
+  font-family: inherit; /* 기존 폰트 스타일과 일치 */
+}
+
+.menu-button {
+  cursor: pointer;
+  font-size: 3rem; /* 크기를 키움 */
+  padding: 0 10px;
+  color: var(--color-neutral-700);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px; /* 간격 조정 */
+}
+
+.edit-button,
+.delete-button {
+  background-color: var(--color-button-primary);
+  border: none;
+  margin-top: 15px;
+  color: var(--color-button-on-primary);
+  padding: 8px 14px; /* 크기 조정 */
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.2rem; /* 폰트 크기 조정 */
 }
 
 .add-list {
@@ -74,12 +369,9 @@ const active = true;
   height: 4rem;
   left: 100%;
   bottom: 10px;
+  margin-top: 10px;
   position: sticky;
   display: flex;
   align-items: center;
-}
-
-.add-title {
-  color: var(--color-button-on-primary);
 }
 </style>

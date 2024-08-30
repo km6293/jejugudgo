@@ -90,29 +90,45 @@ const { password } = storeToRefs(signUpPasswordStore);
 
 const state = reactive({
   verificationStart: false,
+  verificationExpired: false,
 });
 
 const sendCode = async () => {
-  if (name.value.length === 0) {
-    nameState.value = 'error';
-    return;
-  }
-  nameState.value = 'default';
-  if (!validatePhoneNumber(cleanPhoneNumber.value)) {
-    phoneNumberState.value = 'error';
-    return;
-  }
-  phoneNumberState.value = 'default';
+  try {
+    if (name.value.length === 0) {
+      nameState.value = 'error';
+      return;
+    }
+    nameState.value = 'default';
+    if (!validatePhoneNumber(cleanPhoneNumber.value)) {
+      phoneNumberState.value = 'error';
+      return;
+    }
+    phoneNumberState.value = 'default';
 
-  state.verificationStart = true;
-  await sendSms(name.value, cleanPhoneNumber.value);
+    state.verificationStart = true;
+    state.verificationExpired = false;
+    await sendSms(name.value, cleanPhoneNumber.value);
+  } catch (error) {
+    const smsError = error as { errorCode: string | null };
+    if (smsError.errorCode === 'INVALID_VALUE_04') {
+      codeState.value = 'error';
+      codeMessege.value = '이미 계정이 존재합니다.';
+    }
+  }
 };
 
 const handleTimeout = () => {
-  // 타임아웃 처리
+  codeState.value = 'error';
+  codeMessege.value = '인증시간이 만료되었습니다.';
+  state.verificationExpired = true;
 };
 
 const nextPage = async () => {
+  if (state.verificationExpired) {
+    return;
+  }
+
   try {
     await checkSms(name.value, cleanPhoneNumber.value, code.value);
     await signUp(
