@@ -19,27 +19,14 @@
     </div>
     <div class="walking-courses">
       <Title :title="'걷기 코스 TOP 10'" />
-      <div class="walking-slider">
-        <div
-          v-for="item of 3"
-          :key="item"
-          class="walking-item"
-        >
-          <CardImage :test="'104x104'" />
-          <CardContent
-            :star="true"
-            :time="true"
-            :distance="true"
-          />
-        </div>
-      </div>
+      <CourseCard />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { CardContent, CardImage } from '@/components';
-import { Title } from './components';
+import { Title, CourseCard } from './components';
 </script>
 
 <style scoped>
