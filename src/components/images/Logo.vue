@@ -1,15 +1,15 @@
 <template>
   <svg
-    width="212"
-    height="40"
-    viewBox="0 0 212 40"
+    :width="props.width"
+    :height="props.height"
+    :viewBox="`0 0 ${props.width} ${props.height}`"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
     <rect
-      width="212"
-      height="40"
+      :width="props.width"
+      :height="props.height"
       fill="url(#pattern0_1148_2912)"
     />
     <defs>
@@ -34,10 +34,18 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'LogoIcon',
-};
+<script setup lang="ts">
+import { withDefaults, defineProps } from 'vue';
+
+interface Props {
+  width?: number;
+  height?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  width: 212,
+  height: 40,
+});
 </script>
 
 <style scoped></style>

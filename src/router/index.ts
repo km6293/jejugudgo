@@ -51,6 +51,12 @@ const routes: Array<RouteRecordRaw> = [
     component: loadComponent('home/CheckList'),
   },
   {
+    path: '/recommended-course',
+    name: 'recommended-course',
+    component: loadComponent('recommendedCourse/RecommendedCourse'),
+    meta: { hideAppBar: true },
+  },
+  {
     path: '/course-search',
     name: 'course-search',
     component: loadComponent('courseSearch/CourseSearch'),
