@@ -2,9 +2,9 @@
   <div class="find-id-result-container">
     <div class="find-id-result-text">
       <h1>회원님의 휴대전화로</h1>
-      <h1>가입된 아이디가 2개 있습니다</h1>
+      <h1>가입된 아이디가 {{ userCount }}개 있습니다</h1>
     </div>
-    <div>
+    <div v-if="userCount > 0">
       <RadioButton
         v-model="selectedOption"
         :options="radioOptions"
@@ -24,21 +24,40 @@
 
 <script setup lang="ts">
 import { Button, RadioButton } from '@/components';
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { findID } from '@/apis/userFeature/userInfo';
 
 const router = useRouter();
+const route = useRoute(); // useRoute 사용하여 현재 라우트 정보 가져오기
+
+const selectedOption = ref('');
+const radioOptions = ref([]);
+const userCount = ref(0);
+
+// 컴포넌트가 마운트될 때 API 요청을 보내고 결과를 처리
+onMounted(async () => {
+  try {
+    const name = route.query.name as string;
+    const phoneNumber = route.query.phoneNumber as string;
+
+    const response = await findID(name, phoneNumber);
+
+    // `response`가 배열인 경우
+    userCount.value = response.length;
+    radioOptions.value = response.map((user) => ({
+      label: user.name,
+      value: user.id,
+      description: user.email, // 예시로 이메일을 설명으로 추가
+    }));
+  } catch (error) {
+    console.error('Error:', error);
+  }
+});
 
 const nextPage = () => {
   router.push({ path: '/findpassword/phone' });
 };
-
-const selectedOption = ref('');
-const radioOptions = ref([
-  { label: 'Option 1', value: 'option1', description: 'This is option 1' },
-  { label: 'Option 2', value: 'option2', description: 'This is option 2' },
-  { label: 'Option 3', value: 'option3', description: 'This is option 3' },
-]);
 </script>
 
 <style scoped>

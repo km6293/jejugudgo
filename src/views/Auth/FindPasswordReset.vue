@@ -25,7 +25,6 @@
             height="0.917rem"
           />
         </p>
-
         <p
           :class="[
             'caption-regular',
@@ -101,10 +100,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { Check1Icon, Input, Button } from '@/components';
 import { useFindPasswordStore } from '@/stores/auth';
+import { findPassword } from '@/apis/userFeature/userInfo';
 import {
   hasUppercase,
   hasNumber,
@@ -112,12 +112,23 @@ import {
   isValidLength,
   passwordsMatch,
 } from '@/utils';
-import { storeToRefs } from 'pinia';
 
 const router = useRouter();
+const route = useRoute();
 
-const findPasswordStore = useFindPasswordStore();
-const { password, confirmPassword } = storeToRefs(findPasswordStore);
+const password = ref('');
+const confirmPassword = ref('');
+const name = ref('');
+const phoneNumber = ref('');
+const email = ref('');
+const userId = ref('');
+
+onMounted(() => {
+  name.value = route.query.name as string;
+  phoneNumber.value = route.query.phoneNumber as string;
+  userId.value = route.query.userId as string;
+  email.value = route.query.email as string;
+});
 
 const canProceed = computed(
   () =>
@@ -128,9 +139,18 @@ const canProceed = computed(
     passwordsMatch(password.value, confirmPassword.value)
 );
 
-const nextPage = () => {
+const nextPage = async () => {
   if (canProceed.value) {
-    router.push({ name: 'find-password-complete' });
+    try {
+      if (userId.value) {
+        await findPassword(userId.value, password.value, name.value);
+        router.push({ name: 'find-password-complete' });
+      } else {
+        console.error('User ID is not available.');
+      }
+    } catch (error) {
+      console.error('비밀번호 재설정 실패:', error);
+    }
   }
 };
 </script>

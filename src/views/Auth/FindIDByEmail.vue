@@ -4,13 +4,18 @@
       <Input
         placeholder="이름을 입력해주세요"
         label="이름"
+        v-model="name"
+        :state="nameState"
       />
       <Input
         placeholder="example@naver.com"
         label="이메일"
+        v-model="email"
+        :state="emailState"
         message="이메일 주소를 입력해주세요"
       />
       <Button
+        v-if="!state.verificationSent"
         text="인증번호 받기"
         :style="{
           backgroundColor: 'var(--color-button-secondary)',
@@ -18,24 +23,89 @@
           height: '44px',
           fontSize: '1.4rem',
         }"
+        @click="sendVerificationEmail"
+      />
+      <Input
+        v-if="state.verificationSent"
+        placeholder="인증번호 입력"
+        label="인증번호"
+        v-model="authCode"
+        :state="codeState"
+        :message="codeMessage"
       />
     </span>
     <Button
+      v-if="state.verificationSent"
       class="next-button"
-      @click="nextPage"
+      @click="checkVerificationCode"
       text="다음"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Button, Input } from '@/components';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { sendEmail, checkEmail } from '@/apis/authorityFeature/index';
+import { Button, Input } from '@/components';
 
 const router = useRouter();
 
-const nextPage = () => {
-  router.push({ name: 'find-id-result' });
+const state = reactive({
+  verificationSent: false,
+});
+
+const name = ref('');
+const email = ref('');
+const authCode = ref('');
+
+const nameState = ref('default');
+const emailState = ref('default');
+const codeState = ref('default');
+const codeMessage = ref('');
+
+const sendVerificationEmail = async () => {
+  if (name.value.length === 0) {
+    nameState.value = 'error';
+    return;
+  }
+  nameState.value = 'default';
+
+  if (!validateEmail(email.value)) {
+    emailState.value = 'error';
+    return;
+  }
+  emailState.value = 'default';
+
+  try {
+    await sendEmail(email.value);
+    state.verificationSent = true;
+  } catch (error) {
+    const emailError = error as { errorCode: string | null };
+    if (emailError.errorCode) {
+      emailState.value = 'error';
+    }
+  }
+};
+
+const checkVerificationCode = async () => {
+  if (!state.verificationSent) return;
+
+  try {
+    await checkEmail(email.value, authCode.value);
+    router.push({ name: 'find-id-result' });
+  } catch (error) {
+    const smsError = error as { errorCode: string | null };
+    if (smsError.errorCode === 'AUTH_03') {
+      codeState.value = 'error';
+      codeMessage.value = '인증번호가 틀렸습니다.';
+    }
+  }
+};
+
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 };
 </script>
 
