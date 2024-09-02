@@ -1,15 +1,19 @@
 <template>
-  <div class="find-id-container">
-    <span class="find-input">
+  <div class="verification-container">
+    <span class="input-group">
       <Input
         placeholder="이름을 입력해주세요"
         label="이름"
+        v-model="name"
+        :state="nameState"
       />
       <Input
         placeholder="000-0000-0000"
         @input="autoHyphen"
         maxlength="13"
         label="휴대폰 번호"
+        v-model="phoneNumber"
+        :state="phoneNumberState"
         message="가입 시 등록한 휴대폰 번호를 입력해주세요"
       />
       <Button
@@ -27,49 +31,101 @@
         v-if="state.verificationSent"
         placeholder="인증번호 입력"
         label="인증번호"
+        v-model="verificationCode"
+        :state="codeState"
+        :message="codeMessage"
       />
     </span>
     <Button
+      v-if="state.verificationSent"
       class="next-button"
-      @click="nextPage"
+      @click="checkVerificationCode"
       text="다음"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Button, Input } from '@/components';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { reactive } from 'vue';
-import { autoHyphen } from '@/utils';
+import { sendSmsLater, checkSms } from '@/apis/authorityFeature';
+import { autoHyphen, validatePhoneNumber } from '@/utils';
+import { Button, Input } from '@/components';
 
 const router = useRouter();
 
 const state = reactive({
   verificationSent: false,
+  verificationExpired: false,
 });
 
-const sendVerificationCode = () => {
-  // 인증번호 전송 로직을 여기에 추가하세요.
-  state.verificationSent = true;
+const name = ref('');
+const nameState = ref('default');
+const phoneNumber = ref('');
+const phoneNumberState = ref('default');
+const verificationCode = ref('');
+const codeState = ref('default');
+const codeMessage = ref('');
+
+const sendVerificationCode = async () => {
+  if (name.value.length === 0) {
+    nameState.value = 'error';
+    return;
+  }
+  nameState.value = 'default';
+
+  const cleanedPhoneNumber = phoneNumber.value.replace(/-/g, '');
+  if (!validatePhoneNumber(cleanedPhoneNumber)) {
+    phoneNumberState.value = 'error';
+    return;
+  }
+  phoneNumberState.value = 'default';
+
+  try {
+    await sendSmsLater(name.value, cleanedPhoneNumber);
+    state.verificationSent = true;
+  } catch (error) {
+    const smsError = error as { errorCode: string | null };
+    if (smsError.errorCode === 'INVALID_VALUE_04') {
+      codeState.value = 'error';
+      codeMessage.value = '이미 계정이 존재합니다.';
+    }
+  }
 };
 
-const nextPage = () => {
-  router.push({ name: 'find-id-result' });
+const checkVerificationCode = async () => {
+  if (!state.verificationSent) return;
+
+  try {
+    const cleanedPhoneNumber = phoneNumber.value.replace(/-/g, '');
+    await checkSms(name.value, cleanedPhoneNumber, verificationCode.value);
+    router.push({
+      name: 'find-id-result',
+      query: {
+        name: name.value,
+        phoneNumber: cleanedPhoneNumber,
+      },
+    });
+  } catch (error) {
+    const smsError = error as { errorCode: string | null };
+    if (smsError.errorCode === 'AUTH_03') {
+      codeState.value = 'error';
+      codeMessage.value = '인증번호가 틀렸습니다.';
+    }
+  }
 };
 </script>
 
 <style scoped>
-.find-id-container {
+.verification-container {
   width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  box-sizing: border-box;
 }
 
-.find-input {
+.input-group {
   display: flex;
   flex-direction: column;
   gap: 16px;
