@@ -63,6 +63,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideAppBar: true },
   },
   {
+    path: '/create-course',
+    name: 'create-course',
+    component: loadComponent('recommendedCourse/CreateCourse'),
+    meta: { title: '코스생성', hideNavBar: true },
+  },
+  {
     path: '/walk-together',
     name: 'walk-together',
     component: loadComponent('walkTogether/Content'),

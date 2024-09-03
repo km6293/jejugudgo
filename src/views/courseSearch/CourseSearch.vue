@@ -22,9 +22,10 @@
             @click="handleSearchRoutes"
           />
           <Button
-            text="코스 검색하기"
+            text="코스 생성하기"
             :icon="SparkleIcon"
             :style="smallButtonStyle"
+            @click="createCourse"
           />
 
           <!-- <div class="search-course"></div>
@@ -46,6 +47,7 @@ import {
 } from '@/components';
 import { ref, onMounted } from 'vue';
 import { useMap, useLocation } from '@/hooks';
+import router from '@/router';
 
 const map = ref<any>(null);
 
@@ -63,6 +65,10 @@ const handleMoveNowLocation = () => {
 
 const handleSearchRoutes = () => {
   searchRoutes(map);
+};
+
+const createCourse = () => {
+  router.push({ name: 'create-course' });
 };
 
 const buttonStyle = {
