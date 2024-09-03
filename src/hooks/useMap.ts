@@ -71,6 +71,8 @@ export const useMap = (map: any) => {
         width: '100%',
         height: '100%',
         zoom: 15,
+        scaleBar: false,
+        zoomControl: false,
       });
       resolve();
     });
