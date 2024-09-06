@@ -46,11 +46,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import {
-  sendEmail,
-  checkEmail,
-  findUserIdByEmail,
-} from '@/apis/authorityFeature/index';
+import { sendEmail, sendEmailLater } from '@/apis/authorityFeature/index';
 import { Button, Input } from '@/components';
 
 const router = useRouter();
@@ -97,10 +93,10 @@ const checkVerificationCode = async () => {
   if (!state.verificationSent) return;
 
   try {
-    await checkEmail(email.value, authCode.value);
-    const response = await findUserIdByEmail(name.value, email.value);
+    const response = await sendEmailLater(email.value, authCode.value);
 
-    userId.value = response[0]?.id ?? '';
+    userId.value = response.id ?? '';
+    console.log(userId.value);
 
     router.push({
       name: 'find-password-reset',
