@@ -60,7 +60,7 @@
         }"
       />
       <Button
-        @click="handleGoogleLogin"
+        @click="handleKakaoLogin"
         :icon="KakaoIcon"
         text="카카오 로그인"
         :style="{
@@ -114,6 +114,10 @@ const handleLogin = async () => {
 
 const handleGoogleLogin = () => {
   window.location.href = `${process.env.VUE_APP_BASE_API}/api/v1/oauth/authorize/google`;
+};
+
+const handleKakaoLogin = () => {
+  window.location.href = `${process.env.VUE_APP_BASE_API}/api/v1/oauth/authorize/kakao`;
 };
 </script>
 
