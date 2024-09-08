@@ -106,10 +106,10 @@ export const findUserId = async (name: string, phoneNumber: string) => {
   }
 };
 
-export const findUserIdByEmail = async (name: string, email: string) => {
+export const sendEmailLater = async (email: string, authCode: string) => {
   try {
-    const url = `${process.env.VUE_APP_BASE_API}/api/v1/auth/find/id/email`;
-    const data = { name, email };
+    const url = `${process.env.VUE_APP_BASE_API}/api/v1/auth/authentication/check/later`;
+    const data = { email, authCode };
     const response = await axios.post(url, data);
 
     return response.data;
