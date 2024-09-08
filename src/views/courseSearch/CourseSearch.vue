@@ -1,11 +1,14 @@
 <template>
   <div class="container">
-    <div class="search-container">
-      <Search />
-    </div>
-    <div class="tags-container">
-      <Tags />
-    </div>
+    <header>
+      <div class="search-container">
+        <Search @search="handleSearchEvent" />
+      </div>
+      <div class="tags-container">
+        <Tags />
+      </div>
+    </header>
+
     <div class="search-map">
       <div id="map_div"></div>
       <div class="map-button">
@@ -27,9 +30,6 @@
             :style="smallButtonStyle"
             @click="createCourse"
           />
-
-          <!-- <div class="search-course"></div>
-          <div class="create-course"></div> -->
         </div>
       </div>
     </div>
@@ -58,6 +58,10 @@ onMounted(async () => {
   await initTmap(map);
   await moveNowLocation(map);
 });
+
+const handleSearchEvent = (searchText: string) => {
+  console.log('Search bar enter key pressed or icon clicked', searchText);
+};
 
 const handleMoveNowLocation = () => {
   moveNowLocation(map);

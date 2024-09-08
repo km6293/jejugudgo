@@ -3,15 +3,28 @@
     <input
       class="search-text body2-medium"
       placeholder="내 주변 코스 찾기"
+      v-model="searchText"
+      @keypress.enter="handleSearch"
     />
-    <div class="serach-icon">
+    <div
+      class="serach-icon"
+      @click="handleSearch"
+    >
       <BigSearchIcon />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, defineEmits } from 'vue';
 import { BigSearchIcon } from '@/components';
+
+const emit = defineEmits(['search']);
+const searchText = ref('');
+
+const handleSearch = () => {
+  emit('search', searchText.value);
+};
 </script>
 
 <style scoped>
