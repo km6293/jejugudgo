@@ -24,6 +24,7 @@ import Button from './button/Button.vue';
 import Input from './input/Input.vue';
 import NavBar from './navBar/NavBar.vue';
 import TabBar from './tabBar/TabBar.vue';
+import SwipeModal from './swipeModal/SwipeModal.vue';
 
 export {
   AppBar,
@@ -43,4 +44,5 @@ export {
   Tag,
   Tags,
   Search,
+  SwipeModal,
 };
