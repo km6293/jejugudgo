@@ -1,21 +1,21 @@
 <template>
   <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <circle
-      cx="12"
-      cy="12"
+      cx="8"
+      cy="8"
       r="5.5"
       fill="#22F779"
     />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
-      d="M12.5 8.99976H11.5V12.9998H11.5483L11.5227 13.0442L14 14.4745L14.5 13.6084L12.5 12.4537V8.99976Z"
+      d="M8.5 4.99976H7.5V8.99976H7.5483L7.52265 9.04417L10 10.4745L10.5 9.60845L8.5 8.45375V4.99976Z"
       fill="#07AB56"
     />
   </svg>

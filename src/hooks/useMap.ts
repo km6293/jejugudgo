@@ -4,6 +4,7 @@ import { iconMap } from '@/utils/iconMap';
 export const useMap = (map: any) => {
   let drawInfoArr: any[] = [];
   let resultdrawArr: any[] = [];
+  let markers: any[] = [];
 
   const Tmapv2 = (window as any).Tmapv2;
 
@@ -71,9 +72,29 @@ export const useMap = (map: any) => {
         width: '100%',
         height: '100%',
         zoom: 15,
+        scaleBar: false,
+        zoomControl: false,
       });
       resolve();
     });
+  };
+
+  const addMarker = (latitude: number, longitude: number) => {
+    const markerPosition = new Tmapv2.LatLng(latitude, longitude);
+
+    const marker = new Tmapv2.Marker({
+      position: markerPosition,
+      icon: iconMap['location'],
+      map: map.value,
+    });
+
+    markers.push(marker);
+    return marker;
+  };
+
+  const clearMarkers = () => {
+    markers.forEach((marker) => marker.setMap(null));
+    markers = [];
   };
 
   const searchRoutes = async (map: any) => {
@@ -145,5 +166,7 @@ export const useMap = (map: any) => {
   return {
     initTmap,
     searchRoutes,
+    addMarker,
+    clearMarkers,
   };
 };

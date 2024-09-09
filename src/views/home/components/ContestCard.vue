@@ -6,15 +6,9 @@
       :style="imageStyle"
       class="contest-image"
     />
+
     <div class="contest-scheduled">
-      <div
-        class="scheduled-container"
-        :class="{ ongoing: isOngoing, upcoming: !isOngoing }"
-      >
-        <div class="caption-medium">
-          {{ isOngoing ? '진행중' : '진행예정' }}
-        </div>
-      </div>
+      <Chips status="ongoing" />
     </div>
     <div class="contest-content">
       <div class="content-title body1-medium">
@@ -30,7 +24,7 @@
 
 <script setup lang="ts">
 import { CSSProperties, defineProps, ref } from 'vue';
-const isOngoing = ref(true);
+import { Chips } from '@/components';
 
 const props = defineProps<{
   alt?: string;
@@ -51,24 +45,9 @@ const props = defineProps<{
   padding: var(--padding-xs);
 }
 
-.scheduled-container {
-  border-radius: var(--radius-xs);
-  padding: var(--margin-s) var(--padding-m);
-}
-
 .contest-image {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-}
-
-.ongoing {
-  background-color: var(--color-button-primary);
-  color: var(--button-on-primary);
-}
-
-.upcoming {
-  background-color: var(--color-button-secondary);
-  color: var(--color-neutral-100);
 }
 
 .contest-content {

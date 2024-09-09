@@ -1,11 +1,14 @@
 <template>
   <div class="container">
-    <div class="search-container">
-      <Search />
-    </div>
-    <div class="tags-container">
-      <Tags />
-    </div>
+    <header>
+      <div class="search-container">
+        <Search @search="handleSearchEvent" />
+      </div>
+      <div class="tags-container">
+        <Tags />
+      </div>
+    </header>
+
     <div class="search-map">
       <div id="map_div"></div>
       <div class="map-button">
@@ -22,13 +25,11 @@
             @click="handleSearchRoutes"
           />
           <Button
-            text="코스 검색하기"
+            text="코스 생성하기"
             :icon="SparkleIcon"
             :style="smallButtonStyle"
+            @click="createCourse"
           />
-
-          <!-- <div class="search-course"></div>
-          <div class="create-course"></div> -->
         </div>
       </div>
     </div>
@@ -46,6 +47,7 @@ import {
 } from '@/components';
 import { ref, onMounted } from 'vue';
 import { useMap, useLocation } from '@/hooks';
+import router from '@/router';
 
 const map = ref<any>(null);
 
@@ -57,12 +59,20 @@ onMounted(async () => {
   await moveNowLocation(map);
 });
 
+const handleSearchEvent = (searchText: string) => {
+  console.log('Search bar enter key pressed or icon clicked', searchText);
+};
+
 const handleMoveNowLocation = () => {
   moveNowLocation(map);
 };
 
 const handleSearchRoutes = () => {
   searchRoutes(map);
+};
+
+const createCourse = () => {
+  router.push({ name: 'create-course' });
 };
 
 const buttonStyle = {

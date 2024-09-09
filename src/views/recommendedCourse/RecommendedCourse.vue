@@ -22,7 +22,10 @@
       </div>
     </div>
     <div class="create-course">
-      <div class="button-inner">
+      <div
+        class="button-inner"
+        @click="createCourse"
+      >
         <SparkleIcon />
         <div class="course-button body2-bold">코스 생성하기</div>
       </div>
@@ -40,11 +43,16 @@ import {
 } from '@/components';
 import Title from '@/views/home/components/Title.vue';
 import CourseCard from '../home/components/CourseCard.vue';
+import router from '@/router';
 
 const buttonStyle = {
   height: '44px',
   width: '135px',
   fontSize: '1.4rem',
+};
+
+const createCourse = () => {
+  router.push({ name: 'create-course' });
 };
 </script>
 

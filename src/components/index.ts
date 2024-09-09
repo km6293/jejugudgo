@@ -2,6 +2,7 @@
 export * from './icons/basic';
 export * from './icons/big';
 export * from './icons/navigation';
+export * from './icons/infographic';
 
 // image
 export * from './images';
@@ -19,11 +20,13 @@ import Notification from './Notification.vue';
 import Tag from './Tag.vue';
 import Tags from './Tags.vue';
 import Search from './Search.vue';
+import Chips from './Chips.vue';
 
 import Button from './button/Button.vue';
 import Input from './input/Input.vue';
 import NavBar from './navBar/NavBar.vue';
 import TabBar from './tabBar/TabBar.vue';
+import SwipeModal from './swipeModal/SwipeModal.vue';
 
 export {
   AppBar,
@@ -43,4 +46,6 @@ export {
   Tag,
   Tags,
   Search,
+  SwipeModal,
+  Chips,
 };

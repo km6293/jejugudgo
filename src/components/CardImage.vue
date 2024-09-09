@@ -7,6 +7,7 @@
       class="image"
     />
     <HeartIcon
+      v-if="props.icon"
       class="icon"
       :type="false"
     />
@@ -14,14 +15,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, CSSProperties } from 'vue';
+import { computed, defineProps, CSSProperties, withDefaults } from 'vue';
 import { HeartIcon } from '@/components';
 
-const props = defineProps<{
+interface Props {
   test: string;
   alt?: string;
+  icon?: boolean;
   imageStyle?: CSSProperties;
-}>();
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  icon: true,
+});
 
 const src = computed(() => {
   return `https://via.placeholder.com/${props.test}`;
