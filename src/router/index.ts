@@ -81,9 +81,9 @@ const routes: Array<RouteRecordRaw> = [
         beforeEnter: (to, from, next) => moveTabStore(to.path, next),
         children: [
           {
-            path: 'find-accompany',
-            name: 'walk-together-find-accompany',
-            component: loadComponent('walkTogether/FindAccompany'),
+            path: 'find-recruitment',
+            name: 'walk-together-find-recruitment',
+            component: loadComponent('walkTogether/FindRecruitment'),
             beforeEnter: (to, from, next) => saveTabStore(to.path, next),
             meta: { tabTitle: '동행찾기' },
           },
@@ -97,6 +97,18 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
     ],
+  },
+  {
+    path: '/recruitment/:id',
+    name: 'recruitmentDetail',
+    component: loadComponent('walkTogether/RecruitmentDetail'),
+    meta: { appBarCloseButton: false },
+  },
+  {
+    path: '/createRecruitment',
+    name: 'createRecruitment',
+    component: loadComponent('walkTogether/CreateRecruitment'),
+    meta: { appBarCloseButton: false, title: '동행 찾기' },
   },
   {
     path: '/login',
