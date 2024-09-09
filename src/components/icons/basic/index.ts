@@ -11,6 +11,8 @@ import CheckList1 from './CheckList1.vue';
 import CheckList2 from './CheckList2.vue';
 import Delete from './Delete.vue';
 import Delete1 from './Delete1.vue';
+import Delete2 from './Delete2.vue';
+import Edit from './Edit.vue';
 import Error from './Error.vue';
 import EyeOff from './EyeOff.vue';
 import EyeOn from './EyeOn.vue';
@@ -43,6 +45,12 @@ import Heart from './Heart.vue';
 import Search from './Search.vue';
 import Sparkle from './Sparkle.vue';
 import Target from './Target.vue';
+import People from './People.vue';
+import Lock from './Lock.vue';
+import Unlock from './Unlock.vue';
+import Course from './Course.vue';
+import Date from './Date.vue';
+import Info from './Info.vue';
 
 export {
   Add as AddIcon,
@@ -60,6 +68,8 @@ export {
   CheckList2 as CheckList2Icon,
   Delete as DeleteIcon,
   Delete1 as Delete1Icon,
+  Delete2 as Delete2Icon,
+  Edit as EditIcon,
   Error as ErrorIcon,
   EyeOff as EyeOffIcon,
   EyeOn as EyeOnIcon,
@@ -90,4 +100,10 @@ export {
   Sparkle as SparkleIcon,
   Search as SearchIcon,
   Target as TargetIcon,
+  People as PeopleIcon,
+  Unlock as UnlockIcon,
+  Lock as LockIcon,
+  Course as CourseIcon,
+  Date as DateIcon,
+  Info as InfoIcon,
 };
