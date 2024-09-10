@@ -102,13 +102,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/recruitment/:id',
     name: 'recruitmentDetail',
     component: loadComponent('walkTogether/RecruitmentDetail'),
-    meta: { appBarCloseButton: false },
+    meta: { appBarCloseButton: false, hideNavBar: true },
   },
   {
     path: '/createRecruitment',
     name: 'createRecruitment',
     component: loadComponent('walkTogether/CreateRecruitment'),
-    meta: { appBarCloseButton: false, title: '동행 찾기' },
+    meta: { appBarCloseButton: false, title: '동행 찾기', hideNavBar: true },
   },
   {
     path: '/login',
