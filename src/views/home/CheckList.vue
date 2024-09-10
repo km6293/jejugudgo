@@ -5,7 +5,7 @@
       <div
         v-for="(item, index) in items"
         :key="index"
-        class="list-content"
+        :class="['list-content', { 'editing-active': item.editing }]"
       >
         <div
           :class="['list-check', { active: item.checked }]"
@@ -62,19 +62,23 @@
             @click.stop="editItem(index)"
             class="edit-button"
           >
-            <i
-              class="fa-solid fa-gear"
-              style="color: green"
-            ></i>
+            <img
+              src="@/components/icons/basic/Edit Icon.svg"
+              alt="Edit"
+              width="24px"
+              height="24px"
+            />
           </button>
           <button
             @click.stop="deleteItem(index)"
             class="delete-button"
           >
-            <i
-              class="fa-solid fa-trash"
-              style="color: green"
-            ></i>
+            <img
+              src="@/components/icons/basic/Delete Icon.svg"
+              alt="Delete"
+              width="24px"
+              height="24px"
+            />
           </button>
         </div>
       </div>
@@ -109,13 +113,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Check1Icon, AddIcon } from '@/components';
 import '@fortawesome/fontawesome-free/css/all.css';
 import axios from 'axios';
 
 // 기본 리스트 아이템
-const items = ref([
+const defaultItems = [
   {
     name: '등산화',
     checked: false,
@@ -186,26 +190,33 @@ const items = ref([
     editing: false,
     editingName: '',
   },
-]);
+];
 
+const items = ref([...defaultItems]); // 백엔드에서 가져올 데이터를 저장할 변수
 const newItem = ref('');
 const showInputField = ref(false);
 
 // 체크 상태 토글 함수
-const toggleCheck = (index: number) => {
+const toggleCheck = async (index: number) => {
   items.value[index].checked = !items.value[index].checked;
+  await saveItems();
 };
 
-// 데이터 초기 로드 (API 개발)
-// onMounted(async () => {
-//   try {
-//     const response = await axios.get('http://localhost:8080/api/v1/checklist');
-//     items.value = response.data;
-//     console.log('Items loaded successfully:', items.value);
-//   } catch (error) {
-//     console.error('Failed to load items:', error);
-//   }
-// });
+// 페이지 로드 시 백엔드에서 데이터 불러오기
+onMounted(async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/checklist');
+    if (response.data.length === 0) {
+      items.value = [...defaultItems]; // 백엔드에 데이터가 없으면 기본 리스트 표시
+    } else {
+      items.value = response.data;
+    }
+    console.log('Items loaded successfully:', items.value);
+  } catch (error) {
+    console.error('Failed to load items:', error);
+    items.value = [...defaultItems]; // 실패 시에도 기본 리스트 표시
+  }
+});
 
 // 항목 추가 함수
 const addItem = async () => {
@@ -219,12 +230,7 @@ const addItem = async () => {
     };
     items.value.push(newItemData);
 
-    try {
-      await axios.post('http://localhost:8080/api/v1/checklist', items.value);
-      console.log('Items sent successfully:', items.value);
-    } catch (error) {
-      console.error('Failed to send items:', error);
-    }
+    await saveItems(); // 추가된 후 백엔드에 저장
 
     newItem.value = '';
     showInputField.value = false;
@@ -233,7 +239,6 @@ const addItem = async () => {
 
 // 액션 토글 함수
 const toggleActions = (index: number) => {
-  // 다른 아이템의 액션이 열려 있을 경우 닫기
   items.value.forEach((item, i) => {
     if (i !== index) item.showActions = false;
   });
@@ -248,7 +253,6 @@ const editItem = (index: number) => {
   item.editing = true;
   item.showActions = false; // 액션 버튼 숨기기
 
-  // 인풋 필드가 포커스될 수 있도록 약간의 지연을 줌
   setTimeout(() => {
     const input = document.querySelector(
       `.edit-item-input-${index}`
@@ -267,11 +271,24 @@ const saveItem = async (index: number) => {
   }
   item.editing = false;
   item.showActions = false;
+
+  await saveItems(); // 수정된 후 백엔드에 저장
+};
+
+// 아이템 저장 함수
+const saveItems = async () => {
+  try {
+    await axios.post('http://localhost:8080/api/v1/checklist', items.value);
+    console.log('Items saved successfully:', items.value);
+  } catch (error) {
+    console.error('Failed to save items:', error);
+  }
 };
 
 // 아이템 삭제 함수
 const deleteItem = async (index: number) => {
   items.value.splice(index, 1);
+  await saveItems(); // 삭제된 후 백엔드에 저장
 };
 </script>
 
@@ -350,11 +367,11 @@ const deleteItem = async (index: number) => {
 
 .edit-button,
 .delete-button {
-  background-color: var(--color-button-primary);
+  background-color: #333333;
   border: none;
   margin-top: 15px;
   color: var(--color-button-on-primary);
-  padding: 8px 14px; /* 크기 조정 */
+  padding: 3px 10px; /* 크기 조정 */
   cursor: pointer;
   border-radius: 5px;
   font-size: 1.2rem; /* 폰트 크기 조정 */
@@ -373,5 +390,10 @@ const deleteItem = async (index: number) => {
   position: sticky;
   display: flex;
   align-items: center;
+}
+
+.editing-active {
+  background-color: #1b1b1b; /* 더 진한 배경색 */
+  font-weight: bold; /* 글자를 굵게 */
 }
 </style>
