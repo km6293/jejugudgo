@@ -84,13 +84,13 @@ const iconVisible = ref(true);
 
 .content-input {
   width: 100%;
-  height: 4.4rem;
+  height: 5.2rem;
   background-color: var(--color-card-surface);
   color: var(--color-text-active);
   border-radius: var(--radius-xl);
   border: none;
   outline: none;
-  padding: 4px 16px;
+  padding: 12px 16px;
 }
 
 .content-input.with-icon {
