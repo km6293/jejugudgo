@@ -67,6 +67,45 @@
   --color-green-700: #07AB56;
   --color-green-800: #008545;
   --color-green-900: #005E34;
+  
+  // yellow color palette
+  --color-yellow-50: #FFEA9F;
+  --color-yellow-100: #FFD12F;
+  --color-yellow-150: #FFB547;
+  --color-yellow-200: #F6B273;
+  --color-yellow-300: #FFAC7D;
+  --color-yellow-300-3: #F6B2734D;
+  --color-yellow-300-2: #F6B27333;
+
+  // pink color palette
+  --color-pink-100: #FFF1FA;
+  --color-pink-200: #FFADE3;
+  --color-pink-300: #FF94DA;
+  --color-pink-400: #FF82C5;
+  
+  // brown color palette
+  --color-brown-100: #FFBC96;
+  --color-brown-200: #FC9256;
+  --color-brown-300: #F67126;
+
+  // lightblue color palette
+  --color-lightblue-100: #93ECFF;
+  --color-lightblue-200: #37CEEF;
+  --color-lightblue-300: #23CAFF;
+  --color-lightblue-400: #00A1D4;
+
+  // blue color palette
+  --color-blue-100: #8BC0FF;
+  --color-blue-200: #4FA0FF;
+  --color-blue-300: #2E8DFC;
+  --color-blue-400: #0A68D6;
+
+  // purple color palette
+  --color-purple-100: #D0BAFF;
+  --color-purple-200: #A479FF;
+  --color-purple-300: #9D73F6;
+  --color-purple-400: #7647DC;
+  
 
   // red color palette
   --color-red-700: #660300;
@@ -101,19 +140,37 @@
   // Error color palette
   --color-error: var(--color-red-300);
 
-  // Opacity White palette
+  // Opacity white palette
   --color-opacity-white-90: var(--color-white-90);
   --color-opacity-white-70: var(--color-white-70);
   --color-opacity-white-50: var(--color-white-50);
   --color-opacity-white-30: var(--color-white-30);
   --color-opacity-white-15: var(--color-white-15);
 
-  // Opacity Black palette
+  // Opacity black palette
   --color-opacity-black-90: var(--color-black-90);
   --color-opacity-black-70: var(--color-black-70);
   --color-opacity-black-50: var(--color-black-50);
   --color-opacity-black-30: var(--color-black-30);
   --color-opacity-black-15: var(--color-black-15);
+
+  // Opacity green palette
+  --color-opacity-green-90: #07AB56E6;
+  --color-opacity-green-70: #07AB56B3;
+  --color-opacity-green-50: #07AB5680;
+  --color-opacity-green-30: #07AB564D;
+  --color-opacity-green-10: #07AB561A;
+
+
+  // Course
+  --color-primary-course-1: var(--color-green-100);
+  --color-primary-course-2: var(--color-green-200);
+  --color-primary-course-3: var(--color-green-300);
+  --color-primary-course-4: var(--color-green-400);
+  --color-primary-course-5: var(--color-green-500);
+  --color-primary-course-6: var(--color-green-600);
+  --color-primary-course-7: var(--color-green-700);
+  --color-primary-course-8: var(--color-green-800);
 
 
   // Components
@@ -154,4 +211,9 @@
   --color-text-secondary: var(--color-neutral-100);
   --color-text-active: var(--color-neutral-50);
   --color-text-disabled: var(--color-neutral-300);
+  
+  // Input
+  --color-input-chat-surface: var(--color-greyscale-900);
+  --color-input-chat-on-surface: var(--color-greyscale-800);
+  
 }
