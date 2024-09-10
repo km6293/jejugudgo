@@ -11,7 +11,10 @@
     >
       <div class="drag-handle-line"></div>
     </div>
-    <div class="content">
+    <div
+      ref="content"
+      class="content"
+    >
       <slot></slot>
     </div>
   </dialog>
@@ -23,6 +26,7 @@ import { ref, onMounted } from 'vue';
 const bottomSheet = ref<HTMLDialogElement | null>(null);
 const handleHeight = 32;
 const threeFifthHeight = window.innerHeight * (3 / 5);
+const content = ref<HTMLElement | null>(null);
 
 let startY = 0;
 let currentTranslateY = threeFifthHeight;
@@ -32,6 +36,12 @@ const updateSheetPosition = (translateY: number) => {
   if (!bottomSheet.value) return;
   currentTranslateY = translateY;
   bottomSheet.value.style.transform = `translateY(${translateY}px)`;
+
+  if (content.value) {
+    content.value.style.height = `${
+      window.innerHeight - translateY - handleHeight
+    }px`;
+  }
 };
 
 const startDrag = (event: MouseEvent | TouchEvent) => {
@@ -55,7 +65,12 @@ const drag = (event: MouseEvent | TouchEvent) => {
 
   if (deltaY < 0 && currentTranslateY === 0) return;
 
-  updateSheetPosition(Math.max(0, currentTranslateY + deltaY));
+  const newTranslateY = Math.max(
+    0,
+    Math.min(currentTranslateY + deltaY, threeFifthHeight)
+  );
+
+  updateSheetPosition(newTranslateY);
   startY = currentY;
 };
 
@@ -83,8 +98,6 @@ const handleClick = () => {
     currentTranslateY === 0
   ) {
     openSheetPartial();
-  } else {
-    closeSheetPartial();
   }
 };
 
@@ -94,7 +107,7 @@ const openSheetPartial = () => updateSheetPosition(threeFifthHeight);
 const openSheet = () => updateSheetPosition(0);
 
 onMounted(() => {
-  if (bottomSheet.value) {
+  if (bottomSheet.value && content.value) {
     bottomSheet.value.show();
     updateSheetPosition(threeFifthHeight);
   }
@@ -113,7 +126,7 @@ onMounted(() => {
   margin: 0;
   padding: 0;
   border: none;
-  background-color: #1d1b20;
+  background-color: var(--color-card-surface);
   border-radius: 1rem 1rem 0 0;
   z-index: 1001;
   transition: transform 0.3s ease-out;
@@ -122,6 +135,11 @@ onMounted(() => {
     background-color: var(--color-card-surface, 333333);
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
   }
 
   .drag-handle {
@@ -138,14 +156,7 @@ onMounted(() => {
     margin: 16px auto;
   }
 
-  .content {
-    padding: 16px;
-    color: white;
-  }
-
   @media (prefers-color-scheme: light) {
-    background-color: #f7f2fa;
-
     .content {
       color: black;
     }
