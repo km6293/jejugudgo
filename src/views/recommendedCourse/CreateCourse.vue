@@ -2,7 +2,18 @@
   <div class="container">
     <div id="map_div"></div>
     <SwipeModal>
-      <p>Here is some content in the bottom sheet.</p>
+      <StartCourse
+        v-if="activeStep === 1"
+        :setStep="setStep"
+      />
+      <HelperCourse
+        v-if="activeStep === 2"
+        :setStep="setStep"
+      />
+      <HelperResult
+        v-if="activeStep === 3"
+        :setStep="setStep"
+      />
     </SwipeModal>
   </div>
 </template>
@@ -11,10 +22,17 @@
 import { ref, onMounted } from 'vue';
 import { useMap, useLocation } from '@/hooks';
 import { SwipeModal } from '@/components';
+import { StartCourse, HelperCourse, HelperResult } from './components';
 
 const map = ref<any>(null);
+
 const { initTmap } = useMap(map);
 const { moveNowLocation } = useLocation(map);
+
+const activeStep = ref(1);
+const setStep = (step: number) => {
+  activeStep.value = step;
+};
 
 onMounted(async () => {
   await initTmap(map);
