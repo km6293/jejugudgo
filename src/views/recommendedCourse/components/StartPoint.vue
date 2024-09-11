@@ -1,23 +1,17 @@
 <template>
   <div class="container">
-    <div class="header">
-      <div class="start-text">
-        <div class="start-title subheading-bold">어디서부터 시작할까요?</div>
-        <Info2Icon />
-      </div>
-      <div class="button">
-        <Button
-          @click="movePage(4)"
-          text="다음"
-          :style="{
-            height: '40px',
-          }"
-        />
-      </div>
-    </div>
+    <ModalHeader
+      title="어디서부터 시작할까요?"
+      :showLeftIcon="false"
+      :showInfoIcon="true"
+      @right-click="updateData('page', 2)"
+    />
     <div class="content">
       <div class="location">
-        <Search />
+        <ModalSearch
+          :input="courseData.input"
+          @search-click="updateData('ShowSearch', true)"
+        />
         <div class="target">
           <TargetIcon />
           <div class="body2-regular">현위치로 설정</div>
@@ -30,7 +24,7 @@
         </div>
         <div
           class="helper-button body2-bold"
-          @click="movePage(2)"
+          @click="updateData('page', 11)"
         >
           추천받기
         </div>
@@ -40,16 +34,21 @@
 </template>
 
 <script setup lang="ts">
-import { Info2Icon, Button, TargetIcon } from '@/components';
-import { Search } from './index';
+import { TargetIcon } from '@/components';
+import { ModalSearch, ModalHeader } from './index';
 import { defineProps } from 'vue';
+import { ICourseDataType } from '../type';
 
 const props = defineProps<{
-  setStep: (step: number) => void;
+  updateCourseData: (newData: Partial<ICourseDataType>) => void;
+  courseData: ICourseDataType;
 }>();
 
-const movePage = (num: number) => {
-  props.setStep(num);
+const updateData = <K extends keyof ICourseDataType>(
+  item: K,
+  value: ICourseDataType[K]
+) => {
+  props.updateCourseData({ [item]: value });
 };
 </script>
 
@@ -59,23 +58,6 @@ const movePage = (num: number) => {
   display: flex;
   flex-direction: column;
   gap: var(--margin-m);
-}
-
-.header {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  height: 48px;
-}
-
-.start-text {
-  display: flex;
-  gap: var(--margin-xs);
-  align-items: center;
-}
-
-.start-title {
-  color: #f2f2f2;
 }
 
 .location {
