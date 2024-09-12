@@ -114,6 +114,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { getCookie } from '@/utils/cookies';
 import { Check1Icon, AddIcon } from '@/components';
 import '@fortawesome/fontawesome-free/css/all.css';
 import axios from 'axios';
@@ -202,19 +203,50 @@ const toggleCheck = async (index: number) => {
   await saveItems();
 };
 
-// 페이지 로드 시 백엔드에서 데이터 불러오기
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/checklist');
-    if (response.data.length === 0) {
-      items.value = [...defaultItems]; // 백엔드에 데이터가 없으면 기본 리스트 표시
+    const accessToken = getCookie('Authorization');
+
+    const type = 'CHECK';
+
+    const response = await axios.get(
+      `${process.env.VUE_APP_BASE_API}/api/v1/todo`,
+      {
+        params: { type },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    const latestItem = response.data.reduce(
+      (max, item) => (item.id > max.id ? item : max),
+      response.data[0]
+    );
+
+    if (latestItem !== null) {
+      const itemsArray = [];
+      const itemsList = latestItem.content.split(', ');
+
+      for (let i = 0; i < itemsList.length; i++) {
+        const item = itemsList[i];
+        const [name, checked] = item.split(': ');
+
+        itemsArray.push({
+          name: name.trim(),
+          checked: checked === 'true',
+          showActions: false,
+          editing: false,
+          editingName: '',
+        });
+      }
+
+      items.value = itemsArray;
     } else {
-      items.value = response.data;
+      items.value = [...defaultItems];
     }
-    console.log('Items loaded successfully:', items.value);
   } catch (error) {
-    console.error('Failed to load items:', error);
-    items.value = [...defaultItems]; // 실패 시에도 기본 리스트 표시
+    items.value = [...defaultItems];
   }
 });
 
@@ -275,11 +307,27 @@ const saveItem = async (index: number) => {
   await saveItems(); // 수정된 후 백엔드에 저장
 };
 
-// 아이템 저장 함수
 const saveItems = async () => {
+  const content = items.value
+    .map((item) => `${item.name}: ${item.checked}`)
+    .join(', ');
+
+  const requestBody = {
+    type: 'CHECK',
+    content: content,
+  };
+
   try {
-    await axios.post('http://localhost:8080/api/v1/checklist', items.value);
-    console.log('Items saved successfully:', items.value);
+    const accessToken = getCookie('Authorization');
+    await axios.post(
+      `${process.env.VUE_APP_BASE_API}/api/v1/todo`,
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   } catch (error) {
     console.error('Failed to save items:', error);
   }
