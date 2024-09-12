@@ -52,6 +52,7 @@ import Course from './Course.vue';
 import Date from './Date.vue';
 import Info from './Info.vue';
 import Info2 from './Info2.vue';
+import Subtract from './Subtract.vue';
 
 export {
   Add as AddIcon,
@@ -108,4 +109,5 @@ export {
   Date as DateIcon,
   Info as InfoIcon,
   Info2 as Info2Icon,
+  Subtract as SubtractIcon,
 };
