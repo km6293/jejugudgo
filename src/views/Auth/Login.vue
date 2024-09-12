@@ -103,8 +103,7 @@ const handleLogin = async () => {
     loginState.value = 'error';
     message.value = `로그인 5회 실패 시, 10분 간 입력이 제한됩니다. (${loginFailCount.value}/5)`;
   }
-
-  if (status === '200') {
+  if (status === 200) {
     loginFailCount.value = 0;
     loginState.value = 'default';
     message.value = '';
