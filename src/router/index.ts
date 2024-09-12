@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Login from '@/views/auth/Login.vue';
 import NotFound from '@/views/NotFound.vue';
+import OAuthCallback from '@/views/auth/OAuthCallback.vue';
 import { getCookie } from '@/utils/cookies';
 import { moveTabStore, saveTabStore } from '@/utils/enterCondition';
 
@@ -44,6 +45,12 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
     ],
+  },
+  {
+    path: '/oauth/callback',
+    name: 'oauth-callback',
+    component: OAuthCallback,
+    meta: { hideNavBar: true },
   },
   {
     path: '/check-list',
