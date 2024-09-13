@@ -1,7 +1,7 @@
 <template>
   <header class="header-content">
     <div class="header-text heading2-bold">
-      제주객님, 혼자옵서예! <br />
+      {{ userName }}님, 혼저옵서예! <br />
       오늘은 어디를 걸을까요?
     </div>
     <div class="header-info">
@@ -10,9 +10,13 @@
         <div class="rows-item">
           <div class="item-text">
             <div class="item-sub-text caption-medium">지금 서귀포시는</div>
-            <div class="item-main-text subheading-bold">24.0˚</div>
+            <div class="item-main-text subheading-bold">{{ temperature }}˚</div>
           </div>
-          <WeatherIcon class="rows-item-icon" />
+          <img
+            :src="weatherIcon"
+            class="rows-item-icon-weather"
+            alt="Weather Icon"
+          />
         </div>
         <div
           class="rows-item"
@@ -30,13 +34,74 @@
 </template>
 
 <script setup lang="ts">
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
 import { Search, WeatherIcon, NoteIcon } from '@/components';
 import { useRouter } from 'vue-router';
 
+const userName = ref('');
+const temperature = ref(0);
+const weather = ref('');
+const weatherIcon = ref('');
 const router = useRouter();
+
+const fetchUserInfo = async () => {
+  try {
+    const response = await axios.get('/api/v1/auth/user', {
+      headers: {
+        Authorization: `Bearer ${getCookie('Authorization')}`,
+      },
+    });
+    const userData = response.data;
+    userName.value = userData.name || userData.nickname || '사용자';
+  } catch (error) {
+    console.error('Failed to fetch user info:', error);
+  }
+};
+
+const fetchWeather = async () => {
+  const apiKey = 'b185f63264f73151b89f36f599433cf2';
+  const city = 'Jeju City';
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+  try {
+    const response = await axios.get(apiUrl);
+    temperature.value = response.data.main.temp.toFixed(1);
+    weather.value = response.data.weather[0].main;
+
+    switch (weather.value) {
+      case 'Clouds':
+        weatherIcon.value = require('@/assets/weather/Clouds.svg');
+        break;
+      case 'Rain':
+        weatherIcon.value = require('@/assets/weather/Clouds.png');
+        break;
+      case 'Snow':
+        weatherIcon.value = require('@/assets/weather/Clouds.png');
+        break;
+      default:
+        weatherIcon.value = require('@/assets/weather/Clouds.png');
+    }
+  } catch (error) {
+    console.error('Failed to fetch weather:', error);
+  }
+};
+
 const goToCheckList = () => {
   router.push({ name: 'check-list' });
 };
+
+onMounted(() => {
+  fetchUserInfo();
+  fetchWeather();
+});
+
+function getCookie(name: string): string | null {
+  const matches = document.cookie.match(
+    new RegExp('(?:^|; )' + name + '=([^;]*)')
+  );
+  return matches ? decodeURIComponent(matches[1]) : null;
+}
 </script>
 
 <style scoped>
@@ -110,6 +175,14 @@ const goToCheckList = () => {
   position: absolute;
   bottom: 0px;
   right: 0px;
+}
+
+.rows-item-icon-weather {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
 }
 
 .search-text {
