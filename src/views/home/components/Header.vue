@@ -179,10 +179,10 @@ function getCookie(name: string): string | null {
 
 .rows-item-icon-weather {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 40px;
-  height: 40px;
+  bottom: 2px;
+  right: 2px;
+  width: 70px;
+  height: 70px;
 }
 
 .search-text {
