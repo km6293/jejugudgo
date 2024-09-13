@@ -74,13 +74,13 @@ const fetchWeather = async () => {
         weatherIcon.value = require('@/assets/weather/Clouds.svg');
         break;
       case 'Rain':
-        weatherIcon.value = require('@/assets/weather/Clouds.png');
+        weatherIcon.value = require('@/assets/weather/Rain.png');
         break;
       case 'Snow':
-        weatherIcon.value = require('@/assets/weather/Clouds.png');
+        weatherIcon.value = require('@/assets/weather/Snow.png');
         break;
       default:
-        weatherIcon.value = require('@/assets/weather/Clouds.png');
+        weatherIcon.value = require('@/assets/weather/Sunny.png');
     }
   } catch (error) {
     console.error('Failed to fetch weather:', error);
