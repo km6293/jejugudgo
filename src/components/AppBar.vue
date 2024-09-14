@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { RouteRecordName, useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { BigArrowIcon, BigDeleteIcon } from '@/components';
 import { computed } from 'vue';
 
@@ -43,8 +43,9 @@ const goBack = () => {
 };
 
 const goHome = () => {
-  const homeRoute = route.meta.homeRoute as RouteRecordName as string;
-  router.push({ path: homeRoute ? homeRoute : '/home' });
+  const homeRoute = route.meta.homeRoute as string;
+  const path = homeRoute === 'login' ? '/login' : homeRoute || '/login';
+  router.push({ path });
 };
 </script>
 

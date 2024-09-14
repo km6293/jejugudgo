@@ -8,6 +8,11 @@ import { moveTabStore, saveTabStore } from '@/utils/enterCondition';
 const loadComponent = (componentPath: string) => () =>
   import(`@/views/${componentPath}.vue`);
 
+//추후 유효성 검사 필요
+const isTokenValid = (token: string | null): boolean => {
+  return !!token;
+};
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
@@ -240,9 +245,19 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
+  if (to.path === '/' || to.path === '/home') {
+    const token = getCookie('Authorization');
+    if (isTokenValid(token)) {
+      return next({ path: '/home/course' });
+    } else {
+      return next({ path: '/login' });
+    }
+  }
+
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!isLoggedIn()) {
+    const token = getCookie('Authorization');
+    if (!isTokenValid(token)) {
       return next({ path: '/login', query: { redirect: to.fullPath } });
     }
   }
