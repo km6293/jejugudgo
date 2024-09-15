@@ -1,29 +1,22 @@
 <template>
   <div class="container">
-    <MapSearch
-      v-if="courseData.ShowSearch"
-      @arrow-click="() => updateCourseData({ ShowSearch: false })"
-      :courseData="courseData"
-      :updateCourseData="updateCourseData"
-    />
+    <MapSearch v-if="ShowSearch" />
     <div id="map_div"></div>
     <SwipeModal>
+      <SearchResult v-if="ShowSearch" />
       <component
-        v-if="componentMap[courseData.page]"
-        :is="componentMap[courseData.page]"
-        :courseData="courseData"
-        :updateCourseData="updateCourseData"
+        v-else-if="componentMap[page]"
+        :is="componentMap[page]"
       />
     </SwipeModal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive, defineComponent } from 'vue';
+import { ref, onMounted, defineComponent, watch } from 'vue';
 import { useMap, useLocation } from '@/hooks';
 import { SwipeModal } from '@/components';
 import {
-  StartPoint,
   SuggestionHelper,
   ResultHelper,
   WayPoint,
@@ -31,43 +24,98 @@ import {
   CheckPublic,
   CompleteCourse,
   MapSearch,
+  SearchResult,
 } from './components';
-import { ICourseDataType } from './type';
+
+import { storeToRefs } from 'pinia';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
+import { ISpotType } from '@/stores/recommendedCourse/type';
+
+const createCourseStore = useCreateCourseStore();
+const {
+  page,
+  ShowSearch,
+  startPointValid,
+  endPointValid,
+  wayPointsValid,
+  wayPoint,
+  endPoint,
+  startPoint,
+} = storeToRefs(createCourseStore);
 
 const map = ref<any>(null);
 
-const { initTmap } = useMap(map);
-const { moveNowLocation } = useLocation(map);
-
-const courseData = reactive<ICourseDataType>({
-  input: '',
-  page: 1,
-  ShowSearch: false,
-  spot: [],
-  visibilityStatus: true,
-  courseName: '',
-  keyword: [],
-});
+const { initTmap, addMarker, searchRoutes, removeMarker } = useMap(map);
+const { moveNowLocation, moveLocation } = useLocation(map);
 
 const componentMap: { [key: number]: ReturnType<typeof defineComponent> } = {
-  1: StartPoint,
-  2: WayPoint,
-  3: SelectKeyword,
-  4: CheckPublic,
-  5: CompleteCourse,
+  1: WayPoint,
+  2: SelectKeyword,
+  3: CheckPublic,
+  4: CompleteCourse,
   11: SuggestionHelper,
   12: ResultHelper,
-};
-
-const updateCourseData = (newData: Partial<ICourseDataType>) => {
-  Object.assign(courseData, newData);
-  console.log(courseData);
 };
 
 onMounted(async () => {
   await initTmap(map);
   await moveNowLocation(map);
 });
+
+watch(
+  () => [wayPoint, startPoint, endPoint],
+  () => {
+    if (startPointValid.value && endPointValid.value && wayPointsValid.value) {
+      searchRoutes(startPoint.value, endPoint.value, wayPoint.value);
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  () => startPoint,
+  () => {
+    if (startPointValid.value) {
+      addMarker(startPoint.value, 'start');
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  () => [...wayPoint.value],
+  (newWayPoints, oldWayPoints) => {
+    newWayPoints.forEach((newPoint, index) => {
+      const oldPoint = oldWayPoints[index];
+
+      if (
+        !oldPoint ||
+        newPoint.name !== oldPoint.name ||
+        newPoint.longitude !== oldPoint.longitude ||
+        newPoint.latitude !== oldPoint.latitude
+      ) {
+        addMarker(newPoint, 'location');
+      }
+    });
+
+    if (newWayPoints.length < oldWayPoints.length) {
+      for (let i = newWayPoints.length; i < oldWayPoints.length; i++) {
+        removeMarker(oldWayPoints[i]);
+      }
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  () => endPoint,
+  () => {
+    if (endPointValid.value) {
+      addMarker(endPoint.value, 'end');
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped>
