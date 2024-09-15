@@ -4,6 +4,7 @@ import location from '@/assets/icon/location.svg';
 import now from '@/assets/icon/now.svg';
 import start from '@/assets/icon/start.svg';
 
+export type IGubunType = 'start' | 'end' | 'location' | 'course' | 'now';
 export const iconMap = {
   course,
   location,
