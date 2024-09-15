@@ -3,7 +3,7 @@
     <ModalHeader
       title="최적의 걷기 시작점을 찾았어요!"
       :showRightButton="false"
-      @left-click="updateData('page', 11)"
+      :left-step="-1"
     />
     <div class="content">
       <div class="items">
@@ -11,6 +11,7 @@
           class="item"
           v-for="item of 10"
           :key="item"
+          @click="onHelperClick"
         >
           <CardImage
             :test="'74x74'"
@@ -31,20 +32,24 @@
 
 <script setup lang="ts">
 import { CardImage } from '@/components';
-import { defineProps } from 'vue';
-import { ICourseDataType } from '../../../stores/recommendedCourse/type';
 import { ModalHeader } from './index';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
+import { storeToRefs } from 'pinia';
+const createCourseStore = useCreateCourseStore();
+const { selectedObject } = storeToRefs(createCourseStore);
 
-const props = defineProps<{
-  updateCourseData: (newData: Partial<ICourseDataType>) => void;
-  courseData: ICourseDataType;
-}>();
+const helper = {
+  name: 'help',
+  longitude: 126.37650387454218,
+  latitude: 33.47432039426073,
+};
 
-const updateData = <K extends keyof ICourseDataType>(
-  item: K,
-  value: ICourseDataType[K]
-) => {
-  props.updateCourseData({ [item]: value });
+const onHelperClick = () => {
+  const { type, index } = selectedObject.value;
+
+  createCourseStore.updateData(type, helper, index);
+  createCourseStore.updateData('page', 1);
+  createCourseStore.updateData('suggestionCourse', '');
 };
 </script>
 

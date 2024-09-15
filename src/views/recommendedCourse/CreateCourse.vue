@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <MapSearch v-if="ShowSearch" />
+    <MapSearch v-if="showSearch" />
     <div id="map_div"></div>
     <SwipeModal>
-      <SearchResult v-if="ShowSearch" />
+      <SearchResult v-if="showSearch" />
       <component
         v-else-if="componentMap[page]"
         :is="componentMap[page]"
@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, defineComponent, watch } from 'vue';
-import { useMap, useLocation } from '@/hooks';
+import { useMap } from '@/hooks';
 import { SwipeModal } from '@/components';
 import {
   SuggestionHelper,
@@ -34,7 +34,7 @@ import { ISpotType } from '@/stores/recommendedCourse/type';
 const createCourseStore = useCreateCourseStore();
 const {
   page,
-  ShowSearch,
+  showSearch,
   startPointValid,
   endPointValid,
   wayPointsValid,
@@ -44,9 +44,14 @@ const {
 } = storeToRefs(createCourseStore);
 
 const map = ref<any>(null);
-
-const { initTmap, addMarker, searchRoutes, removeMarker } = useMap(map);
-const { moveNowLocation, moveLocation } = useLocation(map);
+const {
+  initTmap,
+  addMarker,
+  searchRoutes,
+  removeMarker,
+  checkDuplMarker,
+  moveNowLocation,
+} = useMap(map);
 
 const componentMap: { [key: number]: ReturnType<typeof defineComponent> } = {
   1: WayPoint,
@@ -59,25 +64,50 @@ const componentMap: { [key: number]: ReturnType<typeof defineComponent> } = {
 
 onMounted(async () => {
   await initTmap(map);
-  await moveNowLocation(map);
+  await moveNowLocation();
 });
 
-watch(
-  () => [wayPoint, startPoint, endPoint],
-  () => {
-    if (startPointValid.value && endPointValid.value && wayPointsValid.value) {
-      searchRoutes(startPoint.value, endPoint.value, wayPoint.value);
+const handleMarkerChange = (
+  newPoint: ISpotType,
+  oldPoint: ISpotType | undefined,
+  markerType: 'start' | 'end' | 'location'
+) => {
+  if (newPoint && startPointValid.value) {
+    const isDuplicate = checkDuplMarker(newPoint);
+
+    if (!isDuplicate) {
+      addMarker(newPoint, markerType);
     }
+  }
+
+  if (
+    oldPoint &&
+    (newPoint.name !== oldPoint.name ||
+      newPoint.longitude !== oldPoint.longitude ||
+      newPoint.latitude !== oldPoint.latitude)
+  ) {
+    removeMarker(oldPoint);
+  }
+};
+
+const handleSearchRoutes = () => {
+  if (startPointValid.value && endPointValid.value && wayPointsValid.value) {
+    searchRoutes(startPoint.value, endPoint.value, wayPoint.value);
+  }
+};
+
+watch(
+  () => startPoint.value,
+  (newStartPoint, oldStartPoint) => {
+    handleMarkerChange(newStartPoint, oldStartPoint, 'start');
   },
   { deep: true }
 );
 
 watch(
-  () => startPoint,
-  () => {
-    if (startPointValid.value) {
-      addMarker(startPoint.value, 'start');
-    }
+  () => endPoint.value,
+  (newEndPoint, oldEndPoint) => {
+    handleMarkerChange(newEndPoint, oldEndPoint, 'end');
   },
   { deep: true }
 );
@@ -87,15 +117,7 @@ watch(
   (newWayPoints, oldWayPoints) => {
     newWayPoints.forEach((newPoint, index) => {
       const oldPoint = oldWayPoints[index];
-
-      if (
-        !oldPoint ||
-        newPoint.name !== oldPoint.name ||
-        newPoint.longitude !== oldPoint.longitude ||
-        newPoint.latitude !== oldPoint.latitude
-      ) {
-        addMarker(newPoint, 'location');
-      }
+      handleMarkerChange(newPoint, oldPoint, 'location');
     });
 
     if (newWayPoints.length < oldWayPoints.length) {
@@ -108,12 +130,8 @@ watch(
 );
 
 watch(
-  () => endPoint,
-  () => {
-    if (endPointValid.value) {
-      addMarker(endPoint.value, 'end');
-    }
-  },
+  () => [wayPoint.value, startPoint.value, endPoint.value],
+  handleSearchRoutes,
   { deep: true }
 );
 </script>
