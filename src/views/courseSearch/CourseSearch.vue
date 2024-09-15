@@ -51,7 +51,7 @@ import router from '@/router';
 
 const map = ref<any>(null);
 
-const { initTmap, searchRoutes } = useMap(map);
+const { initTmap, searchRoutesTest } = useMap(map);
 const { moveNowLocation } = useLocation(map);
 
 onMounted(async () => {
@@ -68,7 +68,7 @@ const handleMoveNowLocation = () => {
 };
 
 const handleSearchRoutes = () => {
-  searchRoutes(map);
+  searchRoutesTest(map);
 };
 
 const createCourse = () => {
