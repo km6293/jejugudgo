@@ -1,7 +1,7 @@
 export interface ISpotType {
   name: string;
-  longitude: string;
-  latitude: string;
+  longitude: number;
+  latitude: number;
 }
 
 export interface IselectedObjectType {
@@ -13,7 +13,7 @@ export interface ICourseDataType {
   input: string;
   visibilityStatus: boolean;
   page: number;
-  ShowSearch: boolean;
+  showSearch: boolean;
   startPoint: ISpotType;
   wayPoint: ISpotType[];
   endPoint: ISpotType;

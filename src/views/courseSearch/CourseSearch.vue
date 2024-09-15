@@ -46,17 +46,16 @@ import {
   SparkleIcon,
 } from '@/components';
 import { ref, onMounted } from 'vue';
-import { useMap, useLocation } from '@/hooks';
+import { useMap } from '@/hooks';
 import router from '@/router';
 
 const map = ref<any>(null);
 
-const { initTmap, searchRoutesTest } = useMap(map);
-const { moveNowLocation } = useLocation(map);
+const { initTmap, searchRoutesTest, moveNowLocation } = useMap(map);
 
 onMounted(async () => {
   await initTmap(map);
-  await moveNowLocation(map);
+  await moveNowLocation();
 });
 
 const handleSearchEvent = (searchText: string) => {
@@ -64,7 +63,7 @@ const handleSearchEvent = (searchText: string) => {
 };
 
 const handleMoveNowLocation = () => {
-  moveNowLocation(map);
+  moveNowLocation();
 };
 
 const handleSearchRoutes = () => {
