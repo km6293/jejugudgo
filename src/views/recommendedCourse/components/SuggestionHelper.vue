@@ -10,14 +10,29 @@
           v-for="(item, index) in keywords"
           :key="index"
           class="slider-item"
-          @click="createCourseStore.updateData('suggestionCourse', item)"
+          @click="onSuggestionClick(item)"
+          :class="{ selected: suggestionCourse === item }"
         >
           <div class="item">
             <CardImage
               :test="'96x96'"
               :icon="false"
+              :imageStyle="{
+                borderColor: suggestionCourse === item ? '#22F779' : '',
+                opacity:
+                  suggestionCourse === '' || suggestionCourse === item
+                    ? 1
+                    : 0.5,
+              }"
             />
-            <div class="image-text body2-bold">{{ item }}</div>
+            <div
+              class="image-text body2-bold"
+              :style="{
+                color: suggestionCourse === item ? '#22F779' : '',
+              }"
+            >
+              {{ item }}
+            </div>
           </div>
         </div>
       </div>
@@ -35,6 +50,10 @@ const createCourseStore = useCreateCourseStore();
 const { suggestionCourse } = storeToRefs(createCourseStore);
 
 const keywords = ['바다', '산', '마을', '맛집', '관광명소', '빵지순례'];
+
+const onSuggestionClick = (item: string) => {
+  createCourseStore.updateData('suggestionCourse', item);
+};
 </script>
 
 <style scoped>

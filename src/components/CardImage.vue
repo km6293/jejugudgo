@@ -48,5 +48,6 @@ const src = computed(() => {
 
 .image {
   border-radius: 12px;
+  border: 2px #00000000 solid;
 }
 </style>
