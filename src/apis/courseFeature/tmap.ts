@@ -41,3 +41,21 @@ export const requestRoute = async (
     throw error;
   }
 };
+
+export const getReverseGeocoding = async (
+  latitude: number,
+  longitude: number
+): Promise<string> => {
+  try {
+    const response = await axios.get(
+      `https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${latitude}&lon=${longitude}&format=json&appKey=${process.env.VUE_APP_MAP_API}`
+    );
+    const data = response.data;
+    const address = data?.addressInfo?.fullAddress || '';
+
+    return address;
+  } catch (error) {
+    console.error('Reverse Geocoding 에러:', error);
+    throw error;
+  }
+};
