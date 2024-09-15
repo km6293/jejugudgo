@@ -1,14 +1,22 @@
 <template>
   <div class="container">
-    <ModalHeader
-      title="코스를 공개하시겠어요?"
-      @left-click="updateData('page', 3)"
-      @right-click="updateData('page', 5)"
-    />
+    <ModalHeader title="코스를 공개하시겠어요?" />
     <div class="check-content">
       <div class="button-container body2-regular">
-        <div class="check-button">공개 할래요</div>
-        <div class="check-button">공개 안할래요</div>
+        <div
+          class="check-button"
+          @click="createCourseStore.updateData('visibilityStatus', true)"
+          :class="{ active: visibilityStatus }"
+        >
+          공개 할래요
+        </div>
+        <div
+          class="check-button"
+          @click="createCourseStore.updateData('visibilityStatus', false)"
+          :class="{ active: !visibilityStatus }"
+        >
+          공개 안할래요
+        </div>
       </div>
       <div class="check-info caption-medium">
         코스를 공개하면 다른 유저들도 코스를 이용할 수 있어요
@@ -18,21 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
-import { ICourseDataType } from '../type';
+import { storeToRefs } from 'pinia';
 import { ModalHeader } from './index';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
 
-const props = defineProps<{
-  updateCourseData: (newData: Partial<ICourseDataType>) => void;
-  courseData: ICourseDataType;
-}>();
-
-const updateData = <K extends keyof ICourseDataType>(
-  item: K,
-  value: ICourseDataType[K]
-) => {
-  props.updateCourseData({ [item]: value });
-};
+const createCourseStore = useCreateCourseStore();
+const { visibilityStatus } = storeToRefs(createCourseStore);
 </script>
 
 <style scoped lang="scss">
@@ -65,9 +64,9 @@ const updateData = <K extends keyof ICourseDataType>(
   flex: 1;
   justify-content: center;
 
-  &:active {
+  &.active {
     color: var(--color-text-primary);
-    border-color: var(--color-text-primary);
+    border-color: var(--color-primary-500);
   }
 }
 

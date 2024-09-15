@@ -1,17 +1,30 @@
 <template>
   <div class="input-container">
-    <input class="content-input body2-medium" />
-    <SearchIcon @click="onSearchClick" />
+    <input
+      class="content-input body2-medium"
+      v-model="inputValue"
+    />
+    <SearchIcon @click="updateInput" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SearchIcon } from '@/components';
-import { defineEmits } from 'vue';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
+import { ref, defineProps } from 'vue';
+import { ISpotType } from '@/stores/recommendedCourse/type';
 
-const emits = defineEmits(['search-click']);
+const createCourseStore = useCreateCourseStore();
 
-const onSearchClick = () => emits('search-click');
+const props = defineProps<{
+  point: ISpotType;
+}>();
+const inputValue = ref(props.point.name);
+
+const updateInput = () => {
+  createCourseStore.updateData('input', inputValue.value);
+  createCourseStore.updateData('ShowSearch', true);
+};
 </script>
 
 <style scoped>

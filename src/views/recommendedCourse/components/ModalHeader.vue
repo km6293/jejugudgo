@@ -3,7 +3,7 @@
     <div class="start-text">
       <BigArrowIcon
         v-if="showLeftIcon"
-        @click="onLeftClick"
+        @click="onPageMove(leftStep)"
       />
       <div class="start-title subheading-bold">{{ title }}</div>
       <Info2Icon v-if="showInfoIcon" />
@@ -13,17 +13,23 @@
       v-if="showRightButton"
     >
       <Button
-        @click="onRightClick"
+        @click="onPageMove(rightStep)"
         :text="rightButtonText"
         :style="{ height: '40px' }"
+        :disabled="rightDisabled"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, withDefaults } from 'vue';
+import { defineProps, withDefaults } from 'vue';
 import { Button, Info2Icon, BigArrowIcon } from '@/components';
+import { storeToRefs } from 'pinia';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
+
+const createCourseStore = useCreateCourseStore();
+const { page } = storeToRefs(createCourseStore);
 
 const props = withDefaults(
   defineProps<{
@@ -32,19 +38,24 @@ const props = withDefaults(
     showInfoIcon?: boolean;
     showRightButton?: boolean;
     rightButtonText?: string;
+    leftStep?: number;
+    rightStep?: number;
+    rightDisabled?: boolean;
   }>(),
   {
     showLeftIcon: true,
     showInfoIcon: false,
     showRightButton: true,
     rightButtonText: '다음',
+    leftStep: -1,
+    rightStep: 1,
+    rightDisabled: false,
   }
 );
 
-const emits = defineEmits(['left-click', 'right-click']);
-
-const onLeftClick = () => emits('left-click');
-const onRightClick = () => emits('right-click');
+const onPageMove = (stepDirection: number) => {
+  createCourseStore.updateData('page', page.value + stepDirection);
+};
 </script>
 
 <style scoped>

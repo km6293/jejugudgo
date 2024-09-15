@@ -2,22 +2,22 @@
   <div class="container">
     <ModalHeader
       title="어떤 장르의 코스를 원하세요?"
-      @left-click="updateData('page', 1)"
-      @right-click="updateData('page', 12)"
+      :left-step="-10"
     />
     <div class="content">
       <div class="slider">
         <div
-          v-for="item of 10"
-          :key="item"
+          v-for="(item, index) in keywords"
+          :key="index"
           class="slider-item"
+          @click="createCourseStore.updateData('suggestionCourse', item)"
         >
           <div class="item">
             <CardImage
               :test="'96x96'"
               :icon="false"
             />
-            <div class="image-text body2-bold">바다</div>
+            <div class="image-text body2-bold">{{ item }}</div>
           </div>
         </div>
       </div>
@@ -27,21 +27,14 @@
 
 <script setup lang="ts">
 import { CardImage } from '@/components';
-import { defineProps } from 'vue';
-import { ICourseDataType } from '../type';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
 import { ModalHeader } from './index';
+import { storeToRefs } from 'pinia';
 
-const props = defineProps<{
-  updateCourseData: (newData: Partial<ICourseDataType>) => void;
-  courseData: ICourseDataType;
-}>();
+const createCourseStore = useCreateCourseStore();
+const { suggestionCourse } = storeToRefs(createCourseStore);
 
-const updateData = <K extends keyof ICourseDataType>(
-  item: K,
-  value: ICourseDataType[K]
-) => {
-  props.updateCourseData({ [item]: value });
-};
+const keywords = ['바다', '산', '마을', '맛집', '관광명소', '빵지순례'];
 </script>
 
 <style scoped>

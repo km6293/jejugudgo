@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { CardImage } from '@/components';
 import { defineProps } from 'vue';
-import { ICourseDataType } from '../type';
+import { ICourseDataType } from '../../../stores/recommendedCourse/type';
 import { ModalHeader } from './index';
 
 const props = defineProps<{

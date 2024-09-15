@@ -1,34 +1,36 @@
 <template>
   <div class="search-bar">
-    <BigArrowIcon @click="onArrowClick" />
+    <BigArrowIcon @click="createCourseStore.updateData('ShowSearch', false)" />
     <div class="search-input">
       <input
         class="subheading-bold input-text"
-        :value="courseData.input"
+        v-model="inputValue"
       />
-      <SearchIcon />
+      <SearchIcon @click="updateInput" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { BigArrowIcon, SearchIcon } from '@/components';
-import { defineEmits, defineProps } from 'vue';
-import { ICourseDataType } from '../type';
+import { storeToRefs } from 'pinia';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
+import { ref, watch } from 'vue';
 
-const emits = defineEmits(['arrow-click']);
-const onArrowClick = () => emits('arrow-click');
+const createCourseStore = useCreateCourseStore();
+const { input } = storeToRefs(createCourseStore);
 
-const props = defineProps<{
-  updateCourseData: (newData: Partial<ICourseDataType>) => void;
-  courseData: ICourseDataType;
-}>();
+const inputValue = ref(input.value);
 
-const updateData = <K extends keyof ICourseDataType>(
-  item: K,
-  value: ICourseDataType[K]
-) => {
-  props.updateCourseData({ [item]: value });
+watch(
+  () => input.value,
+  (newValue) => {
+    inputValue.value = newValue;
+  }
+);
+
+const updateInput = () => {
+  createCourseStore.updateData('input', inputValue.value);
 };
 </script>
 

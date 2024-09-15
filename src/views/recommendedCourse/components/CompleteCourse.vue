@@ -18,21 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
-import { ICourseDataType } from '../type';
 import { ModalHeader } from './index';
-
-const props = defineProps<{
-  updateCourseData: (newData: Partial<ICourseDataType>) => void;
-  courseData: ICourseDataType;
-}>();
-
-const updateData = <K extends keyof ICourseDataType>(
-  item: K,
-  value: ICourseDataType[K]
-) => {
-  props.updateCourseData({ [item]: value });
-};
 </script>
 
 <style scoped lang="scss">
