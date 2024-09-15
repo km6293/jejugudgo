@@ -1,6 +1,7 @@
 import { requestRoute } from '@/apis/courseFeature';
 import { iconMap, IGubunType } from '@/utils/iconMap';
 import { ISpotType } from '@/stores/recommendedCourse/type';
+import { findNowLocation } from '@/utils/map';
 
 export const useMap = (map: any) => {
   let drawInfoArr: any[] = [];
@@ -102,10 +103,12 @@ export const useMap = (map: any) => {
 
   const removeMarker = (location: ISpotType) => {
     const { latitude, longitude } = location;
+    if (!map.value || latitude === 0 || longitude === 0) return;
+
     const markerIndex = markers.findIndex(
       (marker) =>
-        marker.getPosition().lat() + '' === longitude &&
-        marker.getPosition().lng() + '' === latitude
+        marker.getPosition().lat() === latitude &&
+        marker.getPosition().lng() === longitude
     );
 
     if (markerIndex !== -1) {
@@ -116,13 +119,22 @@ export const useMap = (map: any) => {
     }
   };
 
+  const checkDuplMarker = (location: ISpotType): boolean => {
+    const { latitude, longitude } = location;
+    if (!latitude || !longitude || !map.value) return false;
+
+    return markers.some(
+      (marker) =>
+        marker.getPosition().lat() === latitude &&
+        marker.getPosition().lng() === longitude
+    );
+  };
+
   const addMarker = (location: ISpotType, gubun: IGubunType) => {
     const { latitude, longitude } = location;
-    const markerPosition = new Tmapv2.LatLng(longitude, latitude);
-    if (!map.value) {
-      console.error('지도 객체가 초기화되지 않았습니다.');
-      return;
-    }
+    if (!map.value || latitude === 0 || longitude === 0) return;
+
+    const markerPosition = new Tmapv2.LatLng(latitude, longitude);
     const marker = new Tmapv2.Marker({
       position: markerPosition,
       icon: iconMap[gubun],
@@ -143,15 +155,15 @@ export const useMap = (map: any) => {
 
       const passListString = passList
         ? passList
-            .map((point) => `${point.latitude},${point.longitude}`)
+            .map((point) => `${point.longitude},${point.latitude}`)
             .join('_')
         : '';
 
       const resultData = await requestRoute(
-        String(startLocation.latitude),
         String(startLocation.longitude),
-        String(endLocation.latitude),
+        String(startLocation.latitude),
         String(endLocation.longitude),
+        String(endLocation.latitude),
         passListString
       );
 
@@ -246,12 +258,49 @@ export const useMap = (map: any) => {
     }
   };
 
+  const moveLocation = (latitude: number, longitude: number) => {
+    if (!map.value) return;
+
+    if (!isNaN(latitude) && !isNaN(longitude)) {
+      const currentLocation = new Tmapv2.LatLng(latitude, longitude);
+      map.value.setCenter(currentLocation);
+      map.value.setZoom(15);
+    } else {
+      console.error('유효하지 않은 좌표:', latitude, longitude);
+    }
+  };
+
+  const moveNowLocation = async () => {
+    if (!map.value) return;
+
+    let latitude, longitude;
+    try {
+      [latitude, longitude] = await findNowLocation();
+
+      const markerPosition = new Tmapv2.LatLng(latitude, longitude);
+
+      const marker = new Tmapv2.Marker({
+        position: markerPosition,
+        icon: iconMap['now'],
+        map: map.value,
+      });
+    } catch (error) {
+      [latitude, longitude] = [33.50712081595116, 126.49340629577637];
+      console.error('현재 위치를 찾을 수 없습니다:', error);
+    }
+
+    moveLocation(latitude, longitude);
+  };
+
   return {
     initTmap,
     removeMarker,
     searchRoutes,
-    searchRoutesTest,
     addMarker,
     clearMarkers,
+    checkDuplMarker,
+    moveLocation,
+    searchRoutesTest,
+    moveNowLocation,
   };
 };

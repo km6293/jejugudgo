@@ -27,51 +27,46 @@ const { selectedObject } = storeToRefs(createCourseStore);
 
 const start = {
   name: 'start',
-  longitude: '33.433944015499456',
-  latitude: '126.43602130714433',
+  longitude: 126.43602130714433,
+  latitude: 33.433944015499456,
 };
 
 const end = {
   name: 'end',
-  longitude: '33.45120886113757',
-  latitude: '126.48765563964844',
+  longitude: 126.48765563964844,
+  latitude: 33.45120886113757,
 };
 
 const way = [
   {
     name: 'way1',
-    longitude: '33.47190207955216',
-    latitude: '126.39573248492509',
+    longitude: 126.39573248492509,
+    latitude: 33.47190207955216,
   },
   {
     name: 'way2',
-    longitude: '33.47486469122896',
-    latitude: '126.44226001173622',
+    longitude: 126.44226001173622,
+    latitude: 33.47486469122896,
   },
   {
     name: 'way3',
-    longitude: '33.48001928930712',
-    latitude: '126.42766879469521',
+    longitude: 126.42766879469521,
+    latitude: 33.48001928930712,
   },
 ];
 
 const onResultClick = () => {
-  if (
-    selectedObject.value.type === 'wayPoint' &&
-    selectedObject.value.index !== undefined
-  ) {
-    createCourseStore.updateData(
-      'wayPoint',
-      way[selectedObject.value.index],
-      selectedObject.value.index
-    );
-  } else if (selectedObject.value.type === 'startPoint') {
-    createCourseStore.updateData('startPoint', start);
-  } else if (selectedObject.value.type === 'endPoint') {
-    createCourseStore.updateData('endPoint', end);
+  const { type, index } = selectedObject.value;
+
+  if (type === 'wayPoint' && index !== undefined) {
+    createCourseStore.updateData(type, way[index], index);
+  } else if (type === 'startPoint') {
+    createCourseStore.updateData(type, start);
+  } else if (type === 'endPoint') {
+    createCourseStore.updateData(type, end);
   }
 
-  createCourseStore.updateData('ShowSearch', false);
+  createCourseStore.updateData('showSearch', false);
 };
 </script>
 

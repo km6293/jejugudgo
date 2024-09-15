@@ -3,6 +3,7 @@
     <input
       class="content-input body2-medium"
       v-model="inputValue"
+      @keydown.enter="updateInput"
     />
     <SearchIcon @click="updateInput" />
   </div>
@@ -11,7 +12,7 @@
 <script setup lang="ts">
 import { SearchIcon } from '@/components';
 import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, watch } from 'vue';
 import { ISpotType } from '@/stores/recommendedCourse/type';
 
 const createCourseStore = useCreateCourseStore();
@@ -23,8 +24,15 @@ const inputValue = ref(props.point.name);
 
 const updateInput = () => {
   createCourseStore.updateData('input', inputValue.value);
-  createCourseStore.updateData('ShowSearch', true);
+  createCourseStore.updateData('showSearch', true);
 };
+
+watch(
+  () => props.point.name,
+  (newName) => {
+    inputValue.value = newName;
+  }
+);
 </script>
 
 <style scoped>

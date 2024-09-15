@@ -1,6 +1,6 @@
 <template>
   <div class="search-bar">
-    <BigArrowIcon @click="createCourseStore.updateData('ShowSearch', false)" />
+    <BigArrowIcon @click="createCourseStore.updateData('showSearch', false)" />
     <div class="search-input">
       <input
         class="subheading-bold input-text"

@@ -53,6 +53,7 @@ import Date from './Date.vue';
 import Info from './Info.vue';
 import Info2 from './Info2.vue';
 import Subtract from './Subtract.vue';
+import Switch from './Switch.vue';
 
 export {
   Add as AddIcon,
@@ -110,4 +111,5 @@ export {
   Info as InfoIcon,
   Info2 as Info2Icon,
   Subtract as SubtractIcon,
+  Switch as SwitchIcon,
 };

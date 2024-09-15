@@ -4,23 +4,31 @@
       title="다음 지점을 선택해주세요"
       :showInfoIcon="true"
       :showLeftIcon="false"
-      :rightDisabled="!areWaypointsAndEndPointValid"
+      :rightDisabled="!(startPointValid && wayPointsValid && endPointValid)"
     />
 
     <div class="content">
       <div class="location">
-        <ModalSearch
-          :point="startPoint"
-          @click="handleCheckPointClick({ type: 'startPoint' })"
-        />
+        <div class="button-container">
+          <ModalSearch
+            :point="startPoint"
+            @click="handleCheckPointClick({ type: 'startPoint' })"
+          />
+          <div
+            class="button-icon"
+            @click="onSwitchClick"
+          >
+            <SwitchIcon />
+          </div>
+        </div>
 
         <div
-          v-for="(wayPoint, index) in wayPoint"
+          v-for="(point, index) in wayPoint"
           :key="index"
           class="button-container"
         >
           <ModalSearch
-            :point="wayPoint"
+            :point="point"
             @click="handleCheckPointClick({ type: 'wayPoint', index })"
           />
           <div
@@ -38,13 +46,16 @@
           />
           <div
             class="button-icon"
-            :class="{ disabled: !allWayPointsFilled }"
+            :class="{ disabled: !wayPointsValid }"
             @click="handleAddWayPointClick"
           >
             <AddIcon />
           </div>
         </div>
-        <div class="target">
+        <div
+          class="target"
+          @click="onNowLocationClick"
+        >
           <TargetIcon />
           <div class="body2-regular">현위치로 설정</div>
         </div>
@@ -64,42 +75,71 @@
 </template>
 
 <script setup lang="ts">
-import { TargetIcon, AddIcon, SubtractIcon } from '@/components';
+import { TargetIcon, AddIcon, SubtractIcon, SwitchIcon } from '@/components';
 import { ModalSearch, ModalHeader } from './index';
 import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
-import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { IselectedObjectType } from '@/stores/recommendedCourse/type';
+import { findNowLocation } from '@/utils/map';
 
 const createCourseStore = useCreateCourseStore();
-const { wayPoint, endPoint, startPoint } = storeToRefs(createCourseStore);
+const {
+  wayPoint,
+  endPoint,
+  startPoint,
+  wayPointsValid,
+  endPointValid,
+  startPointValid,
+  selectedObject,
+} = storeToRefs(createCourseStore);
 
 const handleAddWayPointClick = () => {
-  if (allWayPointsFilled.value) {
+  if (wayPointsValid.value) {
     createCourseStore.addWayPoint();
   }
 };
 
-const allWayPointsFilled = computed(() =>
-  createCourseStore.wayPoint.every(
-    (point) => point.name && point.longitude && point.latitude
-  )
-);
-
-const isEndPointValid = computed(
-  () =>
-    createCourseStore.endPoint.name &&
-    createCourseStore.endPoint.longitude &&
-    createCourseStore.endPoint.latitude
-);
-
-const areWaypointsAndEndPointValid = computed<boolean>(() => {
-  const isValid = !!(allWayPointsFilled.value && isEndPointValid.value);
-  return isValid;
-});
-
 const handleCheckPointClick = (selectedObject: IselectedObjectType) => {
   createCourseStore.updateData('selectedObject', selectedObject);
+};
+
+const onNowLocationClick = async () => {
+  try {
+    const [latitude, longitude, address] = await findNowLocation();
+    if (
+      !(Number.isNaN(latitude) && Number.isNaN(longitude) && address !== '')
+    ) {
+      const { type, index } = selectedObject.value;
+      const data = {
+        name: address,
+        latitude: latitude,
+        longitude: longitude,
+      };
+
+      createCourseStore.updateData(type, data, index);
+    }
+  } catch (error) {
+    console.error('location error:', error);
+  }
+};
+
+const onSwitchClick = () => {
+  if (!endPointValid.value || !startPointValid.value) return;
+
+  const tempStartPoint = { ...startPoint.value };
+  const tempEndPoint = { ...endPoint.value };
+  const temp = {
+    latitude: 0,
+    longitude: 0,
+    name: '',
+  };
+  createCourseStore.updateData('startPoint', temp);
+  createCourseStore.updateData('endPoint', temp);
+
+  setTimeout(() => {
+    createCourseStore.updateData('startPoint', tempEndPoint);
+    createCourseStore.updateData('endPoint', tempStartPoint);
+  }, 0);
 };
 </script>
 
@@ -142,8 +182,9 @@ const handleCheckPointClick = (selectedObject: IselectedObjectType) => {
 .target {
   display: flex;
   align-items: center;
-  justify-content: end;
   color: var(--color-text-body);
+  width: fit-content;
+  margin-left: auto;
 }
 
 .divider {

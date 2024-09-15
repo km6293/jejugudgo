@@ -6,10 +6,10 @@ export const useCreateCourseStore = defineStore('createCourse', () => {
   const initialState: ICourseDataType = {
     input: '',
     page: 1,
-    ShowSearch: false,
-    startPoint: { name: '', longitude: '', latitude: '' },
+    showSearch: false,
+    startPoint: { name: '', longitude: 0, latitude: 0 },
     wayPoint: [],
-    endPoint: { name: '', longitude: '', latitude: '' },
+    endPoint: { name: '', longitude: 0, latitude: 0 },
     visibilityStatus: true,
     courseName: '',
     keyword: [],
@@ -20,7 +20,7 @@ export const useCreateCourseStore = defineStore('createCourse', () => {
   const state = reactive({ ...initialState });
 
   const addWayPoint = () => {
-    state.wayPoint.push({ name: '', longitude: '', latitude: '' });
+    state.wayPoint.push({ name: '', longitude: 0, latitude: 0 });
   };
 
   const removeWayPoint = (index: number) => {
@@ -32,9 +32,11 @@ export const useCreateCourseStore = defineStore('createCourse', () => {
     value: K extends 'wayPoint' ? ISpotType : ICourseDataType[K],
     index?: number
   ) => {
-    if (item === 'wayPoint' && typeof index === 'number') {
+    if (item === 'wayPoint' && typeof index !== 'undefined') {
+      console.log(`Updating wayPoint at index ${index}:`, value);
       state.wayPoint[index] = value as ISpotType;
     } else {
+      console.log(`Updating ${item}:`, value);
       state[item] = value as ICourseDataType[K];
     }
   };
@@ -55,32 +57,24 @@ export const useCreateCourseStore = defineStore('createCourse', () => {
 
   const startPointValid = computed(() => {
     return (
-      !!state.startPoint.name &&
-      !!state.startPoint.longitude &&
-      !!state.startPoint.latitude &&
-      parseFloat(state.startPoint.longitude) !== 0 &&
-      parseFloat(state.startPoint.latitude) !== 0
+      state.startPoint.name !== '' &&
+      state.startPoint.longitude !== 0 &&
+      state.startPoint.latitude !== 0
     );
   });
 
   const endPointValid = computed(() => {
     return (
-      !!state.endPoint.name &&
-      !!state.endPoint.longitude &&
-      !!state.endPoint.latitude &&
-      parseFloat(state.endPoint.longitude) !== 0 &&
-      parseFloat(state.endPoint.latitude) !== 0
+      state.endPoint.name !== '' &&
+      state.endPoint.longitude !== 0 &&
+      state.endPoint.latitude !== 0
     );
   });
 
   const wayPointsValid = computed(() =>
     state.wayPoint.every(
       (point) =>
-        !!point.name &&
-        !!point.longitude &&
-        !!point.latitude &&
-        parseFloat(point.longitude) !== 0 &&
-        parseFloat(point.latitude) !== 0
+        point.name !== '' && point.longitude !== 0 && point.latitude !== 0
     )
   );
 
