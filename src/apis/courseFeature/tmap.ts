@@ -5,7 +5,7 @@ export const requestRoute = async (
   startY: string,
   endX: string,
   endY: string,
-  passList: string,
+  passList?: string,
   startName = '출발지',
   endName = '도착지'
 ) => {
@@ -14,19 +14,24 @@ export const requestRoute = async (
   };
 
   try {
+    const data: Record<string, any> = {
+      startX,
+      startY,
+      endX,
+      endY,
+      reqCoordType: 'WGS84GEO',
+      resCoordType: 'EPSG3857',
+      startName,
+      endName,
+    };
+
+    if (passList && passList.trim() !== '') {
+      data.passList = passList;
+    }
+
     const response = await axios.post(
       'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json',
-      {
-        startX,
-        startY,
-        endX,
-        endY,
-        passList,
-        reqCoordType: 'WGS84GEO',
-        resCoordType: 'EPSG3857',
-        startName,
-        endName,
-      },
+      data,
       { headers }
     );
 
