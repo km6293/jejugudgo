@@ -69,9 +69,9 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideAppBar: true },
   },
   {
-    path: '/course-search',
-    name: 'course-search',
-    component: loadComponent('courseSearch/CourseSearch'),
+    path: '/search-course',
+    name: 'search-course',
+    component: loadComponent('searchCourse/SearchCourse'),
     meta: { hideAppBar: true },
   },
   {
