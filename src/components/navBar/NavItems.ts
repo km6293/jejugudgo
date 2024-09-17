@@ -32,7 +32,7 @@ export const navItems: NavItem[] = [
     iconInactive: RecommendedCourseDisabledIcon,
   },
   {
-    to: '/course-search',
+    to: '/search-course',
     label: '코스검색',
     iconActive: CourseSearchActiveIcon,
     iconInactive: CourseSearchDisabledIcon,
