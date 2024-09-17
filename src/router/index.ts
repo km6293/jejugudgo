@@ -237,6 +237,12 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: '/my-walk',
+    name: 'my-walk',
+    component: loadComponent('myWalk/MyWalk'),
+    meta: { hideAppBar: true },
+  },
   { path: '/:catchAll(.*)', name: 'NotFound', component: NotFound },
 ];
 
