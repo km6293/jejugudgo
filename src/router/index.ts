@@ -246,21 +246,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/' || to.path === '/home') {
-    const token = getCookie('Authorization');
-    if (isTokenValid(token)) {
-      return next({ path: '/home/course' });
-    } else {
-      return next({ path: '/login' });
-    }
-  }
+  // if (to.path === '/' || to.path === '/home') {
+  //   const token = getCookie('Authorization');
+  //   if (isTokenValid(token)) {
+  //     return next({ path: '/home/course' });
+  //   } else {
+  //     return next({ path: '/login' });
+  //   }
+  // }
 
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const token = getCookie('Authorization');
-    if (!isTokenValid(token)) {
-      return next({ path: '/login', query: { redirect: to.fullPath } });
-    }
-  }
+  // if (to.matched.some((record) => record.meta.requiresAuth)) {
+  //   const token = getCookie('Authorization');
+  //   if (!isTokenValid(token)) {
+  //     return next({ path: '/login', query: { redirect: to.fullPath } });
+  //   }
+  // }
 
   next();
 });
