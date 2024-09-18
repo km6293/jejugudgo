@@ -84,6 +84,30 @@ export const useMap = (map: any) => {
     adjustZoomLevelToFitRoute(arrPoint);
   };
 
+  const requestLocationPermission = () => {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve(position);
+          },
+          (error) => {
+            if (error.code === error.PERMISSION_DENIED) {
+              alert(
+                '위치 권한이 거부되었습니다. 앱 설정에서 권한을 허용해 주세요.'
+              );
+              reject('위치 권한이 거부되었습니다.');
+            } else {
+              reject('위치를 가져오는 데 실패했습니다.');
+            }
+          }
+        );
+      } else {
+        reject('이 브라우저는 위치 서비스를 지원하지 않습니다.');
+      }
+    });
+  };
+
   const initTmap = (map: any) => {
     return new Promise<void>((resolve, reject) => {
       if (!map.value) {
@@ -93,6 +117,7 @@ export const useMap = (map: any) => {
           zoom: 15,
           scaleBar: false,
           zoomControl: false,
+          httpsMode: true,
         });
         resolve();
       } else {
@@ -271,25 +296,26 @@ export const useMap = (map: any) => {
   };
 
   const moveNowLocation = async () => {
-    if (!map.value) return;
-
-    let latitude, longitude;
     try {
-      [latitude, longitude] = await findNowLocation();
+      const position: any = await requestLocationPermission();
+      const { latitude, longitude } = position.coords;
 
       const markerPosition = new Tmapv2.LatLng(latitude, longitude);
-
-      const marker = new Tmapv2.Marker({
+      new Tmapv2.Marker({
         position: markerPosition,
         icon: iconMap['now'],
         map: map.value,
       });
-    } catch (error) {
-      [latitude, longitude] = [33.50712081595116, 126.49340629577637];
-      console.error('현재 위치를 찾을 수 없습니다:', error);
-    }
 
-    moveLocation(latitude, longitude);
+      moveLocation(latitude, longitude);
+    } catch (error) {
+      console.error(error);
+      alert('현재 위치를 가져오는 데 실패했습니다.');
+
+      const defaultLatitude = 33.50712081595116;
+      const defaultLongitude = 126.49340629577637;
+      moveLocation(defaultLatitude, defaultLongitude);
+    }
   };
 
   return {
