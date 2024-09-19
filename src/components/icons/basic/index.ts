@@ -32,14 +32,17 @@ import Name from './Name.vue';
 import Notification from './Notification.vue';
 import Return from './Return.vue';
 import Setting from './Setting.vue';
+import Setting2 from './Setting2.vue';
 import Temperature from './Temperature.vue';
 import Time from './Time.vue';
 import RadioChecked from './RadioChecked.vue';
+import Tab from './Tab.vue';
 import RadioNotChecked from './RadioNotChecked.vue';
 import Note from './Note.vue';
 import Weather from './Weather.vue';
 import Distance from './Distance.vue';
 import Review from './Review.vue';
+import Left from './Left.vue';
 import Time1 from './Time1.vue';
 import Star from './Star.vue';
 import Position from './Position.vue';
@@ -99,6 +102,7 @@ export {
   Notification as NotificationIcon,
   Return as ReturnIcon,
   Setting as SettingIcon,
+  Setting2 as Setting2Icon,
   Temperature as TemperatureIcon,
   Time as TimeIcon,
   RadioChecked as RadioCheckedIcon,
@@ -123,7 +127,9 @@ export {
   Subtract as SubtractIcon,
   Switch as SwitchIcon,
   Shoes as ShoesIcon,
+  Left as LeftIcon,
   Badge as BadgeIcon,
   Right as RightIcon,
   Shield as ShieldIcon,
+  Tab as TabIcon,
 };
