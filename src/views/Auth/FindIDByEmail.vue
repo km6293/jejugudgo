@@ -15,7 +15,7 @@
         message="이메일 주소를 입력해주세요"
       />
       <Button
-        v-if="!state.verificationSent"
+        v-if="!state.verificationSent && !state.isTimerActive"
         text="인증번호 받기"
         :style="{
           backgroundColor: 'var(--color-button-secondary)',
@@ -33,7 +33,16 @@
         :state="codeState"
         :message="codeMessage"
       />
+      <ResentTimer
+        v-if="state.verificationSent && !state.verificationExpired"
+        :verificationStart="state.verificationStart"
+        :handleTimeout="handleTimerEnd"
+        @resendSms="sendVerificationEmail"
+      />
     </span>
+    <br />
+    <br />
+    <br />
     <Button
       v-if="state.verificationSent"
       class="next-button"
@@ -44,15 +53,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { sendEmail, checkEmail } from '@/apis/authorityFeature/index';
-import { Button, Input } from '@/components';
+import { Button, Input, ResentTimer } from '@/components';
 
 const router = useRouter();
 
 const state = reactive({
   verificationSent: false,
+  verificationExpired: false,
+  verificationStart: false,
+  timerKey: 0, // Key to force re-render of Timer
 });
 
 const name = ref('');
@@ -64,6 +76,13 @@ const emailState = ref('default');
 const codeState = ref('default');
 const codeMessage = ref('');
 
+// Function to handle the expiration of the timer
+const handleTimerEnd = () => {
+  state.verificationExpired = true;
+  state.verificationStart = false;
+};
+
+// Function to send verification email
 const sendVerificationEmail = async () => {
   if (name.value.length === 0) {
     nameState.value = 'error';
@@ -80,6 +99,8 @@ const sendVerificationEmail = async () => {
   try {
     await sendEmail(email.value);
     state.verificationSent = true;
+    state.verificationStart = true;
+    state.timerKey += 1; // Force re-render
   } catch (error) {
     const emailError = error as { errorCode: string | null };
     if (emailError.errorCode) {
@@ -88,6 +109,7 @@ const sendVerificationEmail = async () => {
   }
 };
 
+// Function to check the verification code
 const checkVerificationCode = async () => {
   if (!state.verificationSent) return;
 
@@ -95,18 +117,32 @@ const checkVerificationCode = async () => {
     await checkEmail(email.value, authCode.value);
     router.push({ name: 'find-id-result' });
   } catch (error) {
-    const smsError = error as { errorCode: string | null };
-    if (smsError.errorCode === 'AUTH_03') {
+    const emailError = error as { errorCode: string | null };
+    if (emailError.errorCode === 'AUTH_03') {
+      codeState.value = 'error';
+      codeMessage.value = '인증번호가 틀렸습니다.';
+    } else if (emailError.errorCode === 'INVALID_VALUE_02') {
       codeState.value = 'error';
       codeMessage.value = '인증번호가 틀렸습니다.';
     }
   }
 };
 
+// Function to validate email
 const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+
+// Watch for changes in verificationStart to manage timer state
+watch(
+  () => state.verificationStart,
+  (newVal) => {
+    if (newVal) {
+      state.timerKey += 1; // Force re-render
+    }
+  }
+);
 </script>
 
 <style scoped>

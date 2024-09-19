@@ -43,13 +43,16 @@ onMounted(async () => {
 
     const response = await findID(name, phoneNumber);
 
-    // `response`가 배열인 경우
     userCount.value = response.length;
-    radioOptions.value = response.map((user) => ({
-      label: user.name,
-      value: user.id,
-      description: user.email, // 예시로 이메일을 설명으로 추가
-    }));
+    radioOptions.value = response.map((user) => {
+      const date = new Date(user.createdAt);
+      const formattedDate = `${date.toLocaleDateString('ko-KR')} 가입`;
+      return {
+        label: user.email,
+        value: user.id,
+        description: formattedDate,
+      };
+    });
   } catch (error) {
     console.error('Error:', error);
   }
