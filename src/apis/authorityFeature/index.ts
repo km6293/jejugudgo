@@ -117,3 +117,15 @@ export const sendEmailLater = async (email: string, authCode: string) => {
     handleAxiosError(error);
   }
 };
+
+export const checkId = async (email: string) => {
+  try {
+    const url = `${process.env.VUE_APP_BASE_API}/api/v1/auth/check/id`;
+    const data = { email };
+    const response = await axios.post(url, data);
+
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error);
+  }
+};
