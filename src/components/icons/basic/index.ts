@@ -7,8 +7,10 @@ import Camera from './Camera.vue';
 import Camera1 from './Camera1.vue';
 import Check1 from './Check1.vue';
 import Check2 from './Check2.vue';
+import Check3 from './Check3.vue';
 import CheckList1 from './CheckList1.vue';
 import CheckList2 from './CheckList2.vue';
+import Down from './Down.vue';
 import Delete from './Delete.vue';
 import Delete1 from './Delete1.vue';
 import Delete2 from './Delete2.vue';
@@ -20,6 +22,7 @@ import Fitness from './Fitness.vue';
 import Gallery from './Gallery.vue';
 import Gallery1 from './Gallery1.vue';
 import Kakao from './Kakao.vue';
+import Kebab from './Kebab.vue';
 import Like from './Like.vue';
 import Like1 from './Like1.vue';
 import Location from './Location.vue';
@@ -54,6 +57,10 @@ import Info from './Info.vue';
 import Info2 from './Info2.vue';
 import Subtract from './Subtract.vue';
 import Switch from './Switch.vue';
+import Shoes from './Shoes.vue';
+import Badge from './Badge.vue';
+import Right from './Right.vue';
+import Shield from './Shield.vue';
 
 export {
   Add as AddIcon,
@@ -67,8 +74,10 @@ export {
   Camera1 as Camera1Icon,
   Check1 as Check1Icon,
   Check2 as Check2Icon,
+  Check3 as Check3Icon,
   CheckList1 as CheckList1Icon,
   CheckList2 as CheckList2Icon,
+  Down as DownIcon,
   Delete as DeleteIcon,
   Delete1 as Delete1Icon,
   Delete2 as Delete2Icon,
@@ -80,6 +89,7 @@ export {
   Gallery as GalleryIcon,
   Gallery1 as Gallery1Icon,
   Kakao as KakaoIcon,
+  Kebab as KebabIcon,
   Like as LikeIcon,
   Like1 as Like1Icon,
   Location as LocationIcon,
@@ -112,4 +122,8 @@ export {
   Info2 as Info2Icon,
   Subtract as SubtractIcon,
   Switch as SwitchIcon,
+  Shoes as ShoesIcon,
+  Badge as BadgeIcon,
+  Right as RightIcon,
+  Shield as ShieldIcon,
 };

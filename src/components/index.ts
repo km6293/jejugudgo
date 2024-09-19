@@ -3,6 +3,7 @@ export * from './icons/basic';
 export * from './icons/big';
 export * from './icons/navigation';
 export * from './icons/infographic';
+export * from './icons/badge';
 
 // image
 export * from './images';
@@ -21,6 +22,7 @@ import Tag from './Tag.vue';
 import Tags from './Tags.vue';
 import Search from './Search.vue';
 import Chips from './Chips.vue';
+import Review from './Review.vue';
 
 import Button from './button/Button.vue';
 import Input from './input/Input.vue';
@@ -48,4 +50,5 @@ export {
   Search,
   SwipeModal,
   Chips,
+  Review,
 };

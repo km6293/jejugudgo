@@ -4,13 +4,21 @@
       <div class="search-container">
         <Search @search="handleSearchEvent" />
       </div>
-      <div class="tags-container">
+      <!-- Toggle visibility for the Tags component -->
+      <div
+        class="tags-container"
+        v-if="showTags"
+      >
         <Tags />
       </div>
     </header>
 
-    <div class="search-map">
+    <div
+      class="search-map"
+      :class="{ 'expanded-map': !showTags }"
+    >
       <div id="map_div"></div>
+
       <div class="map-button">
         <Button
           :icon="TargetIcon"
@@ -31,6 +39,12 @@
             @click="createCourse"
           />
         </div>
+        <!-- Toggle button to hide/show the Tags component -->
+        <Button
+          text="토글 태그"
+          :style="smallButtonStyle"
+          @click="toggleTags"
+        />
       </div>
     </div>
   </div>
@@ -45,11 +59,12 @@ import {
   TargetIcon,
   SparkleIcon,
 } from '@/components';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { useMap } from '@/hooks';
 import router from '@/router';
 
 const map = ref<any>(null);
+const showTags = ref(true);
 
 const { initTmap, searchRoutesTest, moveNowLocation } = useMap(map);
 
@@ -59,7 +74,7 @@ onMounted(async () => {
 });
 
 const handleSearchEvent = (searchText: string) => {
-  console.log('Search bar enter key pressed or icon clicked', searchText);
+  console.log(searchText);
 };
 
 const handleMoveNowLocation = () => {
@@ -69,9 +84,18 @@ const handleMoveNowLocation = () => {
 const handleSearchRoutes = () => {
   searchRoutesTest(map);
 };
-
 const createCourse = () => {
   router.push({ name: 'create-course' });
+};
+
+const toggleTags = async () => {
+  showTags.value = !showTags.value;
+
+  await nextTick();
+
+  if (map.value) {
+    map.value.resize(); // Tmap의 크기 조정
+  }
 };
 
 const buttonStyle = {
@@ -117,8 +141,13 @@ const smallButtonStyle = {
 
 .search-map {
   flex-grow: 1;
-  height: 100%;
+  height: calc(100% - 200px);
   position: relative;
+  transition: height 0.3s ease;
+}
+
+.expanded-map {
+  height: 100%;
 }
 
 .map-button {
@@ -131,35 +160,8 @@ const smallButtonStyle = {
   position: absolute;
 }
 
-.current-location {
-  width: 48px;
-  height: 48px;
-  padding: var(--padding-m);
-  gap: var(--spacing-1);
-  border-radius: var(--padding-s);
-  background-color: var(--color-button-secondary);
-}
-
 .course-button {
   gap: var(--margin-s);
   display: flex;
 }
-
-/* .search-course {
-  width: 156px;
-  height: 48px;
-  padding: var(--padding-m);
-  gap: var(--spacing-1);
-  border-radius: var(--padding-s);
-  background-color: var(--color-button-secondary);
-}
-
-.create-course {
-  width: Fill (156px)px;
-  height: Fixed (48px)px;
-  padding: var(--SpacingSizingPaddingpadding-m);
-  gap: var(--SpacingSizingSpacingspacing-1);
-  border-radius: var(--SpacingSizingPaddingpadding-s);
-  opacity: 0px;
-} */
 </style>

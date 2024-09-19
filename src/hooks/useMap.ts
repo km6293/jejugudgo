@@ -326,7 +326,7 @@ export const useMap = (map: any) => {
     clearMarkers,
     checkDuplMarker,
     moveLocation,
-    searchRoutesTest,
     moveNowLocation,
+    searchRoutesTest,
   };
 };
