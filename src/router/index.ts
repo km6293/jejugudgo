@@ -62,12 +62,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'check-list',
     component: loadComponent('home/CheckList'),
   },
-  {
-    path: '/recommended-course',
-    name: 'recommended-course',
-    component: loadComponent('recommendedCourse/RecommendedCourse'),
-    meta: { hideAppBar: true },
-  },
+  // {
+  //   path: '/recommended-course',
+  //   name: 'recommended-course',
+  //   component: loadComponent('recommendedCourse/RecommendedCourse'),
+  //   meta: { hideAppBar: true },
+  // },
   {
     path: '/search-course',
     name: 'search-course',
@@ -242,6 +242,42 @@ const routes: Array<RouteRecordRaw> = [
     name: 'my-walk',
     component: loadComponent('myWalk/MyWalk'),
     meta: { hideAppBar: true },
+  },
+  {
+    path: '/walking-travel',
+    name: 'walking-travel',
+    component: loadComponent('myWalk/WalkingTravel'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/course-usage-history',
+    name: 'course-usage-history',
+    component: loadComponent('myWalk/CourseUsageHistory'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/course-creation-history',
+    name: 'course-creation-history',
+    component: loadComponent('myWalk/CourseCreationHistory'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/favorites',
+    name: 'favorites',
+    component: loadComponent('myWalk/Favorites'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/review-management',
+    name: 'review-management',
+    component: loadComponent('myWalk/ReviewManagement'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/badge-history',
+    name: 'badge-history',
+    component: loadComponent('myWalk/BadgeHistory'),
+    meta: { hideAppBar: true, hideNavBar: true },
   },
   { path: '/:catchAll(.*)', name: 'NotFound', component: NotFound },
 ];
