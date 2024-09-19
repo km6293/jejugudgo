@@ -13,7 +13,7 @@
         maxlength="13"
         label="휴대폰 번호"
         v-model="phoneNumber"
-        :state="phoneNumberState"
+        :state="inputState"
         message="가입 시 등록한 휴대폰 번호를 입력해주세요"
       />
       <Button
@@ -35,7 +35,16 @@
         :state="codeState"
         :message="codeMessage"
       />
+      <ResentTimer
+        v-if="state.verificationSent"
+        :verificationStart="state.verificationStart"
+        :handleTimeout="handleTimeout"
+        @resendSms="sendVerificationCode"
+      />
     </span>
+    <br />
+    <br />
+    <br />
     <Button
       v-if="state.verificationSent"
       class="next-button"
@@ -50,13 +59,18 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { sendSmsLater, checkSms } from '@/apis/authorityFeature';
 import { autoHyphen, validatePhoneNumber } from '@/utils';
-import { Button, Input } from '@/components';
+import { useSignUpIDStore } from '@/stores/auth';
+import { storeToRefs } from 'pinia';
+import { Button, Input, ResentTimer } from '@/components';
 
 const router = useRouter();
+const signUpIDStore = useSignUpIDStore();
+const { inputState, inputMessage } = storeToRefs(signUpIDStore);
 
 const state = reactive({
   verificationSent: false,
   verificationExpired: false,
+  verificationStart: null,
 });
 
 const name = ref('');
@@ -84,11 +98,17 @@ const sendVerificationCode = async () => {
   try {
     await sendSmsLater(name.value, cleanedPhoneNumber);
     state.verificationSent = true;
+    state.verificationStart = Date.now();
+    inputState.value = 'default';
+    inputMessage.value = '';
   } catch (error) {
     const smsError = error as { errorCode: string | null };
     if (smsError.errorCode === 'INVALID_VALUE_04') {
-      codeState.value = 'error';
-      codeMessage.value = '이미 계정이 존재합니다.';
+      inputState.value = 'error';
+      inputMessage.value = '이미 계정이 존재합니다.';
+    } else if (smsError.errorCode === 'INVALID_VALUE_01') {
+      inputState.value = 'error';
+      inputMessage.value = '휴대폰 번호를 정확히 입력해주세요.';
     }
   }
 };
@@ -113,6 +133,12 @@ const checkVerificationCode = async () => {
       codeMessage.value = '인증번호가 틀렸습니다.';
     }
   }
+};
+
+const handleTimeout = () => {
+  state.verificationExpired = true;
+  state.verificationSent = false;
+  state.verificationStart = null;
 };
 </script>
 

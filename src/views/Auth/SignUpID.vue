@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { Button, Input } from '@/components';
 import { validateEmail } from '@/utils';
+import { checkId } from '@/apis/authorityFeature';
 import { watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSignUpIDStore } from '@/stores/auth';
@@ -32,23 +33,34 @@ const { email, inputState, inputMessage } = storeToRefs(signUpIDStore);
 
 const router = useRouter();
 
-watch(email, (newEmail) => {
+watch(email, async (newEmail) => {
   if (newEmail === '') {
     inputState.value = 'default';
     inputMessage.value = '';
   } else if (validateEmail(newEmail)) {
     inputState.value = 'success';
     inputMessage.value = '';
-    email.value = newEmail;
   } else {
     inputState.value = 'error';
     inputMessage.value = '이메일 형식이 올바르지 않습니다.';
   }
 });
 
-const nextPage = () => {
+const nextPage = async () => {
   if (inputState.value === 'success') {
-    router.push({ name: 'signup-password' });
+    try {
+      await checkId(email.value);
+      router.push({ name: 'signup-password' });
+    } catch (error) {
+      const emailError = error as { errorCode: string | null };
+      if (emailError.errorCode == 'INVALID_VALUE_04') {
+        inputState.value = 'error';
+        inputMessage.value = '이미 계정이 존재합니다.';
+      } else {
+        inputState.value = 'error';
+        inputMessage.value = '이메일 확인 중 오류가 발생했습니다.';
+      }
+    }
   }
 };
 </script>
