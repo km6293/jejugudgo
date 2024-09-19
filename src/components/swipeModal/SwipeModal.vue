@@ -129,7 +129,12 @@ onMounted(() => {
   background-color: var(--color-card-surface);
   border-radius: 1rem 1rem 0 0;
   z-index: 1001;
+  transform: translateY(100%);
   transition: transform 0.3s ease-out;
+
+  &.open {
+    transform: translateY(0);
+  }
 
   &::backdrop {
     background-color: var(--color-card-surface, 333333);
