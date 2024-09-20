@@ -59,3 +59,28 @@ export const getReverseGeocoding = async (
     throw error;
   }
 };
+
+export const searchPlaces = async (keyword: string) => {
+  const headers = {
+    appKey: process.env.VUE_APP_MAP_API, // TMap API 키
+  };
+
+  try {
+    const response = await axios.get(
+      `https://apis.openapi.sk.com/tmap/pois?version=1&format=json&searchKeyword=${encodeURIComponent(
+        keyword
+      )}&resCoordType=WGS84GEO&reqCoordType=WGS84GEO&count=10`,
+      { headers }
+    );
+
+    return response.data.searchPoiInfo.pois.poi.map((poi: any) => ({
+      name: poi.name,
+      latitude: poi.frontLat,
+      longitude: poi.frontLon,
+      address: poi.newAddressList.newAddress[0]?.fullAddress || poi.address,
+    }));
+  } catch (error) {
+    console.error('장소 검색 중 오류 발생:', error);
+    throw error;
+  }
+};

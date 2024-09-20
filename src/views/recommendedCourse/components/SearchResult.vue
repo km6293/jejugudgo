@@ -2,68 +2,72 @@
   <div class="container">
     <div class="slider">
       <div
-        v-for="item of 10"
-        :key="item"
+        v-for="(place, index) in places"
+        :key="index"
         class="item"
-        @click="onResultClick"
+        @click="onResultClick(place)"
       >
-        <CardImage :test="'104x104'" />
-        <CardContent
-          :star="true"
-          :time="true"
-          :distance="true"
+        <CardImage
+          :test="'104x104'"
+          :icon="false"
         />
+        <div class="content-title body1-medium">
+          {{ place.name }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { CardContent, CardImage } from '@/components';
+import { CardImage } from '@/components';
 import { storeToRefs } from 'pinia';
 import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
+import { searchPlaces } from '@/apis/courseFeature/tmap';
+import { onMounted, ref } from 'vue';
+import { ISpotType } from '@/stores/recommendedCourse/type';
+
 const createCourseStore = useCreateCourseStore();
-const { selectedObject } = storeToRefs(createCourseStore);
+const { selectedObject, input } = storeToRefs(createCourseStore);
 
-const start = {
-  name: 'start',
-  longitude: 126.43602130714433,
-  latitude: 33.433944015499456,
-};
+const places = ref<
+  Array<{ name: string; latitude: number; longitude: number; address: string }>
+>([]);
 
-const end = {
-  name: 'end',
-  longitude: 126.48765563964844,
-  latitude: 33.45120886113757,
-};
+onMounted(async () => {
+  try {
+    if (input.value !== '') {
+      const result = await searchPlaces(input.value);
+      places.value = result;
+    }
+  } catch (error) {
+    console.error('장소를 가져오는 중 오류 발생:', error);
+  }
+});
 
-const way = [
-  {
-    name: 'way1',
-    longitude: 126.39573248492509,
-    latitude: 33.47190207955216,
-  },
-  {
-    name: 'way2',
-    longitude: 126.44226001173622,
-    latitude: 33.47486469122896,
-  },
-  {
-    name: 'way3',
-    longitude: 126.42766879469521,
-    latitude: 33.48001928930712,
-  },
-];
-
-const onResultClick = () => {
+const onResultClick = (place: {
+  name: string;
+  latitude: number;
+  longitude: number;
+  address: string;
+}) => {
   const { type, index } = selectedObject.value;
+  const { name, latitude, longitude, address } = place;
+  const data: ISpotType = {
+    name,
+    longitude,
+    latitude,
+    type: 'USER',
+    category: 'USER',
+    address: address,
+  };
 
   if (type === 'wayPoint' && index !== undefined) {
-    createCourseStore.updateData(type, way[index], index);
+    createCourseStore.updateData(type, data, index);
   } else if (type === 'startPoint') {
-    createCourseStore.updateData(type, start);
+    createCourseStore.updateData(type, data);
   } else if (type === 'endPoint') {
-    createCourseStore.updateData(type, end);
+    createCourseStore.updateData(type, data);
   }
 
   createCourseStore.updateData('showSearch', false);
@@ -86,5 +90,12 @@ const onResultClick = () => {
   height: 104px;
   gap: 16px;
   display: flex;
+}
+
+.content-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text-secondary);
 }
 </style>
