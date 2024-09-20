@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setCookie, hasError } from '@/utils';
+import { setCookie, hasError, getCookie } from '@/utils';
 import { ILoginRequest } from '@/types/api';
 
 export const login = async (data: ILoginRequest) => {
@@ -16,5 +16,18 @@ export const login = async (data: ILoginRequest) => {
     return response.status;
   } catch (error) {
     return hasError(error);
+  }
+};
+
+export const userInfo = async () => {
+  try {
+    const response = await axios.get('/api/v1/auth/user', {
+      headers: {
+        Authorization: `Bearer ${getCookie('Authorization')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch user info:', error);
   }
 };

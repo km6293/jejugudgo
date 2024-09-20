@@ -74,13 +74,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { LogoIcon, GoogleIcon, Button, Input, KakaoIcon } from '@/components';
-import { login } from '@/apis/userFeature';
+import { login, userInfo } from '@/apis/userFeature';
 import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/stores/auth';
 import router from '@/router';
 import { ILoginRequest } from '@/types/api';
+import { useUserStore } from '@/stores/user/userState';
+import { IUserStateType } from '@/stores/user/type';
 
 const loginStore = useLoginStore();
+const userStore = useUserStore();
 const { email, password, message, loginFailCount, loginState, isLocked } =
   storeToRefs(loginStore);
 
@@ -104,11 +107,24 @@ const handleLogin = async () => {
     message.value = `로그인 5회 실패 시, 10분 간 입력이 제한됩니다. (${loginFailCount.value}/5)`;
   }
   if (status === 200) {
+    const userInfoData = await userInfo();
+    setUserInfo(userInfoData);
+
     loginFailCount.value = 0;
     loginState.value = 'default';
     message.value = '';
     await router.push({ path: '/home' });
   }
+};
+
+const setUserInfo = (data: IUserStateType) => {
+  userStore.email = data.email;
+  userStore.id = data.id;
+  userStore.name = data.name;
+  userStore.nickname = data.nickname;
+  userStore.numberTag = data.numberTag;
+  userStore.profileImageUrl = data.profileImageUrl;
+  userStore.userRole = data.userRole;
 };
 
 const handleGoogleLogin = () => {
