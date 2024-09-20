@@ -8,7 +8,7 @@ import { moveTabStore, saveTabStore } from '@/utils/enterCondition';
 const loadComponent = (componentPath: string) => () =>
   import(`@/views/${componentPath}.vue`);
 
-//추후 유효성 검사 필요
+// 추후 유효성 검사 필요
 const isTokenValid = (token: string | null): boolean => {
   return !!token;
 };
@@ -115,6 +115,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'recruitmentDetail',
     component: loadComponent('walkTogether/RecruitmentDetail'),
     meta: { appBarCloseButton: false, hideNavBar: true },
+  },
+  {
+    path: '/chatting-detail/:id',
+    name: 'chatDetail',
+    component: loadComponent('walkTogether/ChattingDetail'),
+    meta: { tabTitle: '채팅 상세' },
   },
   {
     path: '/createRecruitment',
