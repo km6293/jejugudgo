@@ -18,14 +18,12 @@ import { TopBar } from '@/views/myWalk/components';
 import { ResultTags } from './';
 import { CourseCard } from '../../home/components';
 
-import { storeToRefs } from 'pinia';
 import { useSearchCourseStore } from '@/stores/recommendedCourse/searchCourse';
 
 const searchCourseStore = useSearchCourseStore();
-const { showAllCourse } = storeToRefs(searchCourseStore);
 
 const handleCloseAllCourse = () => {
-  searchCourseStore.updateData('showAllCourse', (showAllCourse.value = false));
+  searchCourseStore.updateData('showAllCourse', false);
 };
 </script>
 

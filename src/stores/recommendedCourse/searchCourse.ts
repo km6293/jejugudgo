@@ -6,6 +6,7 @@ export const useSearchCourseStore = defineStore('SearchCourse', () => {
     showSearch: false,
     showNowMap: false,
     showAllCourse: false,
+    selectCourse: false,
   };
 
   const state = reactive({ ...initialState });
