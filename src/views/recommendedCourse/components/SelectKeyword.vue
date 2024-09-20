@@ -6,11 +6,11 @@
       <div
         class="item body2-regular"
         v-for="item in keywords"
-        :key="item"
-        @click="toggleKeyword(item)"
-        :class="{ selected: selectedKeywords.includes(item) }"
+        :key="item.id"
+        @click="toggleKeyword(item.id)"
+        :class="{ selected: selectedKeywords.includes(item.id) }"
       >
-        {{ item }}
+        {{ item.title }}
       </div>
     </div>
   </div>
@@ -24,15 +24,15 @@ import { ModalHeader } from './index';
 const createCourseStore = useCreateCourseStore();
 
 const keywords = [
-  '맛집탐방',
-  '감성카페',
-  '자연힐링',
-  '데이트',
-  '역시탐방',
-  '가족여행',
-  '예술과 문화',
-  '빵지순례',
-  '액티비티',
+  { id: 'USER01', title: '맛집탐방' },
+  { id: 'USER02', title: '감성카페' },
+  { id: 'USER03', title: '자연힐링' },
+  { id: 'USER04', title: '데이트' },
+  { id: 'USER05', title: '역사탐방' },
+  { id: 'USER06', title: '가족여행' },
+  { id: 'USER07', title: '예술과 문화' },
+  { id: 'USER08', title: '빵지순례' },
+  { id: 'USER09', title: '액티비티' },
 ];
 
 const selectedKeywords = computed(() => createCourseStore.keyword);

@@ -23,8 +23,10 @@ const props = defineProps<{
 const inputValue = ref(props.point.name);
 
 const updateInput = () => {
-  createCourseStore.updateData('input', inputValue.value);
-  createCourseStore.updateData('showSearch', true);
+  if (inputValue.value !== '') {
+    createCourseStore.updateData('input', inputValue.value);
+    createCourseStore.updateData('showSearch', true);
+  }
 };
 
 watch(

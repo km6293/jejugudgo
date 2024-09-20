@@ -10,17 +10,17 @@
           v-for="(item, index) in keywords"
           :key="index"
           class="slider-item"
-          @click="onSuggestionClick(item)"
-          :class="{ selected: suggestionCourse === item }"
+          @click="onSuggestionClick(item.id)"
+          :class="{ selected: suggestionCourse === item.id }"
         >
           <div class="item">
             <CardImage
               :test="'96x96'"
               :icon="false"
               :imageStyle="{
-                borderColor: suggestionCourse === item ? '#22F779' : '',
+                borderColor: suggestionCourse === item.id ? '#22F779' : '',
                 opacity:
-                  suggestionCourse === '' || suggestionCourse === item
+                  suggestionCourse === '' || suggestionCourse === item.id
                     ? 1
                     : 0.5,
               }"
@@ -28,10 +28,10 @@
             <div
               class="image-text body2-bold"
               :style="{
-                color: suggestionCourse === item ? '#22F779' : '',
+                color: suggestionCourse === item.id ? '#22F779' : '',
               }"
             >
-              {{ item }}
+              {{ item.title }}
             </div>
           </div>
         </div>
@@ -49,7 +49,14 @@ import { storeToRefs } from 'pinia';
 const createCourseStore = useCreateCourseStore();
 const { suggestionCourse } = storeToRefs(createCourseStore);
 
-const keywords = ['바다', '산', '마을', '맛집', '관광명소', '빵지순례'];
+const keywords = [
+  { id: '12', title: '관광지' },
+  { id: '14', title: '문화시설' },
+  { id: '15', title: '축제/공연/행사' },
+  { id: '28', title: '레포츠' },
+  { id: '38', title: '쇼핑' },
+  { id: '39', title: '음식' },
+];
 
 const onSuggestionClick = (item: string) => {
   createCourseStore.updateData('suggestionCourse', item);
