@@ -120,7 +120,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/chatting-detail/:id',
     name: 'chatDetail',
     component: loadComponent('walkTogether/ChattingDetail'),
-    meta: { tabTitle: '채팅 상세' },
+    meta: { hideAppBar: true, hideNavBar: true },
   },
   {
     path: '/createRecruitment',
