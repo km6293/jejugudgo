@@ -2,6 +2,10 @@ export interface ISpotType {
   name: string;
   longitude: number;
   latitude: number;
+  address?: string;
+  category?: string;
+  type: 'USER' | 'TOUR';
+  contentTypeId?: string;
 }
 
 export interface IselectedObjectType {

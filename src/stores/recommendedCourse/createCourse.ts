@@ -7,9 +7,9 @@ export const useCreateCourseStore = defineStore('createCourse', () => {
     input: '',
     page: 1,
     showSearch: false,
-    startPoint: { name: '', longitude: 0, latitude: 0 },
+    startPoint: { name: '', longitude: 0, latitude: 0, type: 'USER' },
     wayPoint: [],
-    endPoint: { name: '', longitude: 0, latitude: 0 },
+    endPoint: { name: '', longitude: 0, latitude: 0, type: 'USER' },
     visibilityStatus: true,
     courseName: '',
     keyword: [],
@@ -20,7 +20,7 @@ export const useCreateCourseStore = defineStore('createCourse', () => {
   const state = reactive({ ...initialState });
 
   const addWayPoint = () => {
-    state.wayPoint.push({ name: '', longitude: 0, latitude: 0 });
+    state.wayPoint.push({ name: '', longitude: 0, latitude: 0, type: 'USER' });
   };
 
   const removeWayPoint = (index: number) => {
@@ -41,14 +41,14 @@ export const useCreateCourseStore = defineStore('createCourse', () => {
     }
   };
 
-  const addKeyword = (keyword: string) => {
-    if (!state.keyword.includes(keyword)) {
-      state.keyword.push(keyword);
+  const addKeyword = (id: string) => {
+    if (!state.keyword.includes(id)) {
+      state.keyword.push(id);
     }
   };
 
-  const removeKeyword = (keyword: string) => {
-    state.keyword = state.keyword.filter((k) => k !== keyword);
+  const removeKeyword = (id: string) => {
+    state.keyword = state.keyword.filter((k) => k !== id);
   };
 
   const $reset = () => {
