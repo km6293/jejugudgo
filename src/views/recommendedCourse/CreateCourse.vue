@@ -25,6 +25,7 @@ import {
   CompleteCourse,
   MapSearch,
   SearchResult,
+  InputTitle,
 } from './components';
 
 import { storeToRefs } from 'pinia';
@@ -55,9 +56,10 @@ const {
 
 const componentMap: { [key: number]: ReturnType<typeof defineComponent> } = {
   1: WayPoint,
-  2: SelectKeyword,
-  3: CheckPublic,
-  4: CompleteCourse,
+  2: InputTitle,
+  3: SelectKeyword,
+  4: CheckPublic,
+  5: CompleteCourse,
   11: SuggestionHelper,
   12: ResultHelper,
 };

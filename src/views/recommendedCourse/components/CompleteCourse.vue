@@ -18,7 +18,37 @@
 </template>
 
 <script setup lang="ts">
+import { createCourse } from '@/apis/courseFeature';
 import { ModalHeader } from './index';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
+import { useUserStore } from '@/stores/user/userState';
+
+const createCourseStore = useCreateCourseStore();
+const userCourseStore = useUserStore();
+
+const {
+  courseName,
+  visibilityStatus,
+  startPoint,
+  wayPoint,
+  endPoint,
+  keyword,
+} = storeToRefs(createCourseStore);
+const { id } = storeToRefs(userCourseStore);
+
+onMounted(async () => {
+  await createCourse(
+    courseName.value,
+    visibilityStatus.value,
+    keyword.value,
+    id.value,
+    startPoint.value,
+    wayPoint.value,
+    endPoint.value
+  );
+});
 </script>
 
 <style scoped lang="scss">

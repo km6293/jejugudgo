@@ -28,14 +28,14 @@ const { showSearch } = storeToRefs(searchCourseStore);
 const searchInput = ref<HTMLInputElement | null>(null);
 
 const expandInput = () => {
-  searchCourseStore.updateData('showSearch', (showSearch.value = true));
+  searchCourseStore.updateData('showSearch', true);
   nextTick(() => {
     searchInput.value?.focus();
   });
 };
 
 const collapseInput = () => {
-  searchCourseStore.updateData('showSearch', (showSearch.value = false));
+  searchCourseStore.updateData('showSearch', false);
 };
 </script>
 

@@ -28,10 +28,8 @@
 
       <SwipeModal v-if="showNowMap">
         <div class="result-content">
-          <ResultTags />
-          <div class="result-cards">
-            <CourseCard @click="searchRoutesTest" />
-          </div>
+          <NowMapResult v-if="!selectCourse" />
+          <SelectCourse v-else />
         </div>
       </SwipeModal>
     </div>
@@ -52,14 +50,17 @@ import {
   CreateCourseButton,
   ResultTags,
   AllResult,
+  NowMapResult,
+  SelectCourse,
 } from './components';
 import { CourseCard } from '../home/components';
 import { SwipeModal } from '@/components';
 import { useSearchCourseStore } from '@/stores/recommendedCourse/searchCourse';
 import { storeToRefs } from 'pinia';
+import { searchCourse } from '@/apis/courseFeature';
 
 const searchCourseStore = useSearchCourseStore();
-const { showSearch, showNowMap, showAllCourse } =
+const { showSearch, showNowMap, showAllCourse, selectCourse } =
   storeToRefs(searchCourseStore);
 
 const map = ref<any>(null);
@@ -75,16 +76,22 @@ const handleMoveNowLocation = () => {
   moveNowLocation();
 };
 
-const handleSearchRoutes = () => {
-  searchCourseStore.updateData('showAllCourse', (showAllCourse.value = true));
+const handleSearchRoutes = async () => {
+  // const data = await searchCourse();
+  // console.log(data);
+  searchCourseStore.updateData('showAllCourse', true);
 };
 
 const handleBack = () => {
-  searchCourseStore.updateData('showNowMap', (showNowMap.value = false));
+  if (selectCourse.value) {
+    searchCourseStore.updateData('selectCourse', false);
+  } else {
+    searchCourseStore.updateData('showNowMap', false);
+  }
 };
 
 const handleMapSearch = () => {
-  searchCourseStore.updateData('showNowMap', (showNowMap.value = true));
+  searchCourseStore.updateData('showNowMap', true);
 };
 const createCourse = () => {
   router.push({ name: 'create-course' });

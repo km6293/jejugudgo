@@ -75,6 +75,30 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideAppBar: true },
   },
   {
+    path: '/walking-course',
+    name: 'walking-course',
+    component: loadComponent('searchCourse/WalkingCourse'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/walking-course',
+    name: 'walking-course',
+    component: loadComponent('searchCourse/WalkingCourse'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/course-review-start',
+    name: 'course-review-start',
+    component: loadComponent('searchCourse/CourseReviewStart'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
+    path: '/course-review-detail',
+    name: 'course-review-detail',
+    component: loadComponent('searchCourse/CourseReviewDetail'),
+    meta: { hideAppBar: true, hideNavBar: true },
+  },
+  {
     path: '/create-course',
     name: 'create-course',
     component: loadComponent('recommendedCourse/CreateCourse'),

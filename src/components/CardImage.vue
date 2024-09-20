@@ -19,7 +19,8 @@ import { computed, defineProps, CSSProperties, withDefaults } from 'vue';
 import { HeartIcon } from '@/components';
 
 interface Props {
-  test: string;
+  src?: string;
+  test?: string;
   alt?: string;
   icon?: boolean;
   imageStyle?: CSSProperties;
@@ -30,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const src = computed(() => {
-  return `https://via.placeholder.com/${props.test}`;
+  return props.src ? props.src : `https://via.placeholder.com/${props.test}`;
 });
 </script>
 

@@ -18,4 +18,11 @@ const buttonStyle = {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.target-button {
+  padding: var(--margin-m2);
+  display: flex;
+  position: absolute;
+  bottom: 84px;
+}
+</style>

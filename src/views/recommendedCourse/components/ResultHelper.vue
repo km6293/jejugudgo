@@ -7,7 +7,7 @@
     />
     <div class="content">
       <div class="items">
-        <div
+        <!-- <div
           class="item"
           v-for="item of 10"
           :key="item"
@@ -24,6 +24,27 @@
               <div>장소에 대한 설명</div>
             </div>
           </div>
+        </div> -->
+        <div
+          class="item"
+          v-for="spot in spots"
+          :key="spot.id"
+          @click="onHelperClick(spot)"
+        >
+          <CardImage
+            :icon="false"
+            :src="spot.imageUrl"
+            :imageStyle="{
+              width: '74px',
+              height: '74px',
+            }"
+          />
+          <div class="card-info">
+            <div class="info-head body1-medium">{{ spot.title }}</div>
+            <div class="info-content caption-regular">
+              <div>{{ spot.content }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -35,8 +56,15 @@ import { CardImage } from '@/components';
 import { ModalHeader } from './index';
 import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
 import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
+import {
+  findRecommentSpot,
+  IFindRecommentSpotResponse,
+} from '@/apis/courseFeature';
 const createCourseStore = useCreateCourseStore();
-const { selectedObject } = storeToRefs(createCourseStore);
+const { selectedObject, suggestionCourse } = storeToRefs(createCourseStore);
+
+const spots = ref<Array<IFindRecommentSpotResponse>>([]);
 
 const helper = {
   name: 'help',
@@ -51,6 +79,16 @@ const onHelperClick = () => {
   createCourseStore.updateData('page', 1);
   createCourseStore.updateData('suggestionCourse', '');
 };
+
+onMounted(async () => {
+  const result = await findRecommentSpot(
+    33.47432039426073,
+    126.37650387454218,
+    suggestionCourse.value
+  );
+
+  spots.value = result;
+});
 </script>
 
 <style scoped>

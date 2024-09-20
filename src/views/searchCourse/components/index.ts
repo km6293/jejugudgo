@@ -6,6 +6,10 @@ import AllCourseButton from './AllCourseButton.vue';
 import CreateCourseButton from './CreateCourseButton.vue';
 import ResultTags from './ResultTags.vue';
 import AllResult from './AllResult.vue';
+import NowMapResult from './NowMapResult.vue';
+import SelectCourse from './SelectCourse.vue';
+import WalkingModal from './WalkingModal.vue';
+import ReviewTags from './ReviewTags.vue';
 
 export {
   BackButton,
@@ -16,4 +20,8 @@ export {
   CreateCourseButton,
   ResultTags,
   AllResult,
+  NowMapResult,
+  SelectCourse,
+  WalkingModal,
+  ReviewTags,
 };
