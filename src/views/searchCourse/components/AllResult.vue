@@ -7,7 +7,9 @@
     </TopBar>
     <div class="result-content">
       <ResultTags />
-      <CourseCard class="card-scroll" />
+      <div @click="onSelectClick">
+        <CourseCard class="card-scroll" />
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +26,12 @@ const searchCourseStore = useSearchCourseStore();
 
 const handleCloseAllCourse = () => {
   searchCourseStore.updateData('showAllCourse', false);
+};
+
+const onSelectClick = () => {
+  searchCourseStore.updateData('showAllCourse', false);
+  searchCourseStore.updateData('showNowMap', true);
+  searchCourseStore.updateData('selectCourse', true);
 };
 </script>
 

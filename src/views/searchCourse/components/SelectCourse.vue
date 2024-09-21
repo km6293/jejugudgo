@@ -52,9 +52,15 @@ import {
   HeartIcon,
 } from '@/components';
 import { useRouter } from 'vue-router';
+import { useSearchCourseStore } from '@/stores/recommendedCourse/searchCourse';
 
+const searchCourseStore = useSearchCourseStore();
 const router = useRouter();
 const onWalkingButton = () => {
+  searchCourseStore.updateData('showSearch', false);
+  searchCourseStore.updateData('showNowMap', false);
+  searchCourseStore.updateData('showAllCourse', false);
+  searchCourseStore.updateData('selectCourse', false);
   router.push({ path: '/walking-course' });
 };
 </script>

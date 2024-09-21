@@ -12,6 +12,7 @@
       class="search-input body2-medium"
       placeholder="장소 및 코스명을 입력하세요"
       @blur="collapseInput"
+      @keyup.enter="onEnter"
     />
   </div>
 </template>
@@ -36,6 +37,10 @@ const expandInput = () => {
 
 const collapseInput = () => {
   searchCourseStore.updateData('showSearch', false);
+};
+
+const onEnter = () => {
+  searchCourseStore.updateData('showNowMap', true);
 };
 </script>
 
