@@ -7,8 +7,18 @@
     />
     <div class="check-content">
       <div class="button-container body2-regular">
-        <div class="check-button">바로 걸을래요</div>
-        <div class="check-button">나중에 걸을래요</div>
+        <div
+          class="check-button"
+          @click="nowWalk"
+        >
+          바로 걸을래요
+        </div>
+        <div
+          class="check-button"
+          @click="lateWalk"
+        >
+          나중에 걸을래요
+        </div>
       </div>
       <div class="check-info caption-medium">
         생성된 코스는 마이걷고 코스생성내역에서 확인가능해요.
@@ -24,10 +34,11 @@ import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useCreateCourseStore } from '@/stores/recommendedCourse/createCourse';
 import { useUserStore } from '@/stores/user/userState';
+import { useRouter } from 'vue-router';
 
 const createCourseStore = useCreateCourseStore();
 const userCourseStore = useUserStore();
-
+const router = useRouter();
 const {
   courseName,
   visibilityStatus,
@@ -38,16 +49,26 @@ const {
 } = storeToRefs(createCourseStore);
 const { id } = storeToRefs(userCourseStore);
 
+const nowWalk = () => {
+  createCourseStore.updateData('page', 1);
+  router.push({ name: '/walking-course' });
+};
+
+const lateWalk = () => {
+  createCourseStore.updateData('page', 1);
+  router.push({ name: '/home' });
+};
+
 onMounted(async () => {
-  await createCourse(
-    courseName.value,
-    visibilityStatus.value,
-    keyword.value,
-    id.value,
-    startPoint.value,
-    wayPoint.value,
-    endPoint.value
-  );
+  // await createCourse(
+  //   courseName.value,
+  //   visibilityStatus.value,
+  //   keyword.value,
+  //   id.value,
+  //   startPoint.value,
+  //   wayPoint.value,
+  //   endPoint.value
+  // );
 });
 </script>
 
