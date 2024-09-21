@@ -60,15 +60,15 @@ const lateWalk = () => {
 };
 
 onMounted(async () => {
-  // await createCourse(
-  //   courseName.value,
-  //   visibilityStatus.value,
-  //   keyword.value,
-  //   id.value,
-  //   startPoint.value,
-  //   wayPoint.value,
-  //   endPoint.value
-  // );
+  await createCourse(
+    courseName.value,
+    visibilityStatus.value,
+    keyword.value,
+    id.value,
+    startPoint.value,
+    wayPoint.value,
+    endPoint.value
+  );
 });
 </script>
 

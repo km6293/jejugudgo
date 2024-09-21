@@ -1,17 +1,12 @@
 <template>
   <div class="jeju-tidings-container">
     <div class="jeju-tidings-content">
-      <Title
+      <EventTitle
         :title="'제주도 걷기 대회'"
         :allView="true"
       />
       <div class="contest-slider">
-        <div
-          v-for="item of 5"
-          :key="item"
-        >
-          <ContestCard />
-        </div>
+        <ContestCard />
       </div>
     </div>
     <div class="jeju-tidings-content">
@@ -31,6 +26,7 @@
 
 <script setup lang="ts">
 import { Title, ContestCard, RecommendedCard } from './components';
+import EventTitle from './components/EventTitle.vue';
 </script>
 
 <style scoped>

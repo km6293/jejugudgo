@@ -52,6 +52,11 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: '/events',
+    name: 'eventList',
+    component: loadComponent('home/Event'), // EventList 컴포넌트가 있는 경로를 정확히 입력
+  },
+  {
     path: '/oauth/callback',
     name: 'oauth-callback',
     component: OAuthCallback,
