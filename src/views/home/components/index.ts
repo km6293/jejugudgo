@@ -4,6 +4,7 @@ import RecommendedCard from './RecommendedCard.vue';
 import Title from './Title.vue';
 import Advertisement from './Advertisement.vue';
 import CourseCard from './CourseCard.vue';
+import EventCard from './EventCard.vue';
 
 export {
   ContestCard,
@@ -12,4 +13,5 @@ export {
   RecommendedCard,
   Advertisement,
   CourseCard,
+  EventCard,
 };
