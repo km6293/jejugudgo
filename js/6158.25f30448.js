@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkfrontend"]=self["webpackChunkfrontend"]||[]).push([[6158],{3777:function(n,t,e){e.r(t),e.d(t,{default:function(){return f}});var r=e(6768);const a={class:"chat-detail-container"};function c(n,t){return(0,r.uX)(),(0,r.CE)("div",a)}var u=e(1241);const s={},d=(0,u.A)(s,[["render",c],["__scopeId","data-v-54f67b21"]]);var f=d}}]);
+//# sourceMappingURL=6158.25f30448.js.map
